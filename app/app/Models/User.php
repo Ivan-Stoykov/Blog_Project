@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Comment;
+use App\Models\Post;
 
 class User extends Authenticatable
 {
@@ -23,6 +25,16 @@ class User extends Authenticatable
         'password',
         'role'
     ];
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'authorId');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'authorId');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
