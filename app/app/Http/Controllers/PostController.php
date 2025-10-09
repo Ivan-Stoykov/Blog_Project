@@ -39,7 +39,10 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $post = Post::with('author')->with('comments')->with('media')->find($id);
+        if($post){return response( $post, 200);}
+        else return response('Post not found', 404);
+        
     }
 
     /**
@@ -47,14 +50,31 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $post = Post::find($id);
+        if($post){
+        $post->title = $request->input('title');
+        $post->slug = $request->input('slug');
+        $post->content = $request->input('content');
+        $post->authorId = $request->input('author.id');
+        $post->publishedAt = $request->input('publishedAt');
+        $post->status = $request->input('status');
+        
+        $post->save();
+        return response('Post was updated', 201);}
+        else return response('Post not found', 404);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id)//not working
     {
-        //
+        $post = Post::find($id);
+        if($post){
+            $post->delete();
+            return response('Post was deleted', 200);
+        }
+        else return response('Post not found', 404);
+        
     }
 }

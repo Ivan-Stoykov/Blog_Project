@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('content');
             $table->unsignedBigInteger('authorId');
-            $table->foreign('authorId')->references('id')->on('users');
+            $table->foreign('authorId')->references('id')->on('users')->onDelete('cascade');
             $table->date('publishedAt');
             $table->string('status');
             $table->timestamps();

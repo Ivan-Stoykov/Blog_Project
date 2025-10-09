@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('post_categories', function (Blueprint $table) {
             $table->unsignedBigInteger('postId');
-            $table->foreign('postId')->references('id')->on('posts');
+            $table->foreign('postId')->references('id')->on('posts')->onDelete('cascade');;
             $table->unsignedBigInteger('categoryId');
-            $table->foreign('categoryId')->references('id')->on('categories');
+            $table->foreign('categoryId')->references('id')->on('categories')->onDelete('cascade');;
             $table->timestamps();
             $table->primary(['postId', 'categoryId']);
         });

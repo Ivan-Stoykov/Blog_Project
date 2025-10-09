@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('media', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('postId');
-            $table->foreign('postId')->references('id')->on('posts');
+            $table->foreign('postId')->references('id')->on('posts')->onDelete('cascade');;
             $table->string('filePath');
             $table->string('kind');
             $table->date('uploadedAt');
