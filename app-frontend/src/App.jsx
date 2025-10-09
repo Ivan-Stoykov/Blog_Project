@@ -1,20 +1,19 @@
 import "./App.css";
-import Post from "./components/Post";
+import PostList from "./components/PostList";
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import RootLayout from "./pages/Root";
+import Login from "./pages/Login";
+
+const router = createBrowserRouter([
+  {path:'/', element:<RootLayout/>, children:[{path:'', element:<PostList/>}, {path:'/login', element:<Login/>}]}
+  
+])
+
 
 function App() {
-  const users = [
-    { username: "Pesho04", name: "Pesho" },
-    { username: "TheGOAT", name: "Ivan" },
-  ];
-  const posts = [
-    { creator: users[0], content: "I am the goat!" },
-    { creator: users[1], content: "No i am!" }
-  ];
-  return (
-    <>
-      {posts.map(post=><Post key={post.content} post={post} creator={post.creator}/>)}
-    </>
-  );
+
+
+  return <RouterProvider router={router}/>
 }
 
 export default App;
