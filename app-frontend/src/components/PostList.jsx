@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Post from "./Post";
 
 export default function PostList()
 {
@@ -12,12 +13,11 @@ export default function PostList()
     }
 
     fetchPosts();
-  }, [setPosts]);
-  console.log(posts);
+  }, []);
   return (
     <>
       {posts.length !== 0 && posts.map((post) => (
-        <Post key={post.content} post={post} creator={post.creator} />
+        <Post key={post.content} post={post} author={post.author} comments={post.comments} />
       ))}
       {posts.length === 0 && "No posts!"}
     </>

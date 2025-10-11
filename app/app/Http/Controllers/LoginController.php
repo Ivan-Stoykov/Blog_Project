@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Validator;
+use Illuminate\Routing\ResponseFactory;
 
 class LoginController extends Controller
 {
@@ -20,13 +21,13 @@ class LoginController extends Controller
            // 'c_password' => 'required|same:password',
         ]);
         if($validator->fails()){
-            return response('Validation Error.', $validator->errors());       
+            return response(["ValidationError"=>$validator->errors()], 400);       
         }
         $input = $request->all();
         $user = User::create($input);
         $success['token'] =  $user->createToken($request->email)->plainTextToken;
         $success['name'] =  $user->name;
-        return response($success, 'User register successfully.');
+        return response(["success"=>'User register successfully.'], 200);
     }
     /**
      * Login api
@@ -36,11 +37,11 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
-            $user = Auth::user(); 
+             $user = Auth::user(); 
             $user['token'] =  $user->createToken('MyApp')->plainTextToken; 
             return response($user, 200);
-        }else{ 
-            return response('Error');
+        }else{
+            return  response(["message"=>"Wrong credentials"],404);
         } 
     }
 
