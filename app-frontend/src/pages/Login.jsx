@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import { UserContext } from "../store/userContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const userCtx = useContext(UserContext);
+  const navigate = useNavigate();
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -21,6 +23,7 @@ export default function Login() {
 
       const user = await response.json();
       userCtx.login(user);
+      return navigate('/');
     }
 
     login();

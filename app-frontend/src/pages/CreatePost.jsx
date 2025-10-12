@@ -22,6 +22,7 @@ export default function CreatePost() {
         body: JSON.stringify(post),
         headers: {
           "Content-Type": "application/json",
+          "Authorization": "Bearer " + userCtx.user.token
         },
       });
 

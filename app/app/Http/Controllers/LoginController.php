@@ -25,7 +25,7 @@ class LoginController extends Controller
         }
         $input = $request->all();
         $user = User::create($input);
-        $success['token'] =  $user->createToken($request->email)->plainTextToken;
+        $success['token'] =  $user->createToken($request->email, ['*'], now()->addDay())->plainTextToken;
         $success['name'] =  $user->name;
         return response(["success"=>'User register successfully.'], 200);
     }
@@ -49,6 +49,7 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+        $request->user()->currentAccessToken()->delete();
         return response("Logged out", 200);
     }
 }

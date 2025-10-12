@@ -15,11 +15,11 @@ export default function PostList()
     fetchPosts();
   }, []);
   return (
-    <>
+    <ul>
       {posts.length !== 0 && posts.map((post) => (
         <Post key={post.content} post={post} author={post.author} comments={post.comments} />
       ))}
       {posts.length === 0 && "No posts!"}
-    </>
+    </ul>
   );
 }

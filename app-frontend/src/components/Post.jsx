@@ -1,15 +1,10 @@
-import AddComment from "./AddComment";
-import Comments from "./Comments"
+import { Link } from "react-router-dom";
 
-export default function Post({ post, author, comments }) {
+export default function Post({ post, author }) {
   return (
-    <div>
-      <p>{author.name}
-      </p>
-      <span>{post.content}</span>
-      {comments.map((comment)=>(<Comments comment={comment}/>))}
-      <AddComment/>
-    </div>
+    <li>
+      <p><Link to={`/posts/${post.id}`}>{post.title} - {author.name}</Link></p>
+    </li>
     
   );
 }

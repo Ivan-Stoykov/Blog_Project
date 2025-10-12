@@ -4,7 +4,7 @@ import { createContext, useState } from "react";
 export const UserContext = createContext({
     name: "",
     loggedIn: false,
-    token:""
+    
 
 });
 
@@ -15,18 +15,24 @@ export default function UserContextProvider({children})
     function login({id, name, token})
     {
         setUser((prevUser)=>({...prevUser,id:id, name: name, loggedIn: true, token: token}));
-        console.log(user);
     }
     function logout()
     {
-        setUser(prevUser=> ({...prevUser, id: 0, name:"", loggedIn: false, token:""}));
-        console.log(user);
+        setUser(prevUser=> ({...prevUser, id: 0, name:"", loggedIn: false, token:undefined}));
+        fetch("http://127.0.0.1:8000/api/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + user.token
+        },
+      })
     }
 
     const userCtx = {
         user: user,
         logout: logout,
-        login: login
+        login: login,
+
     }
     return <UserContext.Provider value={userCtx}>{children}</UserContext.Provider>
 

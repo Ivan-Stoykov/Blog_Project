@@ -13,7 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')->with('comments')->with('media')->get();
+        $posts = Post::with('comments')->with('author')->with('media')->orderByDesc('id')->get();
         return response( $posts, 200);
     }
 
@@ -39,7 +39,7 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        $post = Post::with('author')->with('comments')->with('media')->find($id);
+        $post = Post::with('comments')->with('author')->with('media')->find($id);
         if($post){return response( $post, 200);}
         else return response('Post not found', 404);
         
