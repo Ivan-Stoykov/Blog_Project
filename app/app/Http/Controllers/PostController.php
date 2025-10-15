@@ -29,7 +29,7 @@ class PostController extends Controller
         'publishedAt' => $request->input('publishedAt'),
         'status' => $request->input('status')]);
         
-        return response('Post was created', 201);
+        return response(["message"=>'Post was created'], 201);
         
 
     }
@@ -39,9 +39,9 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        $post = Post::with('comments')->with('author')->with('media')->find($id);
+        $post = Post::with('comments')->with('author')->with('media')->where('slug', $id)->first();
         if($post){return response( $post, 200);}
-        else return response('Post not found', 404);
+        else return response(["message"=>'Post not found'], 404);
         
     }
 
@@ -60,8 +60,8 @@ class PostController extends Controller
         $post->status = $request->input('status');
         
         $post->save();
-        return response('Post was updated', 201);}
-        else return response('Post not found', 404);
+        return response(["message"=>'Post was updated'], 201);}
+        else return response(["message"=>'Post not found'], 404);
     }
 
     /**
@@ -72,9 +72,9 @@ class PostController extends Controller
         $post = Post::find($id);
         if($post){
             $post->delete();
-            return response('Post was deleted', 200);
+            return response(["message"=>'Post was deleted'], 200);
         }
-        else return response('Post not found', 404);
+        else return response(["message"=>'Post not found'], 404);
         
     }
 }

@@ -1,0 +1,9 @@
+.catDiv{width:20%; display:inline-block}
+
+.categories {
+  list-style-type: none;
+  overflow: hidden;
+}
+
+.catLink
+{text-decoration: none;}

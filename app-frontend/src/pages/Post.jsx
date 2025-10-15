@@ -12,34 +12,33 @@ export default function Post() {
 
   useEffect(() => {
     async function fetchPost() {
-      const response = await fetch(
-        `http://localhost:8000/api/posts/${params.id}`
+      let response = await fetch(
+        `http://localhost:8000/api/posts/${params.slug}`
       );
 
       const post = await response.json();
 
       setPost(post);
-      
-    }async function fetchComments() {
-      const response = await fetch(
-        `http://localhost:8000/api/comments/${params.id}`
+      response = await fetch(
+        `http://localhost:8000/api/comments/${post.id}`
       );
 
       const comments = await response.json();
 
       setComments(comments);
+      console.log(post);
+      
     }
-
-    fetchComments();
-
     fetchPost();
-  }, [params.id]);
+    
+  }, [params.slug]);
 
   return (
     <>
       {!post && <p>Loading</p>}
       {post && <div>
         <h1>{post.title}</h1>
+        <h3>Author: {post.author.name}</h3>
         <span>{post.content}</span>
         <h2>Comments</h2>
         {comments.length > 0 && comments.map((comment)=>(<Comments key={comment.body} comment={comment}/>))}

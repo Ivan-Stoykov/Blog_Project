@@ -1,5 +1,5 @@
 import "./App.css";
-import PostList from "./components/PostList";
+import Home from "./pages/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./pages/Root";
 import Login from "./pages/Login";
@@ -13,11 +13,11 @@ const router = createBrowserRouter([
     path: "/",
     element: <RootLayout />,
     children: [
-      { path: "", element: <PostList /> },
+      { path: "", element: <Home /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "/create-post", element: <CreatePost /> },
-      { path: "/posts/:id", element:<Post/> },
+      { path: "/posts/:slug", element:<Post/> },
     ],
   },
 ]);

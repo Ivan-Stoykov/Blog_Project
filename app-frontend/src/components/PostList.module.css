@@ -1,0 +1,9 @@
+.postDiv{width:80%; display:inline-block}
+
+.posts{
+  list-style-type: none;
+  overflow: hidden;
+}
+
+.postLink
+{text-decoration: none;}

@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import { UserContext } from "../store/userContext";
+import { useNavigate } from "react-router-dom";
 
 export default function CreatePost() {
   const userCtx = useContext(UserContext);
+  const navigate = useNavigate();
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -10,7 +12,7 @@ export default function CreatePost() {
     const title = fd.get("title");
     const content = fd.get("content");
     const status = "draft";
-    const slug = userCtx.user.name + '/' + title;
+    const slug = title.replace(/[^a-zA-Z0-9 ]/g, '').replace(' ', '-');
     const today = new Date();
     const publishedAt = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
     const post = { title, slug, content, status, author:userCtx.user, publishedAt };
@@ -31,6 +33,7 @@ export default function CreatePost() {
     }
 
     createPost();
+    navigate('/');
   }
 
   return (

@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Register() {
+  const navigate = useNavigate();
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -22,6 +25,7 @@ export default function Register() {
     }
 
     register();
+    navigate('/');
   }
 
   return (
