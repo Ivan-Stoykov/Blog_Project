@@ -1,10 +1,24 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../store/userContext";
 import { useNavigate } from "react-router-dom";
 
 export default function CreatePost() {
   const userCtx = useContext(UserContext);
   const navigate = useNavigate();
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      const response = await fetch("http://127.0.0.1:8000/api/categories");
+      const fetchedCategories = await response.json();
+      setCategories(fetchedCategories);
+    }
+
+    fetchCategories();
+  }, []);
+
+  console.log(categories)
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -45,6 +59,12 @@ export default function CreatePost() {
       <div>
         <label htmlFor="content">Content:</label>
         <textarea name="content" required></textarea>
+      </div>
+      <div>
+        <label htmlFor="categoryId">Category</label>
+        <select name="categpryId">{categories.length !== 0 && categories.map((category) => (
+       <option key={category} value={category.id}>{category.name}</option>
+      ))}</select>
       </div>
       <div>
         <input type="submit" />

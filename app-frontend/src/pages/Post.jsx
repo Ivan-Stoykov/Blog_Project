@@ -44,6 +44,7 @@ export default function Post() {
         {comments.length > 0 && comments.map((comment)=>(<Comments key={comment.body} comment={comment}/>))}
               {userCtx.user.token && <AddComment postId = {post.id} setComments={setComments}  />}
         </div>}
+        {comments.length == 0 && <p>No comments!</p>}
     </>
   );
 }

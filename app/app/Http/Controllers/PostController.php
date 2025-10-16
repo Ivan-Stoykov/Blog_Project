@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\PostCategory;
 use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
@@ -22,12 +23,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        Post::create(['title'=>$request->input('title'),
+        $post = Post::create(['title'=>$request->input('title'),
         'slug' => $request->input('slug'),
         'content' => $request->input('content'),
         'authorId' => $request->input('author.id'),
         'publishedAt' => $request->input('publishedAt'),
-        'status' => $request->input('status')]);
+        'status' => $request->input('status')])->id();
+
+        PostCategory::create(['postId'=>$post, 'categodyId'=>$request->input('categoryId')]);
+
+
         
         return response(["message"=>'Post was created'], 201);
         
