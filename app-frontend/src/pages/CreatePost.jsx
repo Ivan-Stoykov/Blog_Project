@@ -28,8 +28,9 @@ export default function CreatePost() {
     const status = "draft";
     const slug = title.replace(/[^a-zA-Z0-9 ]/g, '').replace(' ', '-');
     const today = new Date();
+    const categoryId = fd.get('categoryId');
     const publishedAt = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-    const post = { title, slug, content, status, author:userCtx.user, publishedAt };
+    const post = { title, slug, content, status, author:userCtx.user, publishedAt, categoryId };
     console.log(post);
 
     async function createPost() {
@@ -44,10 +45,11 @@ export default function CreatePost() {
 
       const resData = await response.json();
       console.log(resData);
+      navigate('/');
     }
 
     createPost();
-    navigate('/');
+    
   }
 
   return (
@@ -62,7 +64,7 @@ export default function CreatePost() {
       </div>
       <div>
         <label htmlFor="categoryId">Category</label>
-        <select name="categpryId">{categories.length !== 0 && categories.map((category) => (
+        <select name="categoryId">{categories.length !== 0 && categories.map((category) => (
        <option key={category} value={category.id}>{category.name}</option>
       ))}</select>
       </div>

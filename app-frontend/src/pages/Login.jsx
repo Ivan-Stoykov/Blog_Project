@@ -22,8 +22,8 @@ export default function Login() {
       });
 
       const user = await response.json();
-      userCtx.login(user);
-      return navigate('/');
+      if(user.token){userCtx.login(user);
+      return navigate('/');}
     }
 
     login();

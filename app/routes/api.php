@@ -18,7 +18,7 @@ Route::delete('posts/{id}', [PostController::class, 'destroy'])->middleware('aut
 Route::get('comments/{id}', [CommentController::class, 'index']);
 Route::post('comments', [CommentController::class, 'store'])->middleware('auth:sanctum');
 Route::apiResource('categories', CategoriesController::class)->only(['index']);
-Route::post('categories', [CommentController::class, 'store'])->middleware('auth:sanctum');
+Route::post('categories', [CategoriesController::class, 'store'])->middleware('auth:sanctum');
 Route::apiResource('users', UserController::class);
 Route::controller(LoginController::class)->group(function(){
     Route::post('register', 'register');

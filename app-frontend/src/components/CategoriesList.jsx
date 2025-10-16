@@ -18,10 +18,12 @@ export default function CategoriesList()
   }, []);
   return (
     <div className={styles.catDiv}>
+      
     <ul className={styles.categories}>
         <h3>Категории</h3>
+        <p><Link to="/add-category" >Add category</Link></p>
       {categories.length !== 0 && categories.map((category) => (
-       <li key={category}> <Link className={styles.catLink} to={`/categories/${category.slug}`}>{category.name}</Link></li>
+       <li key={category}> <Link className={styles.catLink} to={`/posts?category=${category.slug}`}>{category.name}</Link></li>
       ))}
       {categories.length === 0 && "Няма категории!"}
     </ul></div>

@@ -28,9 +28,10 @@ class PostController extends Controller
         'content' => $request->input('content'),
         'authorId' => $request->input('author.id'),
         'publishedAt' => $request->input('publishedAt'),
-        'status' => $request->input('status')])->id();
+        'status' => $request->input('status')]);
 
-        PostCategory::create(['postId'=>$post, 'categodyId'=>$request->input('categoryId')]);
+        PostCategory::create(['postId'=>$post->id, 'categoryId' => $request->input('categoryId')]);
+        
 
 
         

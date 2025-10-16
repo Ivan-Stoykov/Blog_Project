@@ -22,10 +22,12 @@ export default function Register() {
 
       const resData = await response.json();
       console.log(resData);
+      if(response.ok)
+        navigate('/login');
     }
 
     register();
-    navigate('/');
+    
   }
 
   return (
