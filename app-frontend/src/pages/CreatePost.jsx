@@ -30,7 +30,8 @@ export default function CreatePost() {
     const today = new Date();
     const categoryId = fd.get('categoryId');
     const publishedAt = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-    const post = { title, slug, content, status, author:userCtx.user, publishedAt, categoryId };
+    const image = fd.get('image');
+    const post = { title, slug, content, status, author:userCtx.user, publishedAt, categoryId, image };
     console.log(post);
 
     async function createPost() {
@@ -61,6 +62,10 @@ export default function CreatePost() {
       <div>
         <label htmlFor="content">Content:</label>
         <textarea name="content" required></textarea>
+      </div>
+      <div>
+        <label htmlFor="image">Image:</label>
+        <input type="file" name="image" />
       </div>
       <div>
         <label htmlFor="categoryId">Category</label>

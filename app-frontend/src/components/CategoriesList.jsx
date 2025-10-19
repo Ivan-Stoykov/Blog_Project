@@ -23,7 +23,7 @@ export default function CategoriesList()
         <h3>Категории</h3>
         <p><Link to="/add-category" >Add category</Link></p>
       {categories.length !== 0 && categories.map((category) => (
-       <li key={category}> <Link className={styles.catLink} to={`/posts?category=${category.slug}`}>{category.name}</Link></li>
+       <li key={category}> <Link className={styles.catLink} to={`?category=${category.slug}`}>{category.name}</Link></li>
       ))}
       {categories.length === 0 && "Няма категории!"}
     </ul></div>
