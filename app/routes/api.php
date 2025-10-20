@@ -11,6 +11,21 @@ use Illuminate\Support\Facades\Auth;
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
+Route::get('/image/{filename}', function ($filename, Request $request) {
+    $path = 'uploads/' . $filename;
+
+    if (!Storage::disk('public')->exists($path)) {
+        abort(404);
+    }
+
+    $file = Storage::disk('public')->get($path);
+    $mime = Storage::disk('public')->mimeType($path);
+
+    return response($file, 200)
+        ->header('Content-Type', $mime)
+        ->header('Access-Control-Allow-Origin', '*');
+});
+
 Route::apiResource('posts', PostController::class)->only(['index', 'show']);
 Route::post('posts', [PostController::class, 'store'])->middleware('auth:sanctum');
 Route::patch('posts/{id}', [PostController::class, 'update'])->middleware('auth:sanctum');

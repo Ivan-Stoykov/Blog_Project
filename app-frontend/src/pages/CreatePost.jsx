@@ -18,34 +18,36 @@ export default function CreatePost() {
     fetchCategories();
   }, []);
 
-  console.log(categories)
+  console.log('categories', categories)
   function handleSubmit(event) {
     event.preventDefault();
 
     const fd = new FormData(event.target);
     const title = fd.get("title");
-    const content = fd.get("content");
-    const status = "draft";
-    const slug = title.replace(/[^a-zA-Z0-9 ]/g, '').replace(' ', '-');
-    const today = new Date();
-    const categoryId = fd.get('categoryId');
-    const publishedAt = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-    const image = fd.get('image');
-    const post = { title, slug, content, status, author:userCtx.user, publishedAt, categoryId, image };
-    console.log(post);
+    // const content = fd.get("content");
+    // const status = "draft";
+    // const slug = title.replace(/[^a-zA-Z0-9 ]/g, '').replace(' ', '-');
+     const today = new Date();
+    // const categoryId = fd.get('categoryId');
+     const publishedAt = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+    // const image = fd.get('image');
+    // const post = { title, slug, content, status, author:userCtx.user, publishedAt, categoryId, image };
+    fd.append('status', 'draft');
+    fd.append('slug', title.replace(/[^a-zA-Z0-9 ]/g, '').replace(' ', '-'));
+    fd.append('publishedAt', publishedAt);
+    fd.append('authorId', userCtx.user.id);
 
     async function createPost() {
       const response = await fetch("http://localhost:8000/api/posts", {
         method: "POST",
-        body: JSON.stringify(post),
+        body: fd,
         headers: {
-          "Content-Type": "application/json",
           "Authorization": "Bearer " + userCtx.user.token
         },
       });
 
       const resData = await response.json();
-      console.log(resData);
+      console.log('resData', resData);
       navigate('/');
     }
 

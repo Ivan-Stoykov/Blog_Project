@@ -9,7 +9,6 @@ export default function Post() {
   const [comments, setComments] = useState([]);
   const params = useParams();
   const userCtx = useContext(UserContext);
-
   useEffect(() => {
     async function fetchPost() {
       let response = await fetch(
@@ -27,10 +26,9 @@ export default function Post() {
 
       setComments(comments);
       console.log(post);
-      
     }
     fetchPost();
-    
+     
   }, [params.slug]);
 
   return (
@@ -39,6 +37,7 @@ export default function Post() {
       {post && <div>
         <h1>{post.title}</h1>
         <h3>Author: {post.author.name}</h3>
+        {post.media.length > 0 && post.media.map(file=><img src={`http://localhost:8000/api/${file.filePath}`}></img>)}
         <span>{post.content}</span>
         <h2>Comments</h2>
         {comments.length > 0 && comments.map((comment)=>(<Comments key={comment.body} comment={comment}/>))}
