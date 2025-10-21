@@ -10,15 +10,15 @@ export const UserContext = createContext({
 
 export default function UserContextProvider({children})
 {
-    const [user, setUser] = useState({id: 0, name:"", loggedIn: false, token: ""});
+    const [user, setUser] = useState({id: 0, name:"", loggedIn: false, token: "", role:""});
 
-    function login({id, name, token})
+    function login({id, name, token, role})
     {
-        setUser((prevUser)=>({...prevUser,id:id, name: name, loggedIn: true, token: token}));
+        setUser((prevUser)=>({...prevUser,id:id, name: name, loggedIn: true, token: token, role: role}));
     }
     function logout()
     {
-        setUser(prevUser=> ({...prevUser, id: 0, name:"", loggedIn: false, token:undefined}));
+        setUser(prevUser=> ({...prevUser, id: 0, name:"", loggedIn: false, token:undefined, role:undefined}));
         fetch("http://127.0.0.1:8000/api/logout", {
         method: "POST",
         headers: {

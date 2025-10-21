@@ -32,6 +32,7 @@ Route::patch('posts/{id}', [PostController::class, 'update'])->middleware('auth:
 Route::delete('posts/{id}', [PostController::class, 'destroy'])->middleware('auth:sanctum');
 Route::get('comments/{id}', [CommentController::class, 'index']);
 Route::post('comments', [CommentController::class, 'store'])->middleware('auth:sanctum');
+Route::delete('comments/{id}', [CommentController::class, 'destroy'])->middleware('auth:sanctum');
 Route::apiResource('categories', CategoriesController::class)->only(['index']);
 Route::post('categories', [CategoriesController::class, 'store'])->middleware('auth:sanctum');
 Route::apiResource('users', UserController::class);

@@ -52,6 +52,11 @@ class CommentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $comment = Comment::find($id);
+        if($comment){
+            $comment->delete();
+            return response(["message"=>'comment was deleted'], 200);
+        }
+        else return response(["message"=>'comment not found'], 404);
     }
 }

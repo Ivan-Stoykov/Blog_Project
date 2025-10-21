@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Comments from "../components/Comments";
 import AddComment from "../components/AddComment";
 import { UserContext } from "../store/userContext";
+import DeleteButton from "../components/DeleteButton";
 
 export default function Post() {
   const [post, setPost] = useState();
@@ -31,6 +32,24 @@ export default function Post() {
      
   }, [params.slug]);
 
+  function handleDelete(comment) {
+    async function deletePost() {
+      const response = await fetch(
+        "http://localhost:8000/api/comments/" + comment.id,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + userCtx.user.token,
+          },
+        }
+      );
+      const resData = await response.json();
+      console.log(resData);
+      if(response.ok) setComments(prevComments => prevComments.filter(c => c.id != comment.id));
+    }
+    deletePost();
+  }
+
   return (
     <>
       {!post && <p>Loading</p>}
@@ -40,7 +59,8 @@ export default function Post() {
         {post.media.length > 0 && post.media.map(file=><img src={`http://localhost:8000/api/${file.filePath}`}></img>)}
         <span>{post.content}</span>
         <h2>Comments</h2>
-        {comments.length > 0 && comments.map((comment)=>(<Comments key={comment.body} comment={comment}/>))}
+        {comments.length > 0 && comments.map((comment)=>(<><Comments key={comment.body} comment={comment}/>
+        {(userCtx.user.token && (userCtx.user.role == "editor" || userCtx.user.role == "admin")) && <DeleteButton handleDelete={()=>handleDelete(comment)}/>}</>))}
               {userCtx.user.token && <AddComment postId = {post.id} setComments={setComments}  />}
         </div>}
         {comments.length == 0 && <p>No comments!</p>}
