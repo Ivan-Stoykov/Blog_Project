@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from './CategoriesList.module.css'
+import { UserContext } from "../store/userContext";
 
 
 export default function CategoriesList()
 {
     const [categories, setCategories] = useState([]);
+    const userCtx = useContext(UserContext);
 
   useEffect(() => {
     async function fetchPosts() {
@@ -21,7 +23,7 @@ export default function CategoriesList()
       
     <ul className={styles.categories}>
         <h3>Категории</h3>
-        <p><Link to="/add-category" >Add category</Link></p>
+       {(userCtx.user.role == "editor" || userCtx.user.role == "admin") && <p><Link to="/add-category" >Add category</Link></p>} 
       {categories.length !== 0 && categories.map((category) => (
        <li key={category}> <Link className={styles.catLink} to={`?category=${category.slug}`}>{category.name}</Link></li>
       ))}
