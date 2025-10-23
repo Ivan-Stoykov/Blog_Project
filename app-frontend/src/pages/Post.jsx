@@ -13,7 +13,7 @@ export default function Post() {
   useEffect(() => {
     async function fetchPost() {
       let response = await fetch(
-        `http://localhost:8000/api/posts/${params.slug}`
+        `http://localhost:8000/api/post/${params.slug}`
       );
 
       const post = await response.json();

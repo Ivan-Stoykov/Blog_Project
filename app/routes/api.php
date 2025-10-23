@@ -26,7 +26,8 @@ Route::get('/image/{filename}', function ($filename, Request $request) {
         ->header('Access-Control-Allow-Origin', '*');
 });
 
-Route::apiResource('posts', PostController::class)->only(['index', 'show']);
+Route::get('post/{id}', [PostController::class, 'show']);
+Route::get('posts/{cat}', [PostController::class, 'index']);
 Route::post('posts', [PostController::class, 'store'])->middleware('auth:sanctum');
 Route::patch('posts/{id}', [PostController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('posts/{id}', [PostController::class, 'destroy'])->middleware('auth:sanctum');

@@ -3,13 +3,18 @@ import Post from "./Post";
 import styles from "./PostList.module.css";
 import { UserContext } from "../store/userContext";
 import DeleteButton from "./DeleteButton";
+import { useParams } from "react-router-dom";
 export default function PostList() {
   const userCtx = useContext(UserContext);
   const [posts, setPosts] = useState([]);
+  const params = useParams(); // useSearchParams
+  let cat = 0;
+  console.log(params)
+  if(params.category) cat = params.category;
 
   useEffect(() => {
     async function fetchPosts() {
-      const response = await fetch("http://localhost:8000/api/posts");
+      const response = await fetch("http://localhost:8000/api/posts/"+ cat);
       const fetchedPosts = await response.json();
       setPosts(fetchedPosts);
       console.log(fetchedPosts)
