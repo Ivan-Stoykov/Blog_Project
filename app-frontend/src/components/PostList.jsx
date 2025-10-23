@@ -3,14 +3,14 @@ import Post from "./Post";
 import styles from "./PostList.module.css";
 import { UserContext } from "../store/userContext";
 import DeleteButton from "./DeleteButton";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 export default function PostList() {
   const userCtx = useContext(UserContext);
   const [posts, setPosts] = useState([]);
-  const params = useParams(); // useSearchParams
+  const [searchParams] = useSearchParams(); // useSearchParams
   let cat = 0;
-  console.log(params)
-  if(params.category) cat = params.category;
+  console.log(searchParams.get("category"))
+  if(searchParams.get("category")) cat = searchParams.get("category");
 
   useEffect(() => {
     async function fetchPosts() {
@@ -49,14 +49,14 @@ export default function PostList() {
             <>
               <Post
                 className={styles.postLink}
-                key={post.content}
-                post={post}
-                author={post.author}
-                comments={post.comments}
+                key={post.post.content}
+                post={post.post}
+                author={post.post.author}
+                comments={post.post.comments}
               />
               {userCtx.user.token &&
                 (userCtx.user.role == "editor" ||
-                  userCtx.user.role == "admin") && <DeleteButton handleDelete={()=>{handleDelete(post)}} />}
+                  userCtx.user.role == "admin") && <DeleteButton handleDelete={()=>{handleDelete(post.post)}} />}
             </>
           ))}
         {posts.length === 0 && "No posts!"}
