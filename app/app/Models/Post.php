@@ -31,7 +31,7 @@ class Post extends Model
 
     public function postCategories()
     {
-        return $this->hasMany(PostCategory::class, 'postId');
+        return $this->hasOne(PostCategory::class, 'postId');
     }
 
     public function postTags()

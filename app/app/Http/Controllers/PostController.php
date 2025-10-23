@@ -14,10 +14,9 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $cat)
+    public function index()
     {
-        $posts = PostCategory::with('post')->orderByDesc('postId')->get();
-        if($cat != "0") $posts = PostCategory::with('post')->where('categoryId', $cat)->orderByDesc('postId')->get();
+        $posts = Post::with('author')->with('postCategories')->orderByDesc('id')->get();
         return response( $posts, 200);
     }
 

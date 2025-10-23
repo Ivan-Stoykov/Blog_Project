@@ -9,19 +9,24 @@ export default function PostList() {
   const [posts, setPosts] = useState([]);
   const [searchParams] = useSearchParams(); // useSearchParams
   let cat = 0;
-  console.log(searchParams.get("category"))
-  if(searchParams.get("category")) cat = searchParams.get("category");
+  console.log(searchParams.get("category"), "cat");
+  if (searchParams.get("category")) cat = searchParams.get("category");
 
   useEffect(() => {
     async function fetchPosts() {
-      const response = await fetch("http://localhost:8000/api/posts/"+ cat);
-      const fetchedPosts = await response.json();
+      const response = await fetch("http://localhost:8000/api/posts");
+      let fetchedPosts = await response.json();
+      if ( cat !== '0' && cat !== null) {
+        fetchedPosts = fetchedPosts.filter(
+          (p) => p.post_categories.categoryId == cat
+        );
+      }
       setPosts(fetchedPosts);
-      console.log(fetchedPosts)
+      console.log(fetchedPosts);
     }
 
     fetchPosts();
-  }, []);
+  }, [cat]);
 
   function handleDelete(post) {
     async function deletePost() {
@@ -36,7 +41,8 @@ export default function PostList() {
       );
       const resData = await response.json();
       console.log(resData);
-      if(response.ok) setPosts(prevPosts => prevPosts.filter(p => p.id != post.id));
+      if (response.ok)
+        setPosts((prevPosts) => prevPosts.filter((p) => p.id != post.id));
     }
     deletePost();
   }
@@ -49,14 +55,20 @@ export default function PostList() {
             <>
               <Post
                 className={styles.postLink}
-                key={post.post.content}
-                post={post.post}
-                author={post.post.author}
-                comments={post.post.comments}
+                key={post.content}
+                post={post}
+                author={post.author}
+                comments={post.comments}
               />
               {userCtx.user.token &&
                 (userCtx.user.role == "editor" ||
-                  userCtx.user.role == "admin") && <DeleteButton handleDelete={()=>{handleDelete(post.post)}} />}
+                  userCtx.user.role == "admin") && (
+                  <DeleteButton
+                    handleDelete={() => {
+                      handleDelete(post.post);
+                    }}
+                  />
+                )}
             </>
           ))}
         {posts.length === 0 && "No posts!"}
