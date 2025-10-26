@@ -10,7 +10,7 @@ export default function MainNavigation() {
       <nav>
         <ul>
           <li>
-            <Link to={"/?category=0"}>Home</Link>
+            <Link to={"/"}>Home</Link>
           </li>
           <li>
             <Link>Categories</Link>

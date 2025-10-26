@@ -25,7 +25,6 @@ Route::get('/image/{filename}', function ($filename, Request $request) {
         ->header('Content-Type', $mime)
         ->header('Access-Control-Allow-Origin', '*');
 });
-
 Route::apiResource('posts', PostController::class)->only(['index', 'show']);
 Route::post('posts', [PostController::class, 'store'])->middleware('auth:sanctum');
 Route::patch('posts/{id}', [PostController::class, 'update'])->middleware('auth:sanctum');
@@ -33,7 +32,7 @@ Route::delete('posts/{id}', [PostController::class, 'destroy'])->middleware('aut
 Route::get('comments/{id}', [CommentController::class, 'index']);
 Route::post('comments', [CommentController::class, 'store'])->middleware('auth:sanctum');
 Route::delete('comments/{id}', [CommentController::class, 'destroy'])->middleware('auth:sanctum');
-Route::apiResource('categories', CategoriesController::class)->only(['index']);
+Route::apiResource('categories', CategoriesController::class)->only(['index', 'show']);
 Route::post('categories', [CategoriesController::class, 'store'])->middleware('auth:sanctum');
 Route::apiResource('users', UserController::class);
 Route::controller(LoginController::class)->group(function(){
@@ -42,5 +41,5 @@ Route::controller(LoginController::class)->group(function(){
 });
 Route::middleware('auth:sanctum')->post('/logout', function(Request $request){
         $request->user()->currentAccessToken()->delete();
-        return response("Logged out", 200);
+        return response(["message"=>"Logged out"], 200);
     });

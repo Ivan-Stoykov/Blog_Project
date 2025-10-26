@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\PostCategory;
+use App\Models\Post;
 use Symfony\Component\HttpFoundation\Response;
 
 class CategoriesController extends Controller
@@ -33,9 +35,15 @@ class CategoriesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $category)
     {
-        //
+        $posts = PostCategory::with('post.author')->with('category')
+        ->whereHas('category', function($q) use ($category)
+        {
+            $q->where('slug', $category);
+        })->get();
+
+        return response( $posts, 200);
     }
 
     /**

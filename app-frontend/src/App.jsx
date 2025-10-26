@@ -8,6 +8,7 @@ import Post from "./pages/Post";
 import UserContextProvider from "./store/userContext";
 import CreatePost from "./pages/CreatePost";
 import AddCategory from "./pages/AddCategory"
+import CategoryPage from "./pages/CategoryPage";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: "/create-post", element: <CreatePost /> },
       { path: "/post/:slug", element:<Post/> },
       { path: "/add-category", element:<AddCategory/> },
+      { path: "/category/:slug", element:<CategoryPage/> },
     ],
   },
 ]);
