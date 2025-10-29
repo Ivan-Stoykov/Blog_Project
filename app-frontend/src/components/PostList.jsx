@@ -9,7 +9,9 @@ export default function PostList() {
 
   useEffect(() => {
     async function fetchPosts() {
-      const response = await fetch("http://localhost:8000/api/posts");
+      const response = await fetch("http://localhost:8000/api/posts" ,{headers:{
+            "Accept": "application/json"
+      }});
       let fetchedPosts = await response.json();
       setPosts(fetchedPosts);
       console.log(fetchedPosts);
@@ -20,12 +22,14 @@ export default function PostList() {
 
   function handleDelete(post) {
     async function deletePost() {
+      console.log(post);
       const response = await fetch(
         "http://localhost:8000/api/posts/" + post.id,
         {
           method: "DELETE",
           headers: {
             Authorization: "Bearer " + userCtx.user.token,
+            "Accept": "application/json"
           },
         }
       );
@@ -55,7 +59,7 @@ export default function PostList() {
                   userCtx.user.role == "admin") && (
                   <DeleteButton
                     handleDelete={() => {
-                      handleDelete(post.post);
+                      handleDelete(post);
                     }}
                   />
                 )}

@@ -21,7 +21,8 @@ export default function AddComment({postId, setComments}){
         body: JSON.stringify(comment),
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + userCtx.user.token
+          "Authorization": "Bearer " + userCtx.user.token,
+          "Accept": "application/json"
         },
       });
 

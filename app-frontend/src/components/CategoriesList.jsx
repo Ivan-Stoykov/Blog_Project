@@ -11,7 +11,9 @@ export default function CategoriesList()
 
   useEffect(() => {
     async function fetchPosts() {
-      const response = await fetch("http://127.0.0.1:8000/api/categories");
+      const response = await fetch("http://127.0.0.1:8000/api/categories", {headers:{
+            Accept: "application/json"
+      }});
       const fetchedCategories = await response.json();
       setCategories(fetchedCategories);
     }

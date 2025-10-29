@@ -42,7 +42,8 @@ export default function CreatePost() {
         method: "POST",
         body: fd,
         headers: {
-          "Authorization": "Bearer " + userCtx.user.token
+          "Authorization": "Bearer " + userCtx.user.token,
+          "Accept": "application/json"
         },
       });
 

@@ -28,6 +28,7 @@ export default function PostList() {
           method: "DELETE",
           headers: {
             Authorization: "Bearer " + userCtx.user.token,
+            "Accept": "application/json"
           },
         }
       );

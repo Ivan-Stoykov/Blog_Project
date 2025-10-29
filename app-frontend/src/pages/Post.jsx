@@ -40,6 +40,7 @@ export default function Post() {
           method: "DELETE",
           headers: {
             Authorization: "Bearer " + userCtx.user.token,
+            "Accept": "application/json"
           },
         }
       );

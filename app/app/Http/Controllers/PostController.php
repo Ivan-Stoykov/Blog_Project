@@ -8,6 +8,7 @@ use App\Models\PostCategory;
 use App\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -68,6 +69,7 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        
         $post = Post::find($id);
         if($post){
         $post->title = $request->input('title');
@@ -76,9 +78,13 @@ class PostController extends Controller
         $post->authorId = $request->input('author.id');
         $post->publishedAt = $request->input('publishedAt');
         $post->status = $request->input('status');
-        
-        $post->save();
-        return response(["message"=>'Post was updated'], 201);}
+        if($request->user()->can('update', $post)) 
+            {
+                $post->save();
+                return response(["message"=>'Post was updated'], 201);
+            }
+        else return response(['message'=>'Unautharized'], 401);
+        }
         else return response(["message"=>'Post not found'], 404);
     }
 
@@ -89,6 +95,7 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         if($post){
+            if(Gate::authorize('delete', $post))
             $post->delete();
             return response(["message"=>'Post was deleted'], 200);
         }

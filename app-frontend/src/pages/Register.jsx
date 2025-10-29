@@ -16,7 +16,8 @@ export default function Register() {
         method: "POST",
         body: JSON.stringify({ name, email, password, role }),
         headers:{
-            "Content-Type":"application/json"
+            "Content-Type":"application/json",
+            "Accept": "application/json"
         }
       });
 
