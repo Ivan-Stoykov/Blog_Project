@@ -12,9 +12,6 @@ export default function MainNavigation() {
           <li>
             <Link to={"/"}>Home</Link>
           </li>
-          <li>
-            <Link>Categories</Link>
-          </li>
           {userCtx.user.token && (
             <>
               <li>
@@ -35,6 +32,7 @@ export default function MainNavigation() {
               </li>
             </>
           )}
+          {userCtx.user.role == 'admin' && <li><Link to={"/admin"}>Admin</Link></li>}
           <li>
             <audio controls autoPlay>
               <source
