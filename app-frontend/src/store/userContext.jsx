@@ -15,6 +15,10 @@ export default function UserContextProvider({children})
     function login({id, name, token, role})
     {
         setUser((prevUser)=>({...prevUser,id:id, name: name, loggedIn: true, token: token, role: role}));
+        localStorage.setItem('token', token);
+        localStorage.setItem('role', role);
+        localStorage.setItem('id', id);
+        localStorage.setItem('name', name);
     }
     function logout()
     {
@@ -25,7 +29,12 @@ export default function UserContextProvider({children})
           "Content-Type": "application/json",
           "Authorization": "Bearer " + user.token
         },
-      })
+      });
+      localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        localStorage.removeItem('id');
+        localStorage.removeItem('name');
+      
     }
 
     const userCtx = {

@@ -9,6 +9,7 @@ import UserContextProvider from "./store/userContext";
 import CreatePost from "./pages/CreatePost";
 import AddCategory from "./pages/AddCategory"
 import CategoryPage from "./pages/CategoryPage";
+import AdminPage from "./pages/AdminPage";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
       { path: "/post/:slug", element:<Post/> },
       { path: "/add-category", element:<AddCategory/> },
       { path: "/category/:slug", element:<CategoryPage/> },
+      { path: "/admin", element:<AdminPage/> },
     ],
   },
 ]);

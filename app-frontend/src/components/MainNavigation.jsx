@@ -12,7 +12,7 @@ export default function MainNavigation() {
           <li>
             <Link to={"/"}>Home</Link>
           </li>
-          {userCtx.user.token && (
+          {localStorage.getItem('token') && (
             <>
               <li>
                 <Link to={"/create-post"}>Create Post</Link>
@@ -22,7 +22,7 @@ export default function MainNavigation() {
               </li>
             </>
           )}
-          {!userCtx.user.token && (
+          {!localStorage.getItem('token') && (
             <>
               <li>
                 <Link to={"/login"}>Log In</Link>
@@ -32,7 +32,7 @@ export default function MainNavigation() {
               </li>
             </>
           )}
-          {userCtx.user.role == 'admin' && <li><Link to={"/admin"}>Admin</Link></li>}
+          {localStorage.getItem('role') == 'admin' && <li><Link to={"/admin"}>Admin</Link></li>}
           <li>
             <audio controls autoPlay>
               <source
