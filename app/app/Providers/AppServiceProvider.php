@@ -3,9 +3,21 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use \App\Models\User;
+use \App\Models\Post;
+use \App\Models\Category;
+use \App\Policies\UserPolicy;
+use \App\Policies\PostPolicy;
+use \App\Policies\CategoryPolicy;
+use Illuminate\Support\Facades\Log;
 
 class AppServiceProvider extends ServiceProvider
 {
+    protected $policies = [
+    User::class => UserPolicy::class,
+    Post::class => PostPolicy::class,
+    Category::class => CategoryPolicy::class,
+    ];
     /**
      * Register any application services.
      */
@@ -19,6 +31,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Log::info('*** LOGGING IS ACTIVE ***'); // Test line
     }
 }

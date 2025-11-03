@@ -33,8 +33,11 @@ export default function AdminPage(){
                     }
                 }
             );
-            const usersLeft = await resData.json();
-            setUsers(usersLeft);
+            const response = await resData.json();
+            console.log(response);
+        if (resData.ok)
+            setUsers((prevUsers) => prevUsers.filter((u) => u.id != user.id));
+
         }
         fetchDelete();
     }

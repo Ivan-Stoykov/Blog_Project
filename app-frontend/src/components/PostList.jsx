@@ -1,10 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Post from "./Post";
 import styles from "./PostList.module.css";
-import { UserContext } from "../store/userContext";
 import DeleteButton from "./DeleteButton";
 export default function PostList() {
-  const userCtx = useContext(UserContext);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -28,7 +26,7 @@ export default function PostList() {
         {
           method: "DELETE",
           headers: {
-            Authorization: "Bearer " + userCtx.user.token,
+            Authorization: "Bearer " + localStorage.getItem('token'),
             "Accept": "application/json"
           },
         }
@@ -54,9 +52,9 @@ export default function PostList() {
                 author={post.author}
                 comments={post.comments}
               />
-              {userCtx.user.token &&
-                (userCtx.user.role == "editor" ||
-                  userCtx.user.role == "admin") && (
+              {localStorage.getItem('token') &&
+                (localStorage.getItem('role') == "editor" ||
+                  localStorage.getItem('role') == "admin") && (
                   <DeleteButton
                     handleDelete={() => {
                       handleDelete(post);

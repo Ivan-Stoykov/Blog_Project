@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -65,7 +67,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if($user){
-            if(Gate::authorize('delete', $user))
+            if($this->authorize('delete', $user))
             $user->delete();
             return response(["message"=>'User was deleted'], 200);
         }

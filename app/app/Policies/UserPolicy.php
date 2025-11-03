@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Log;
 
 class UserPolicy
 {
@@ -36,7 +37,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return $user->id == $model->id || $user->role == 'admin';
+        return $user->role == 'admin';
     }
 
     /**
@@ -44,7 +45,16 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        return $user->id == $model->id || $user->role == 'admin';
+
+        Log::info('DELETE AUTHORIZATION CHECK:',[
+            'AuthUser Role' => $user->role,
+            'AuthUser Id' => $user->id,
+            'TargetUser Role' => $model->role,
+            'TargetUser Id' => $model->id,
+        ]);
+
+        if($user->role === 'admin') return true;
+        else return false;
     }
 
     /**
@@ -60,6 +70,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model): bool
     {
-        return false;
+        return true;
     }
 }
