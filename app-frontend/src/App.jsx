@@ -10,6 +10,7 @@ import CreatePost from "./pages/CreatePost";
 import AddCategory from "./pages/AddCategory"
 import CategoryPage from "./pages/CategoryPage";
 import AdminPage from "./pages/AdminPage";
+import EditUserPage from "./pages/EditUserPage";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: "/add-category", element:<AddCategory/> },
       { path: "/category/:slug", element:<CategoryPage/> },
       { path: "/admin", element:<AdminPage/> },
+      { path: "/users/:id", element:<EditUserPage/> },
     ],
   },
 ]);

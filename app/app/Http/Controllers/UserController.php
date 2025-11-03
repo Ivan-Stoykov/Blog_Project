@@ -12,7 +12,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::get();
+        return response($users, 200);
     }
 
     /**
@@ -42,7 +43,19 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::find($id);
+        if($user){
+        $user->name = $request->input('name');
+        $post->email = $request->input('email');
+        $post->role = $request->input('role');
+        if($request->user()->can('update', $user)) 
+            {
+                $user->save();
+                return response(["message"=>'User was updated'], 201);
+            }
+        else return response(['message'=>'Unautharized'], 401);
+        }
+        else return response(["message"=>'User not found'], 404);
     }
 
     /**
@@ -50,6 +63,12 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::find($id);
+        if($user){
+            if(Gate::authorize('delete', $user))
+            $user->delete();
+            return response(["message"=>'User was deleted'], 200);
+        }
+        else return response(["message"=>'User not found'], 404);
     }
 }
