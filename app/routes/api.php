@@ -38,6 +38,7 @@ Route::post('categories', [CategoriesController::class, 'store'])->middleware('a
 Route::get('users', [UserController::class, 'index']);
 Route::delete('users/{id}', [UserController::class, 'destroy'])->name('users.destroy')->middleware('auth:sanctum');
 Route::get('users/{id}', [UserController::class, 'show']);
+Route::post('users/{id}', [UserController::class, 'update'])->name('users.update')->middleware('auth:sanctum');
 Route::controller(LoginController::class)->group(function(){
     Route::post('register', 'register');
     Route::post('login', 'login');

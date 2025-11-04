@@ -1,9 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { UserContext } from "../store/userContext";
 import { useNavigate } from "react-router-dom";
 
 export default function CreatePost() {
-  const userCtx = useContext(UserContext);
   const navigate = useNavigate();
 
   const [categories, setCategories] = useState([]);
@@ -35,14 +34,14 @@ export default function CreatePost() {
     fd.append('status', 'draft');
     fd.append('slug', title.replace(/[^a-zA-Z0-9 ]/g, '').replace(' ', '-'));
     fd.append('publishedAt', publishedAt);
-    fd.append('authorId', userCtx.user.id);
+    fd.append('authorId', localStorage.getItem('id'));
 
     async function createPost() {
       const response = await fetch("http://localhost:8000/api/posts", {
         method: "POST",
         body: fd,
         headers: {
-          "Authorization": "Bearer " + userCtx.user.token,
+          "Authorization": "Bearer " + localStorage.getItem('token'),
           "Accept": "application/json"
         },
       });

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function EditUserPage(){
 
     const params = useParams();
     const [user, setUser] = useState();
+    const navigate = useNavigate();
 
     useEffect(()=>{
         async function fetchUser() {
@@ -13,11 +14,41 @@ export default function EditUserPage(){
             setUser(user);
         }
         fetchUser();
-    }, [params.id])
+    }, [params.id]);
+
+    function handleEditUser(event)
+    {
+        event.preventDefault();
+
+    const fd = new FormData(event.target);
+    const name = fd.get("name");
+    const email = fd.get("email");
+    const role = fd.get("role");
+    console.log({name, email, role})
+
+    async function editUser() {
+      const response = await fetch(`http://localhost:8000/api/users/${user.id}`, {
+        method: "POST",
+        body: JSON.stringify({ name, email, role }),
+        headers:{
+            "Content-Type":"application/json",
+            "Accept": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem('token')
+        }
+      });
+
+      const resData = await response.json();
+      console.log(resData);
+      if (response.ok) navigate('/admin');
+      
+    }
+
+    editUser();
+    }
 
     return <>
     {!user && <p>Fetching user...</p>}
-    {user && <form action="">
+    {user && <form onSubmit={handleEditUser}>
         <div><label htmlFor="name">Name</label>
         <input type="text" name="name" defaultValue={user.name}/></div>
         <div><label htmlFor="name">Email</label>

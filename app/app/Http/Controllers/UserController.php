@@ -48,9 +48,9 @@ class UserController extends Controller
         $user = User::find($id);
         if($user){
         $user->name = $request->input('name');
-        $post->email = $request->input('email');
-        $post->role = $request->input('role');
-        if($request->user()->can('update', $user)) 
+        $user->email = $request->input('email');
+        $user->role = $request->input('role');
+        if($this->authorize('update', $user)) 
             {
                 $user->save();
                 return response(["message"=>'User was updated'], 201);
