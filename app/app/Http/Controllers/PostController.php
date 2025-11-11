@@ -17,8 +17,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')->with('postCategories')->orderByDesc('id')->get();
-        return response( $posts, 200);
+        $posts = Post::with('author')->with('postCategories')->orderByDesc('id');
+        return response( $posts->paginate(10), 200);
     }
 
     /**
