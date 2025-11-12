@@ -35,6 +35,9 @@ export default function CreatePost() {
     fd.append('slug', title.replace(/[^a-zA-Z0-9 ]/g, '').replace(' ', '-'));
     fd.append('publishedAt', publishedAt);
     fd.append('authorId', localStorage.getItem('id'));
+    const tags = JSON.stringify(fd.get('tags').split(","));
+    fd.set('tags', tags);
+    console.log(fd.get('tags'))
 
     async function createPost() {
       const response = await fetch("http://localhost:8000/api/posts", {
@@ -74,6 +77,10 @@ export default function CreatePost() {
         <select name="categoryId">{categories.length !== 0 && categories.map((category) => (
        <option key={category} value={category.id}>{category.name}</option>
       ))}</select>
+      </div>
+      <div>
+        <label htmlFor="tags">Tags</label>
+        <input type="text" name="tags" />
       </div>
       <div>
         <input type="submit" />

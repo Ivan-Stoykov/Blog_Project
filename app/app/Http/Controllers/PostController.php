@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\Media;
+use App\Models\PostTag;
+use App\Models\Tag;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Gate;
@@ -42,10 +44,22 @@ class PostController extends Controller
         $file->storeAs('uploads', $filename, 'public');
 
         $type = explode('/', $file->getMimeType())[0];
-
         Media::create(['postId'=>$post->id, 'filePath'=>"image/".$filename, 'kind'=>$type, 'uploadedAt'=>$post->publishedAt]);}
         
+        $tags = json_decode($request->input('tags'));
 
+        if(count($tags) > 0)
+        {
+            for($i = 0; $i < count($tags); $i++)
+            {
+                if(!Tag::where('name', $tags[$i])->exists())
+                {
+                    $tag = Tag::create(['name'=>$tags[$i], 'slug'=>str_replace(' ', '_', $tags[$i])]);
+                    PostTag::create(['postId'=>$post->id, 'tagId'=>$tag->id]);
+                }
+                
+            }
+        }
 
         
         return response(["message"=>'Post was created'], 201);

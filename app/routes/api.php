@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +36,10 @@ Route::delete('comments/{id}', [CommentController::class, 'destroy'])->middlewar
 Route::apiResource('categories', CategoriesController::class)->only(['index', 'show']);
 Route::post('categories', [CategoriesController::class, 'store'])->middleware('auth:sanctum');
 //Route::apiResource('users', UserController::class);
+Route::get('admin/byCategory/{category}', [AdminController::class, 'showByPostCategory']);
+Route::get('admin/byTag/{tag}', [AdminController::class, 'showByPostTag']);
+Route::get('admin/byAuthor/{author}', [AdminController::class, 'showByPostAuthor']);
+Route::get('admin/byPeriod/{period}', [AdminController::class, 'showByPostPublishedAt']);
 Route::get('users', [UserController::class, 'index']);
 Route::delete('users/{id}', [UserController::class, 'destroy'])->name('users.destroy')->middleware('auth:sanctum');
 Route::get('users/{id}', [UserController::class, 'show']);
