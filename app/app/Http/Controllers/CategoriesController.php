@@ -41,7 +41,7 @@ class CategoriesController extends Controller
         ->whereHas('category', function($q) use ($category)
         {
             $q->where('slug', $category);
-        })->get();
+        })->paginate(10);
 
         return response( $posts, 200);
     }

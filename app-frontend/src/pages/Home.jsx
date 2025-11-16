@@ -4,26 +4,27 @@ import PostList from "../components/PostList";
 import Paginator from "../components/Paginator";
 import { useSearchParams } from "react-router-dom";
 
-export default function Home()
-{
-    const [getParams] = useSearchParams();
-    const [posts, setPosts] = useState([]);
-    let pages = useRef();
-    let page = getParams.get("page");
+export default function Home() {
+  const [getParams] = useSearchParams();
+  const [posts, setPosts] = useState([]);
+  let pages = useRef();
+  let page = getParams.get("page");
 
   useEffect(() => {
     async function fetchPosts() {
-        
-        console.log(page, "page");
-      const response = await fetch(`http://localhost:8000/api/posts?page=${page}` ,{headers:{
-            "Accept": "application/json"
-      },});
+
+      console.log(page, "page");
+      const response = await fetch(`http://localhost:8000/api/posts?page=${page}`, {
+        headers: {
+          "Accept": "application/json"
+        },
+      });
       let fetchedPosts = await response.json();
-      if(response.ok){
+      if (response.ok) {
         pages.current = fetchedPosts.last_page;
-      setPosts(fetchedPosts.data);
-      console.log(fetchedPosts);
-    }
+        setPosts(fetchedPosts.data);
+        console.log(fetchedPosts);
+      }
     }
 
     fetchPosts();
@@ -49,9 +50,9 @@ export default function Home()
     }
     deletePost();
   }
-   return <div>
-    <CategoriesList/>
-    <PostList posts={posts} handleDelete={handleDelete}/>
-    <Paginator pages={pages.current}/>
-    </div>
+  return <div>
+    <CategoriesList />
+    <PostList posts={posts} handleDelete={handleDelete} />
+    <Paginator pages={pages.current} />
+  </div>
 }
