@@ -1,11 +1,8 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../store/userContext";
 
 export default function AddCategory(){
 
     const navigate = useNavigate();
-    const userCtx = useContext(UserContext);
     function handleSubmit(event)
     {
         event.preventDefault();
@@ -20,7 +17,7 @@ export default function AddCategory(){
         body: JSON.stringify({name:category, slug}),
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + userCtx.user.token,
+          "Authorization": "Bearer " + localStorage.getItem('token'),
           "Accept": "application/json"
         },
       });

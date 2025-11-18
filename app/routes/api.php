@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\bannedwordsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +28,7 @@ Route::get('/image/{filename}', function ($filename, Request $request) {
         ->header('Access-Control-Allow-Origin', '*');
 });
 Route::apiResource('posts', PostController::class)->only(['index', 'show']);
+Route::apiResource('bannedWords', bannedwordsController::class)->middleware('auth:sanctum');
 Route::post('posts', [PostController::class, 'store'])->middleware('auth:sanctum');
 Route::patch('posts/{id}', [PostController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('posts/{id}', [PostController::class, 'destroy'])->middleware('auth:sanctum');

@@ -28,8 +28,8 @@ class CategoriesController extends Controller
         Category::create(['name'=>$request->input('name'),
         'slug' => $request->input('slug'),]);
         
-        $comment = Category::latest()->first();
-        return response($comment, 201);
+        $category = Category::latest()->first();
+        return response($category, 201);
     }
 
     /**
