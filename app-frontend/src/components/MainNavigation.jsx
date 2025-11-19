@@ -36,9 +36,14 @@ export default function MainNavigation() {
               </li>
             </>
           )}
-          {localStorage.getItem('role') == 'admin' && <li><Link to={"/admin"}>Admin</Link></li>}
+          {localStorage.getItem('role') == 'admin' && <div className={styles.dropdown}>
+            <li><Link to={"/admin"}>Admin</Link></li>
+            <div className={styles.dropdownContent}>
+              <Link to={"/admin/bannedWords"}>Banned Words</Link>
+            </div>
+            </div>}
           <li>
-            <audio controls autoPlay>
+            <audio controls /*autoPlay*/>
               <source
                 src="https://play.global.audio/veronika128"
                 type="audio/ogg"

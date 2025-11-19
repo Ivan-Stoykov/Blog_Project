@@ -13,7 +13,7 @@ class bannedwordsController extends Controller
      */
     public function index()
     {
-        $bannedwords = BannedWords::get();
+        $bannedwords = BannedWords::paginate(20);
         return response($bannedwords, 200);
     }
 
@@ -22,8 +22,8 @@ class bannedwordsController extends Controller
      */
     public function store(Request $request)
     {
-        BannedWords::create(['word'=>$request->input('word')]);
-        return response(["message"=>"inserted banned word"]);
+        $word = BannedWords::create(['word'=>$request->input('word')]);
+        return response($word, 200);
     }
 
     /**
@@ -47,6 +47,11 @@ class bannedwordsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $word = BannedWords::find($id);
+        if($word){
+            $word->delete();
+            return response(["message"=>'word was deleted'], 200);
+        }
+        else return response(["message"=>'word not found'], 404);
     }
 }

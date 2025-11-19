@@ -1,8 +1,6 @@
-import { useContext, useRef } from "react";
-import { UserContext } from "../store/userContext";
+import { useRef } from "react";
 
 export default function AddComment({postId, setComments}){
-    const userCtx = useContext(UserContext);
     const txtarea = useRef();
   function handleSubmit(event) {
     event.preventDefault();
@@ -12,7 +10,7 @@ export default function AddComment({postId, setComments}){
     const status = "published";
     const today = new Date();
     const createdAt = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-    const comment = { postId, body, status, authorId:userCtx.user.id, createdAt };
+    const comment = { postId, body, status, authorId:localStorage.getItem('id'), createdAt };
     console.log(comment);
 
     async function createPost() {
@@ -21,7 +19,7 @@ export default function AddComment({postId, setComments}){
         body: JSON.stringify(comment),
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + userCtx.user.token,
+          "Authorization": "Bearer " + localStorage.getItem('token'),
           "Accept": "application/json"
         },
       });
@@ -31,10 +29,15 @@ export default function AddComment({postId, setComments}){
 
       if(response.ok)
       {
-        setComments(prevComments => [resData, ...prevComments])
+        setComments(prevComments => [resData, ...prevComments]);
+        txtarea.current.value = '';
       }
+      else
+        {
+          txtarea.current.style.borderColor = 'red';
+        } 
 
-      txtarea.current.value = '';
+      
     }
 
     createPost();

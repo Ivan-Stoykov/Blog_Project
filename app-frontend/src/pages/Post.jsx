@@ -39,7 +39,7 @@ export default function Post() {
         {
           method: "DELETE",
           headers: {
-            Authorization: "Bearer " + userCtx.user.token,
+            Authorization: "Bearer " + localStorage.getItem('token'),
             "Accept": "application/json"
           },
         }
@@ -61,8 +61,8 @@ export default function Post() {
         <span>{post.content}</span>
         <h2>Comments</h2>
         {comments.length > 0 && comments.map((comment)=>(<><Comments key={comment.body} comment={comment}/>
-        {(userCtx.user.token && (userCtx.user.role == "editor" || userCtx.user.role == "admin")) && <DeleteButton handleDelete={()=>handleDelete(comment)}/>}</>))}
-              {userCtx.user.token && <AddComment postId = {post.id} setComments={setComments}  />}
+        {(localStorage.getItem('token') && (localStorage.getItem('role') == "editor" || localStorage.getItem('admin') == "admin")) && <DeleteButton handleDelete={()=>handleDelete(comment)}/>}</>))}
+              {localStorage.getItem('token') && <AddComment postId = {post.id} setComments={setComments}  />}
         </div>}
         {comments.length == 0 && <p>No comments!</p>}
     </>

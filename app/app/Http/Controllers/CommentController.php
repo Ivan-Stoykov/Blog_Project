@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use App\Models\BannedWords;
 
 class CommentController extends Controller
 {
@@ -21,14 +22,27 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        Comment::create(['postId'=>$request->input('postId'),
-        'authorId' => $request->input('authorId'),
-        'body' => $request->input('body'),
-        'createdAt' => $request->input('createdAt'),
-        'status' => $request->input('status')]);
+        $flag = false;
+        $body = $request->input('body');
+        $arr = explode(' ', $body);
+        $bannedWords = array_values(BannedWords::pluck('word')->toArray());
+        for($i = 0; $i < count($arr); $i++)
+        {
+            if(in_array($arr[$i], $bannedWords)) $flag = true;
+        }
         
-        $comment = Comment::latest()->with('author')->first();
-        return response($comment, 201);
+        if($flag == false){
+            Comment::create(['postId'=>$request->input('postId'),
+            'authorId' => $request->input('authorId'),
+            'body' => $request->input('body'),
+            'createdAt' => $request->input('createdAt'),
+            'status' => $request->input('status')]);
+        
+            $comment = Comment::latest()->with('author')->first();
+            return response($comment, 201);
+        }
+        else return response(["message"=>"Comment contains banned word!!"], 405);
+
     }
 
     /**
