@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::get();
+        $users = User::paginate(20);
         return response($users, 200);
     }
 
@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         User::create(['name'=>$request->input('name'),
         'email' => $request->input('email'),
-        'role' => $request->input('role'),
+        'role' => 'author',
         'password'=>$request->input('password')]);
         
         return response('User was created', 201);

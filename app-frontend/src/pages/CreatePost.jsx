@@ -31,7 +31,6 @@ export default function CreatePost() {
      const publishedAt = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
     // const image = fd.get('image');
     // const post = { title, slug, content, status, author:userCtx.user, publishedAt, categoryId, image };
-    fd.append('status', 'draft');
     fd.append('slug', title.replace(/[^a-zA-Z0-9 ]/g, '').replace(' ', '-'));
     fd.append('publishedAt', publishedAt);
     fd.append('authorId', localStorage.getItem('id'));
@@ -81,6 +80,15 @@ export default function CreatePost() {
       <div>
         <label htmlFor="tags">Tags</label>
         <input type="text" name="tags" />
+      </div>
+      <div>
+        <label htmlFor="status">Save as</label>
+        <select name="status">
+          <option value="Draft">Draft</option>
+          <option value="Published">Published</option>
+          <option value="Reviewed">Reviewed</option>
+          <option value="Archived">Archived</option>
+        </select>
       </div>
       <div>
         <input type="submit" />

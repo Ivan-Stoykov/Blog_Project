@@ -9,12 +9,11 @@ export default function Register() {
     const name = fd.get("name");
     const email = fd.get("email");
     const password = fd.get("password");
-    const role = "editor";
 
     async function register() {
       const response = await fetch("http://localhost:8000/api/register", {
         method: "POST",
-        body: JSON.stringify({ name, email, password, role }),
+        body: JSON.stringify({ name, email, password }),
         headers:{
             "Content-Type":"application/json",
             "Accept": "application/json"

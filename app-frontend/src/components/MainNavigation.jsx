@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../store/userContext";
 import { useContext } from "react";
-// eslint-disable-next-line no-unused-vars
 import styles from "./MainNavigation.module.css";
 export default function MainNavigation() {
   const userCtx = useContext(UserContext);
@@ -40,6 +39,10 @@ export default function MainNavigation() {
             <li><Link to={"/admin"}>Admin</Link></li>
             <div className={styles.dropdownContent}>
               <Link to={"/admin/bannedWords"}>Banned Words</Link>
+              <Link to={"/admin/inquiryByAuthor"}>Spravka Avtor</Link>
+              <Link to={"/admin/inquiryByCategory"}>Spravka Kategoriq</Link>
+              <Link to={"/admin/inquiryByTag"}>Spravka Tag</Link>
+              <Link to={"/admin/inquiryByPeriod"}>Spravka Period</Link>
             </div>
             </div>}
           <li>

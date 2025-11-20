@@ -1,7 +1,8 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function AddComment({postId, setComments}){
     const txtarea = useRef();
+    const [error, setError] = useState();
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -30,10 +31,13 @@ export default function AddComment({postId, setComments}){
       if(response.ok)
       {
         setComments(prevComments => [resData, ...prevComments]);
+        setError(undefined);
         txtarea.current.value = '';
+          txtarea.current.style.borderColor = 'black';
       }
       else
         {
+          setError(resData.message);
           txtarea.current.style.borderColor = 'red';
         } 
 
@@ -43,6 +47,7 @@ export default function AddComment({postId, setComments}){
     createPost();
   }
     return <form onSubmit={handleSubmit}>
+      {error && <p>{error}</p>}
     <textarea ref={txtarea} name="body"></textarea>
     <input type="submit" />
     </form>

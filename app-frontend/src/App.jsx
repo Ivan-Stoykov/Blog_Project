@@ -12,6 +12,10 @@ import CategoryPage from "./pages/CategoryPage";
 import AdminPage from "./pages/AdminPage";
 import EditUserPage from "./pages/EditUserPage";
 import AddBannedWord from "./components/AddBannedWord";
+import InquiryByAuthor from "./pages/InquiryByAuthor";
+import InquiryByTag from "./pages/InquiryByTag";
+import InquiryByPeriod from "./pages/InquiryByPeriod";
+import InquiryByCategory from "./pages/InquiryByCategory";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +35,10 @@ const router = createBrowserRouter([
         children: [
           { path: "", element: <AdminPage /> },
           { path: "bannedWords", element: <AddBannedWord /> },
+          { path: "inquiryByAuthor", element: <InquiryByAuthor /> },
+          { path: "inquiryByCategory", element: <InquiryByCategory/> },
+          { path: "inquiryByTag", element: <InquiryByTag /> },
+          { path: "inquiryByPeriod", element: <InquiryByPeriod /> },
         ],
       },
     ],

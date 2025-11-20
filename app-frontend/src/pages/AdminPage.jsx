@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react"
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react"
+import { Link, useSearchParams } from "react-router-dom";
+import Paginator from "../components/Paginator";
 
 export default function AdminPage(){
+    const [getParams] = useSearchParams();
     const [users, setUsers] = useState([]);
+    let pages = useRef();
+    let page = getParams.get("page");
     useEffect(()=>{
         async function fetchUsers() {
-            const resData = await fetch('http://localhost:8000/api/users', {
+            const response = await fetch(`http://localhost:8000/api/users?page=${page}`, {
                 headers:
                 {
                     "Content-Type":"application/json",
@@ -13,12 +17,17 @@ export default function AdminPage(){
                 }
             });
 
-            const users = await resData.json();
-            setUsers(users);
+            const users = await response.json();
+            if(response.ok)
+                {
+                    pages.current = users.last_page;
+                    setUsers(users.data);
+                }
+            
 
         }
         fetchUsers();
-    }, []);
+    }, [page]);
 
     function deleteUser(user)
     {
@@ -49,5 +58,6 @@ export default function AdminPage(){
         <tbody>{users.map(user=><tr key={user.id}><td>{user.id}</td><td>{user.name}</td><td>{user.email}</td><td>{user.role}</td>
         <td><Link to={`http://localhost:3000/users/${user.id}`}>Edit</Link></td><td><button onClick={()=>deleteUser(user)}>Delete</button></td></tr>)}</tbody>
     </table>}
+    <Paginator pages={pages.current}/>
         </>
 }

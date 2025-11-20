@@ -23,8 +23,10 @@ class LoginController extends Controller
         if($validator->fails()){
             return response(["ValidationError"=>$validator->errors()], 400);       
         }
-        $input = $request->all();
-        $user = User::create($input);
+        $user = User::create(['name'=>$request->input('name'),
+        'email' => $request->input('email'),
+        'role' => 'author',
+        'password'=>$request->input('password')]);
         $success['token'] =  $user->createToken($request->email, ['*'], now()->addDay())->plainTextToken;
         $success['name'] =  $user->name;
         return response(["success"=>'User register successfully.'], 200);
