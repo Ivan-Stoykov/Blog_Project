@@ -33,7 +33,7 @@ class AdminController extends Controller
 
     public function showByPostAuthor(string $author)
     {
-        $posts = Post::whereHas('author', function($q) use ($author)
+        $posts = Post::with('author')->whereHas('author', function($q) use ($author)
         {
             $q->where('name', $author);
         })->paginate(10);
@@ -45,7 +45,7 @@ class AdminController extends Controller
     {
         $dates = explode('|',$period);
         $posts = Post::with('author')->whereBetween('publishedAt', [$dates[0], $dates[1]])->paginate(10);
-
+        
         return response( $posts, 200);
     }
 }
