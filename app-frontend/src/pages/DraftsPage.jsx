@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import CategoriesList from "../components/CategoriesList";
-import PostList from "../components/PostList";
-import Paginator from "../components/Paginator";
 import { useSearchParams } from "react-router-dom";
+import Paginator from "../components/Paginator";
+import PostList from "../components/PostList";
+import { useEffect, useRef, useState } from "react";
 
-export default function Home() {
-  const [getParams] = useSearchParams();
+export default function DraftsPage(){
+    const [getParams] = useSearchParams();
   const [posts, setPosts] = useState([]);
   let pages = useRef();
   let page = getParams.get("page");
@@ -14,9 +13,10 @@ export default function Home() {
     async function fetchPosts() {
 
       console.log(page, "page");
-      const response = await fetch(`http://localhost:8000/api/posts?page=${page}`, {
+      const response = await fetch(`http://localhost:8000/api/posts/drafts/${localStorage.getItem('id')}?page=${page}`, {
         headers: {
-          "Accept": "application/json"
+          "Accept": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem('token')
         },
       });
       let fetchedPosts = await response.json();
@@ -51,8 +51,7 @@ export default function Home() {
     deletePost();
   }
   return <div>
-    <CategoriesList />
-            <h3>Последни публикации</h3>
+            <h3>Drafts</h3>
     <PostList posts={posts} handleDelete={handleDelete} />
     <Paginator pages={pages.current} />
   </div>

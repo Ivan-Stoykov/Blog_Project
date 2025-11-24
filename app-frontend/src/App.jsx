@@ -16,6 +16,7 @@ import InquiryByAuthor from "./pages/InquiryByAuthor";
 import InquiryByTag from "./pages/InquiryByTag";
 import InquiryByPeriod from "./pages/InquiryByPeriod";
 import InquiryByCategory from "./pages/InquiryByCategory";
+import DraftsPage from "./pages/DraftsPage";
 
 const router = createBrowserRouter([
   {
@@ -29,11 +30,12 @@ const router = createBrowserRouter([
       { path: "/post/:slug", element: <Post /> },
       { path: "/add-category", element: <AddCategory /> },
       { path: "/category/:slug", element: <CategoryPage /> },
-      { path: "/users/:id", element: <EditUserPage /> },
+      { path: "/drafts", element: <DraftsPage /> },
       {
         path: "admin",
         children: [
           { path: "", element: <AdminPage /> },
+          { path: "users/:id", element: <EditUserPage /> },
           { path: "bannedWords", element: <AddBannedWord /> },
           { path: "inquiryByAuthor", element: <InquiryByAuthor /> },
           { path: "inquiryByCategory", element: <InquiryByCategory/> },

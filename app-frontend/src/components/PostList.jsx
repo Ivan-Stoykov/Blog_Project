@@ -5,7 +5,6 @@ export default function PostList({posts, handleDelete}) {
   return (
     <div className={styles.postDiv}>
       <ul className={styles.posts}>
-        <h3>Последни публикации</h3>
         {posts.length !== 0 &&
           posts.map((post) => (
               <Post

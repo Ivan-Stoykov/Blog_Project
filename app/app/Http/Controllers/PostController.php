@@ -105,7 +105,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)//not working
+    public function destroy(string $id)
     {
         $post = Post::find($id);
         if($post){
@@ -115,5 +115,13 @@ class PostController extends Controller
         }
         else return response(["message"=>'Post not found'], 404);
         
+    }
+
+    public function PersonalDrafts(string $id)
+    {
+        $posts = Post::with('comments')->with('author')->where('status', 'draft')->where('authorId', $id)
+        ->orderByDesc('id')->paginate(10);
+        if($posts){return response( $posts, 200);}
+        else return response(["message"=>'Posts not found'], 404);
     }
 }

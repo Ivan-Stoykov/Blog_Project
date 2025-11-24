@@ -31,6 +31,7 @@ Route::apiResource('posts', PostController::class)->only(['index', 'show']);
 Route::apiResource('bannedWords', bannedwordsController::class)->middleware('auth:sanctum');
 Route::post('posts', [PostController::class, 'store'])->middleware('auth:sanctum');
 Route::patch('posts/{id}', [PostController::class, 'update'])->middleware('auth:sanctum');
+Route::get('posts/drafts/{id}', [PostController::class, 'PersonalDrafts'])->middleware('auth:sanctum');
 Route::delete('posts/{id}', [PostController::class, 'destroy'])->middleware('auth:sanctum');
 Route::get('comments/{id}', [CommentController::class, 'index']);
 Route::post('comments', [CommentController::class, 'store'])->middleware('auth:sanctum');

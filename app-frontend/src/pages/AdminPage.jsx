@@ -56,7 +56,7 @@ export default function AdminPage(){
     {users.length > 0 && <table>
         <thead><tr><th>Id</th><th>Name</th><th>email</th><th>role</th><th>Edit</th></tr></thead>
         <tbody>{users.map(user=><tr key={user.id}><td>{user.id}</td><td>{user.name}</td><td>{user.email}</td><td>{user.role}</td>
-        <td><Link to={`http://localhost:3000/users/${user.id}`}>Edit</Link></td><td><button onClick={()=>deleteUser(user)}>Delete</button></td></tr>)}</tbody>
+        <td><Link to={`http://localhost:3000/admin/users/${user.id}`}>Edit</Link></td><td><button onClick={()=>deleteUser(user)}>Delete</button></td></tr>)}</tbody>
     </table>}
     <Paginator pages={pages.current}/>
         </>
