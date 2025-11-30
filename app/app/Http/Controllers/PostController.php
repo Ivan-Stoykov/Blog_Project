@@ -77,6 +77,13 @@ class PostController extends Controller
         else return response(["message"=>'Post not found'], 404);
         
     }
+    public function showById(string $id)
+    {
+        $post = Post::with('comments')->with('author')->with('media')->with('postTags')->where('Id', $id)->first();
+        if($post){return response( $post, 200);}
+        else return response(["message"=>'Post not found'], 404);
+        
+    }
 
     /**
      * Update the specified resource in storage.

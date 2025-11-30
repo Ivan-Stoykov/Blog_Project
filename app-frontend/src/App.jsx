@@ -17,6 +17,7 @@ import InquiryByTag from "./pages/InquiryByTag";
 import InquiryByPeriod from "./pages/InquiryByPeriod";
 import InquiryByCategory from "./pages/InquiryByCategory";
 import DraftsPage from "./pages/DraftsPage";
+import EditPostPage from "./pages/EditPostPage";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
       { path: "/add-category", element: <AddCategory /> },
       { path: "/category/:slug", element: <CategoryPage /> },
       { path: "/drafts", element: <DraftsPage /> },
+      { path: "/edit-post/:id", element: <EditPostPage /> },
       {
         path: "admin",
         children: [

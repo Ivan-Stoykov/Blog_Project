@@ -8,11 +8,11 @@ export default function Post({ post, author, handleDelete }) {
       {localStorage.getItem('token') &&
                 (localStorage.getItem('role') == "editor" ||
                   localStorage.getItem('role') == "admin") && (
-                  <DeleteButton
+                  <><Link to={`/edit-post/${post.id}`}>Edit</Link><DeleteButton
                     handleDelete={() => {
                       handleDelete(post);
                     }}
-                  />
+                  /></>
                 )}
     </li>
     

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
-export default function CreatePost() {
+export default function EditPostPage() {
   const navigate = useNavigate();
-
+  const {id} = useParams();
   const [categories, setCategories] = useState([]);
+  const [post, setPost] = useState();
 
   useEffect(() => {
     async function fetchCategories() {
@@ -12,9 +13,20 @@ export default function CreatePost() {
       const fetchedCategories = await response.json();
       setCategories(fetchedCategories);
     }
-
+    async function fetchPost() {
+        const response = await fetch(`http://localhost:8000/api/post/${id}`,{
+            headers:{
+                "Accept":"Application/json",
+                "Authorization":"Bearer " + localStorage.getItem('token')
+            }
+        });
+        const fetchedPost = await response.json();
+        setPost(fetchedPost);
+    }
     fetchCategories();
-  }, []);
+    fetchPost();
+    
+  }, [id]);
 
   console.log('categories', categories)
   function handleSubmit(event) {
@@ -38,8 +50,8 @@ export default function CreatePost() {
     console.log(fd.get('tags'))
 
     async function createPost() {
-      const response = await fetch("http://localhost:8000/api/posts", {
-        method: "POST",
+      const response = await fetch(`http://localhost:8000/api/posts/${id}`, {
+        method: "PATCH",
         body: fd,
         headers: {
           "Authorization": "Bearer " + localStorage.getItem('token'),
@@ -55,20 +67,22 @@ export default function CreatePost() {
     createPost();
     
   }
-
+console.log("post", post);
   return (
-    <form onSubmit={handleSubmit}>
+    <>
+    {!post && <p>Loading...</p>}
+    {post && <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="title">Title:</label>
-        <input type="text" name="title" required />
+        <input type="text" name="title" required defaultValue={post.title} />
       </div>
       <div>
         <label htmlFor="content">Content:</label>
-        <textarea name="content" required></textarea>
+        <textarea name="content" required defaultValue={post.content}></textarea>
       </div>
       <div>
         <label htmlFor="image">Image:</label>
-        <input type="file" name="image" />
+        <input type="file" name="image" multiple/>
       </div>
       <div>
         <label htmlFor="categoryId">Category</label>
@@ -92,6 +106,7 @@ export default function CreatePost() {
       <div>
         <input type="submit" />
       </div>
-    </form>
+    </form>}
+    </>
   );
 }
