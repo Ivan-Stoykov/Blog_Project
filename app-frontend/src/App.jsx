@@ -9,7 +9,6 @@ import UserContextProvider from "./store/userContext";
 import CreatePost from "./pages/CreatePost";
 import AddCategory from "./pages/AddCategory";
 import CategoryPage from "./pages/CategoryPage";
-import AdminPage from "./pages/AdminPage";
 import EditUserPage from "./pages/EditUserPage";
 import AddBannedWord from "./components/AddBannedWord";
 import InquiryByAuthor from "./pages/InquiryByAuthor";
@@ -18,6 +17,8 @@ import InquiryByPeriod from "./pages/InquiryByPeriod";
 import InquiryByCategory from "./pages/InquiryByCategory";
 import DraftsPage from "./pages/DraftsPage";
 import EditPostPage from "./pages/EditPostPage";
+import AdminPage from "./pages/AdminPage";
+import TagsEditPage from "./pages/TagsEditPage";
 
 const router = createBrowserRouter([
   {
@@ -25,19 +26,21 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { path: "", element: <Home /> },
-      { path: "/login", element: <Login /> },
-      { path: "/register", element: <Register /> },
-      { path: "/create-post", element: <CreatePost /> },
-      { path: "/post/:slug", element: <Post /> },
-      { path: "/add-category", element: <AddCategory /> },
-      { path: "/category/:slug", element: <CategoryPage /> },
-      { path: "/drafts", element: <DraftsPage /> },
-      { path: "/edit-post/:id", element: <EditPostPage /> },
+      { path: "login", element: <Login /> },
+      { path: "register", element: <Register /> },
+      { path: "create-post", element: <CreatePost /> },
+      { path: "post/:slug", element: <Post /> },
+      { path: "add-category", element: <AddCategory /> },
+      { path: "category/:slug", element: <CategoryPage /> },
+      { path: "drafts", element: <DraftsPage /> },
+      { path: "edit-post/:id", element: <EditPostPage /> },
       {
         path: "admin",
         children: [
           { path: "", element: <AdminPage /> },
           { path: "users/:id", element: <EditUserPage /> },
+          { path: "posts/:id", element: <EditPostPage /> },
+          { path: "tags/:id", element: <TagsEditPage /> },
           { path: "bannedWords", element: <AddBannedWord /> },
           { path: "inquiryByAuthor", element: <InquiryByAuthor /> },
           { path: "inquiryByCategory", element: <InquiryByCategory/> },

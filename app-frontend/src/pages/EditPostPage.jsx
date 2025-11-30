@@ -86,7 +86,7 @@ console.log("post", post);
       </div>
       <div>
         <label htmlFor="categoryId">Category</label>
-        <select name="categoryId">{categories.length !== 0 && categories.map((category) => (
+        <select name="categoryId" defaultValue={post.category}>{categories.length !== 0 && categories.map((category) => (
        <option key={category} value={category.id}>{category.name}</option>
       ))}</select>
       </div>
@@ -96,7 +96,7 @@ console.log("post", post);
       </div>
       <div>
         <label htmlFor="status">Save as</label>
-        <select name="status">
+        <select name="status" defaultValue={post.status}>
           <option value="Draft">Draft</option>
           <option value="Published">Published</option>
           <option value="Reviewed">Reviewed</option>

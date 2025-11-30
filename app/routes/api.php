@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\bannedwordsController;
+use App\Http\Controllers\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +49,7 @@ Route::get('users', [UserController::class, 'index']);
 Route::delete('users/{id}', [UserController::class, 'destroy'])->name('users.destroy')->middleware('auth:sanctum');
 Route::get('users/{id}', [UserController::class, 'show']);
 Route::post('users/{id}', [UserController::class, 'update'])->name('users.update')->middleware('auth:sanctum');
+Route::apiResource('tags', TagController::class);
 Route::controller(LoginController::class)->group(function(){
     Route::post('register', 'register');
     Route::post('login', 'login');

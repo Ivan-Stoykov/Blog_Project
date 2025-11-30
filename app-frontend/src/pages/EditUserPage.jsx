@@ -54,10 +54,10 @@ export default function EditUserPage(){
         <div><label htmlFor="name">Email</label>
         <input type="email" name="email" defaultValue={user.email} /></div>
         <div><label htmlFor="name">Role</label>
-        <select name="role">
-            <option value="author" selected={user.role == 'author'}>author</option>
-            <option value="editor" selected={user.role == 'editor'}>editor</option>
-            <option value="admin" selected={user.role == 'admin'}>admin</option>
+        <select name="role" defaultValue={user.role}>
+            <option value="author">author</option>
+            <option value="editor">editor</option>
+            <option value="admin">admin</option>
             </select></div>
         <div><input type="submit" value={"Edit"}/></div>
     </form>}
