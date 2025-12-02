@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const [errors, setErrors] = useState();
   const navigate = useNavigate();
   function handleSubmit(event) {
     event.preventDefault();
@@ -24,6 +26,9 @@ export default function Register() {
       console.log(resData);
       if(response.ok)
         navigate('/login');
+      else {setErrors(Object.values(resData.ValidationError))
+        console.log(errors);
+      };
     }
 
     register();
@@ -31,11 +36,12 @@ export default function Register() {
   }
 
   return (
+    <>{errors && errors.map(e => <p key={e} style={{color: 'red'}}>{e}</p>)}
     <form onSubmit={handleSubmit}>
       <div><label htmlFor="name">Name:</label><input type="text" name="name" required /></div>
       <div><label htmlFor="email">Email:</label><input type="email" name="email" required /></div>
       <div><label htmlFor="password">Password:</label><input type="password" name="password" required /></div>
       <div><input type="submit" /></div>
-    </form>
+    </form></>
   );
 }

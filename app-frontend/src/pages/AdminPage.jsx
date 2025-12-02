@@ -2,11 +2,12 @@ import { useState } from "react";
 import UsersCrudPage from "./UsersCrudPage";
 import PostsCrudPage from "./PostsCrudPage";
 import TagsCrudPage from "./TagsCrudPage";
+import { Navigate } from "react-router-dom";
 
 export default function AdminPage()
 {
     const [content, setContent] = useState(<p>Choose menu</p>);
-    
+      if(!localStorage.getItem('token') && localStorage.getItem('role') != "admin"){ return <Navigate to="/" replace/>;}
     return <>
     <div>
         <ul>

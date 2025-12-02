@@ -1,17 +1,17 @@
-import { useSearchParams } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import Paginator from "../components/Paginator";
 import PostList from "../components/PostList";
 import { useEffect, useRef, useState } from "react";
 
 export default function DraftsPage(){
-    const [getParams] = useSearchParams();
+  const [getParams] = useSearchParams();
   const [posts, setPosts] = useState([]);
   let pages = useRef();
   let page = getParams.get("page");
-
+  
   useEffect(() => {
     async function fetchPosts() {
-
+      
       console.log(page, "page");
       const response = await fetch(`http://localhost:8000/api/posts/drafts/${localStorage.getItem('id')}?page=${page}`, {
         headers: {
@@ -23,13 +23,13 @@ export default function DraftsPage(){
       if (response.ok) {
         pages.current = fetchedPosts.last_page;
         setPosts(fetchedPosts.data);
-        console.log(fetchedPosts);
       }
     }
-
+    
     fetchPosts();
   }, [page]);
-
+  if(!localStorage.getItem('token')){ return <Navigate to="/" replace/>;}
+  
   function handleDelete(post) {
     async function deletePost() {
       console.log(post);

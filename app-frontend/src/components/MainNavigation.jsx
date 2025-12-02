@@ -17,6 +17,7 @@ export default function MainNavigation() {
               <li>
                 <Link to={"/create-post"}>Create Post</Link>
               </li>
+              <li><Link to={"/drafts"}>My Drafts</Link></li>
               <li>
                 <button onClick={()=>{
                   userCtx.logout();

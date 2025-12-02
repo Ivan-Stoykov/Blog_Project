@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, Navigate, useSearchParams } from "react-router-dom";
 import Paginator from "../components/Paginator";
 
 export default function PostsCrudPage() {
@@ -27,6 +27,7 @@ export default function PostsCrudPage() {
     }
     fetchPosts();
   }, [page]);
+    if(!localStorage.getItem('token') && localStorage.getItem('role') != "admin"){ return <Navigate to="/" replace/>;}
   console.log(posts);
   function deletePost(post) {
     async function fetchDelete() {

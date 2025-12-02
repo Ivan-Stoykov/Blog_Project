@@ -15,10 +15,9 @@ class LoginController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|min:3',
             'email' => 'required|unique:users,email',
-            'password' => 'required',
-           // 'c_password' => 'required|same:password',
+            'password' => 'required|min:8',
         ]);
         if($validator->fails()){
             return response(["ValidationError"=>$validator->errors()], 400);       
@@ -38,6 +37,13 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+        if($validator->fails()){
+            return response(["ValidationError"=>$validator->errors()], 400);       
+        }
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
              $user = Auth::user(); 
             $user['token'] =  $user->createToken('MyApp')->plainTextToken; 

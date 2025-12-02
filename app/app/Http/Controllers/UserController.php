@@ -23,12 +23,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create(['name'=>$request->input('name'),
-        'email' => $request->input('email'),
-        'role' => 'author',
-        'password'=>$request->input('password')]);
+        // User::create(['name'=>$request->input('name'),
+        // 'email' => $request->input('email'),
+        // 'role' => 'author',
+        // 'password'=>$request->input('password')]);
         
-        return response('User was created', 201);
+        // return response('User was created', 201);
     }
 
     /**
@@ -45,6 +45,13 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:3',
+            'email' => 'required|unique:users,email',
+        ]);
+        if($validator->fails()){
+            return response(["ValidationError"=>$validator->errors()], 400);       
+        }
         $user = User::find($id);
         if($user){
         $user->name = $request->input('name');

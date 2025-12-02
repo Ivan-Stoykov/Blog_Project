@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../store/userContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const userCtx = useContext(UserContext);
+  const [errors, setErrors] = useState();
   const navigate = useNavigate();
   function handleSubmit(event) {
     event.preventDefault();
@@ -22,19 +23,24 @@ export default function Login() {
         }
       });
 
-      const user = await response.json();
-      if(user.token){userCtx.login(user);
+      const resData = await response.json();
+      if(response.ok && resData.token){userCtx.login(resData);
       return navigate('/');}
+      else {setErrors(Object.values(resData.ValidationError))
+        console.log(errors);
+      };
     }
 
     login();
   }
 
   return (
+    <>
+    {errors && errors.map(e => <p key={e} style={{color: 'red'}}>{e}</p>)}
     <form onSubmit={handleSubmit}>
       <div><label htmlFor="email">Email:</label><input type="email" name="email" required /></div>
       <div><label htmlFor="password">Password:</label><input type="password" name="password" required /></div>
       <div><input type="submit" /></div>
-    </form>
+    </form></>
   );
 }

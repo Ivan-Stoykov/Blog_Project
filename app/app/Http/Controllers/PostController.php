@@ -11,6 +11,7 @@ use App\Models\Tag;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Gate;
+use Validator;
 
 class PostController extends Controller
 {
@@ -19,7 +20,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')->with('postCategories')->orderByDesc('id');
+        $posts = Post::with('author')->with('postCategories')->where('status', '!=', 'draft')->orderByDesc('id');
         return response( $posts->paginate(10), 200);
     }
 
@@ -28,6 +29,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|min:3',
+            'content' => 'required|max:500',
+            'image'=> 'image',
+            'authorId' => 'required',
+            'status' => 'required',
+        ]);
+        if($validator->fails()){
+            return response(["ValidationError"=>$validator->errors()], 400);       
+        }
         $post = Post::create(['title'=>$request->input('title'),
         'slug' => $request->input('slug'),
         'content' => $request->input('content'),

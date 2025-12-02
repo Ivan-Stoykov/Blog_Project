@@ -40,18 +40,19 @@ class TagController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:3',
+            'slug' => 'required|min:3',
+        ]);
+        if($validator->fails()){
+            return response(["ValidationError"=>$validator->errors()], 400);       
+        }
         $tag = Tag::find($id);
         if($tag){
         $tag->name = $request->input('name');
         $tag->slug = $request->input('slug');
         $tag->save();
         return response(["message"=>"Tag edited"]);
-        // if($this->authorize('update', $user)) 
-        //     {
-        //         $user->save();
-        //         return response(["message"=>'User was updated'], 201);
-        //     }
-        // else return response(['message'=>'Unautharized'], 401);
          }
         else return response(["message"=>'Tag not found'], 404);
     }

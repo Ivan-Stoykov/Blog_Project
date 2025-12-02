@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import PostList from "../components/PostList";
 import Paginator from "../components/Paginator";
 
@@ -34,6 +34,7 @@ export default function InquiryByPeriod() {
 
     fetchPosts();
   }, [page, period]);
+    if(!localStorage.getItem('token') && localStorage.getItem('role') != "admin"){ return <Navigate to="/" replace/>;}
   function handleDelete(post) {
     async function deletePost() {
       console.log(post);

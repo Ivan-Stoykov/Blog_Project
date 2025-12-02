@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Models\BannedWords;
+use Validator;
 
 class CommentController extends Controller
 {
@@ -22,6 +23,12 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'body' => 'required|min:1',
+        ]);
+        if($validator->fails()){
+            return response(["ValidationError"=>$validator->errors()], 400);       
+        }
         $flag = false;
         $body = $request->input('body');
         $arr = explode(' ', $body);

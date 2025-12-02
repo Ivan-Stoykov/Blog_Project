@@ -1,8 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function AddCategory(){
 
+  const [errors, setErrors] = useState();
     const navigate = useNavigate();
+      if(!localStorage.getItem('token') && (localStorage.getItem('role') != "admin" || localStorage.getItem('role') != "editor")){ return <Navigate to="/" replace/>;}
     function handleSubmit(event)
     {
         event.preventDefault();
@@ -24,7 +27,10 @@ export default function AddCategory(){
 
       const resData = await response.json();
       console.log(resData);
-      navigate('/');
+      if(response.ok)navigate('/');
+      else {setErrors(Object.values(resData.ValidationError))
+        console.log(errors);
+      };
     }
 
     createCategory();
@@ -32,9 +38,11 @@ export default function AddCategory(){
 
     }
 
-    return <form onSubmit={handleSubmit}>
+    return <>
+    {errors && errors.map(e => <p key={e} style={{color: 'red'}}>{e}</p>)}
+    <form onSubmit={handleSubmit}>
         <label htmlFor="category">Категория</label>
         <input type="text" name="category" />
         <input type="submit" />
-    </form>
+    </form></>
 }

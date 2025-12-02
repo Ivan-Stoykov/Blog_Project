@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import Paginator from "./Paginator";
 
 export default function AddBannedWord() {
@@ -55,7 +55,7 @@ export default function AddBannedWord() {
 
     fetchWords();
   }, [page]);
-
+  if(!localStorage.getItem('token')){ return <Navigate to="/" replace/>;}
   function handleDelete(word) {
     async function deletePost() {
       const response = await fetch(

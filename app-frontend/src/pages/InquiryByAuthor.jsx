@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import PostList from "../components/PostList";
-import { useSearchParams } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import Paginator from "../components/Paginator";
 
 export default function InquiryByAuthor() {
@@ -33,6 +33,7 @@ export default function InquiryByAuthor() {
 
     fetchPosts();
   }, [page, author]);
+    if(!localStorage.getItem('token') && localStorage.getItem('role') != "admin"){ return <Navigate to="/" replace/>;}
   function handleDelete(post) {
     async function deletePost() {
       console.log(post);

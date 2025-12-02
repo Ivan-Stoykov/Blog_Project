@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
 
 export default function TagsEditPage() {
   const params = useParams();
   const [tag, setTag] = useState();
+  const [errors, setErrors] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function TagsEditPage() {
     }
     fetchTag();
   }, [params.id]);
-
+  if(!localStorage.getItem('token') && localStorage.getItem('role') != "admin"){ return <Navigate to="/" replace/>;}
   function handleEditTag(event) {
     event.preventDefault();
 
@@ -49,6 +50,9 @@ export default function TagsEditPage() {
         console.log(resData);
         navigate("/admin");
       }
+      else {setErrors(Object.values(resData.ValidationError))
+        console.log(errors);
+      };
     }
 
     editTag();
@@ -58,6 +62,7 @@ export default function TagsEditPage() {
     <>
       {!tag && <p>Fetching tag...</p>}
       {tag && (
+        <>{errors && errors.map(e => <p key={e} style={{color: 'red'}}>{e}</p>)}
         <form onSubmit={handleEditTag}>
           <div>
             <label htmlFor="name">Name</label>
@@ -71,6 +76,7 @@ export default function TagsEditPage() {
             <input type="submit" value={"Edit"} />
           </div>
         </form>
+        </>
       )}
     </>
   );

@@ -22,6 +22,12 @@ class bannedwordsController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'word' => 'required|min:3',
+        ]);
+        if($validator->fails()){
+            return response(["ValidationError"=>$validator->errors()], 400);       
+        }
         $word = BannedWords::create(['word'=>$request->input('word')]);
         return response($word, 200);
     }
