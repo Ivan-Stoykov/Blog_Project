@@ -1,12 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../store/userContext";
 import { useContext } from "react";
-import styles from "./MainNavigation.module.css";
+//import styles from "./MainNavigation.module.css";
+import { Header } from "./Header";
 export default function MainNavigation() {
   const userCtx = useContext(UserContext);
   const navigate = useNavigate();
   return (
+    
     <header>
+      <Header/>
       <nav>
         <ul>
           <li>
@@ -36,9 +39,9 @@ export default function MainNavigation() {
               </li>
             </>
           )}
-          {localStorage.getItem('role') == 'admin' && <div className={styles.dropdown}>
+          {localStorage.getItem('role') == 'admin' && <div /*className={styles.dropdown}*/>
             <li><Link to={"/admin"}>Admin</Link></li>
-            <div className={styles.dropdownContent}>
+            <div /*className={styles.dropdownContent}*/>
               <Link to={"/admin/bannedWords"}>Banned Words</Link>
               <Link to={"/admin/inquiryByAuthor"}>Spravka Avtor</Link>
               <Link to={"/admin/inquiryByCategory"}>Spravka Kategoriq</Link>
