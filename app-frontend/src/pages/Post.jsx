@@ -55,7 +55,7 @@ export default function Post() {
       {post && <div>
         <h1>{post.title}</h1>
         <h3>Author: {post.author.name}</h3>
-        {post.media.length > 0 && post.media.map(file=><div><img src={`http://localhost:8000/api/${file.filePath}`} width="500px" height="500px"></img></div>)}
+        <div><img src={post.media.length > 0 ? `http://localhost:8000/api/${post.media[0].filePath}` : "http://localhost:8000/api/image/default_img.png"} width="500px" height="500px"></img></div>
         <span>{post.content}</span>
         <h2>Comments</h2>
               {localStorage.getItem('token') && <AddComment postId = {post.id} setComments={setComments}  />}

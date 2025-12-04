@@ -66,7 +66,7 @@ export default function InquiryByTag() {
         />
       </div>
       <PostList posts={posts} handleDelete={handleDelete} />
-      <Paginator pages={pages.current} />
+      <Paginator pages={pages.current} currentPage={page} />
     </>
   );
 }

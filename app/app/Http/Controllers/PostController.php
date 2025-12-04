@@ -20,8 +20,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')->with('postCategories')->where('status', '!=', 'draft')->orderByDesc('id');
-        return response( $posts->paginate(10), 200);
+        $posts = Post::with('author')->with('postCategories')->with('media')->where('status', '!=', 'draft')->orderByDesc('id');
+        return response( $posts->paginate(4), 200);
     }
 
     /**

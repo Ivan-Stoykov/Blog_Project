@@ -1,64 +1,130 @@
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../store/userContext";
-import { useContext } from "react";
-//import styles from "./MainNavigation.module.css";
-import { Header } from "./Header";
+
 export default function MainNavigation() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const dropdownRef = useRef()
   const userCtx = useContext(UserContext);
   const navigate = useNavigate();
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setIsDropdownOpen(false)
+      }
+    }
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isDropdownOpen])
   return (
-    
-    <header>
-      <Header/>
-      <nav>
-        <ul>
-          <li>
-            <Link to={"/"}>Home</Link>
-          </li>
-          {localStorage.getItem('token') && (
-            <>
-              <li>
-                <Link to={"/create-post"}>Create Post</Link>
-              </li>
-              <li><Link to={"/drafts"}>My Drafts</Link></li>
-              <li>
-                <button onClick={()=>{
-                  userCtx.logout();
-                  navigate('/');
-                  }}>Logout</button>
-              </li>
-            </>
-          )}
-          {!localStorage.getItem('token') && (
-            <>
-              <li>
-                <Link to={"/login"}>Log In</Link>
-              </li>
-              <li>
-                <Link to={"/register"}>Register</Link>
-              </li>
-            </>
-          )}
-          {localStorage.getItem('role') == 'admin' && <div /*className={styles.dropdown}*/>
-            <li><Link to={"/admin"}>Admin</Link></li>
-            <div /*className={styles.dropdownContent}*/>
-              <Link to={"/admin/bannedWords"}>Banned Words</Link>
-              <Link to={"/admin/inquiryByAuthor"}>Spravka Avtor</Link>
-              <Link to={"/admin/inquiryByCategory"}>Spravka Kategoriq</Link>
-              <Link to={"/admin/inquiryByTag"}>Spravka Tag</Link>
-              <Link to={"/admin/inquiryByPeriod"}>Spravka Period</Link>
-            </div>
-            </div>}
-          <li>
-            <audio controls /*autoPlay*/>
-              <source
-                src="https://play.global.audio/veronika128"
-                type="audio/ogg"
-              />
-            </audio>
-          </li>
-        </ul>
-      </nav>
+    <header className="border-b border-neutral-200 bg-white">
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        <div className="flex items-center justify-between">
+          <Link
+            to={"/"}
+            className="text-3xl font-serif font-bold text-neutral-900"
+          >
+            Blog Page
+          </Link>
+          <nav className="flex gap-8">
+            {localStorage.getItem("token") && (
+              <>
+                <Link
+                  to="/create-post"
+                  className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
+                >
+                  Create Post
+                </Link>
+                <Link
+                  to="/drafts"
+                  className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
+                >
+                  My Drafts
+                </Link>
+                <button
+                  onClick={() => {
+                    userCtx.logout();
+                    navigate("/");
+                  }}
+                  className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
+                >
+                  Logout
+                </button>
+              </>
+            )}
+            {localStorage.getItem("role") == "admin" && (
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50 transition-colors"
+              >
+                <span className="text-sm font-medium text-neutral-900">
+                <Link to={"/admin"}>Admin</Link>
+                </span>
+              </button>
+                {isDropdownOpen && 
+                <div
+                  className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-neutral-200 py-2 z-50"
+                  /*className={styles.dropdownContent}*/
+                >
+                  <Link
+                    to={"/admin/bannedWords"}
+                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
+                  >
+                    Banned Words
+                  </Link>
+                  <Link
+                    to={"/admin/inquiryByAuthor"}
+                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
+                  >
+                    Spravka Avtor
+                  </Link>
+                  <Link
+                    to={"/admin/inquiryByCategory"}
+                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
+                  >
+                    Spravka Kategoriq
+                  </Link>
+                  <Link
+                    to={"/admin/inquiryByTag"}
+                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
+                  >
+                    Spravka Tag
+                  </Link>
+                  <Link
+                    to={"/admin/inquiryByPeriod"}
+                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
+                  >
+                    Spravka Period
+                  </Link>
+                </div>}</div>
+            )}
+            {!localStorage.getItem("token") && (
+              <>
+                <Link
+                  to={"/login"}
+                  className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
+                >
+                  Log In
+                </Link>
+                <Link
+                  to={"/register"}
+                  className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
+                >
+                  Register
+                </Link>
+              </>
+            )}
+          </nav>
+        </div>
+      </div>
     </header>
   );
 }

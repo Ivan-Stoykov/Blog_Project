@@ -87,7 +87,7 @@ export default function PostsCrudPage() {
           </tbody>
         </table>
       )}
-      <Paginator pages={pages.current} />
+      <Paginator pages={pages.current} currentPage={page} />
     </>
   );
 }

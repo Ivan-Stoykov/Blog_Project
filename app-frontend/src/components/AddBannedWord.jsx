@@ -88,7 +88,7 @@ export default function AddBannedWord() {
     </form>
       {!words && <p>No banned words!</p>}
       {words && <><ul>{words.map(word => <li key={word.id}>{word.word}  <button onClick={()=>handleDelete(word)}>Delete</button></li>)}</ul>
-      <Paginator pages={pages.current} />
+      <Paginator pages={pages.current} currentPage={page}/>
       </>
       }
     </div>

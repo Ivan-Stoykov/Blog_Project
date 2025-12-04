@@ -12,13 +12,15 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchPosts() {
-
       console.log(page, "page");
-      const response = await fetch(`http://localhost:8000/api/posts?page=${page}`, {
-        headers: {
-          "Accept": "application/json"
-        },
-      });
+      const response = await fetch(
+        `http://localhost:8000/api/posts?page=${page}`,
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
       let fetchedPosts = await response.json();
       if (response.ok) {
         pages.current = fetchedPosts.last_page;
@@ -38,8 +40,8 @@ export default function Home() {
         {
           method: "DELETE",
           headers: {
-            Authorization: "Bearer " + localStorage.getItem('token'),
-            "Accept": "application/json"
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            Accept: "application/json",
           },
         }
       );
@@ -50,10 +52,22 @@ export default function Home() {
     }
     deletePost();
   }
-  return <div>
-    <CategoriesList />
-            <h3>Последни публикации</h3>
-    <PostList posts={posts} handleDelete={handleDelete} />
-    <Paginator pages={pages.current} />
-  </div>
+  return (
+    <main className="max-w-7xl mx-auto px-6 py-12">
+      <div className="grid lg:grid-cols-[1fr_320px] gap-12">
+        <div>
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-2xl font-serif font-bold text-neutral-900">
+              Последни публикации
+            </h2>
+          </div>
+          <PostList posts={posts} handleDelete={handleDelete} />
+          <Paginator pages={pages.current} currentPage={page} />
+        </div>
+        <aside className="lg:sticky lg:top-6 h-fit">
+          <CategoriesList />
+        </aside>
+      </div>
+    </main>
+  );
 }

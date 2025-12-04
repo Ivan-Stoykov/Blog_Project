@@ -64,7 +64,7 @@ export default function InquiryByPeriod() {
         <input type="submit"onClick={()=>{setPeriod(field1.current.value + "|" + field2.current.value)}} />
       </div>
       <PostList posts={posts} handleDelete={handleDelete} />
-      <Paginator pages={pages.current} />
+      <Paginator pages={pages.current} currentPage={page} />
     </>
   );
 }

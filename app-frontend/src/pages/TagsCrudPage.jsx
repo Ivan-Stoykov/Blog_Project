@@ -81,7 +81,7 @@ export default function TagsCrudPage() {
           </tbody>
         </table>
       )}
-      <Paginator pages={pages.current} />
+      <Paginator pages={pages.current} currentPage={page} />
     </>
   );
 }

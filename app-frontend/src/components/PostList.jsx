@@ -1,14 +1,11 @@
 import Post from "./Post";
-import styles from "./PostList.module.css";
 export default function PostList({posts, handleDelete}) {
   
   return (
-    <div className={styles.postDiv}>
-      <ul className={styles.posts}>
+    <div className="grid md:grid-cols-2 gap-8">
         {posts.length !== 0 &&
           posts.map((post) => (
               <Post
-                className={styles.postLink}
                 key={post.id}
                 post={post}
                 author={post.author}
@@ -16,8 +13,13 @@ export default function PostList({posts, handleDelete}) {
                 handleDelete={handleDelete}
               />
           ))}
-        {posts.length === 0 && "No posts!"}
-      </ul>
+        {posts.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-neutral-600">
+                  No posts found in this category.
+                </p>
+              </div>
+            )}
     </div>
   );
 }

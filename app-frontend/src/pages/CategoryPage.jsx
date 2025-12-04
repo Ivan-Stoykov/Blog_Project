@@ -52,6 +52,6 @@ export default function CategoryPage() {
     return <div>
         <CategoriesList />
         <Category posts={posts} handleDelete={handleDelete} />
-        <Paginator pages={pages.current} />
+        <Paginator pages={pages.current} currentPage={page} />
     </div>
 }
