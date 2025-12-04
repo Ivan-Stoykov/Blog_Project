@@ -53,7 +53,7 @@ export default function Home() {
     deletePost();
   }
   return (
-    <main className="max-w-7xl mx-auto px-6 py-12">
+
       <div className="grid lg:grid-cols-[1fr_320px] gap-12">
         <div>
           <div className="flex items-center justify-between mb-8">
@@ -68,6 +68,5 @@ export default function Home() {
           <CategoriesList />
         </aside>
       </div>
-    </main>
   );
 }

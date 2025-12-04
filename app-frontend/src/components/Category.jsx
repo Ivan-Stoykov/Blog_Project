@@ -1,24 +1,25 @@
 import Post from "./Post";
-import styles from "./PostList.module.css";
-export default function PostList({ posts, handleDelete }) {
+export default function Category({ posts, handleDelete }) {
 
   return (
-    <div className={styles.postDiv}>
-      <ul className={styles.posts}>
-        <h3>Последни публикации</h3>
-        {posts.length !== 0 &&
-          posts.map((post) => (
-            <Post
-              className={styles.postLink}
-              key={post.post.id}
-              post={post.post}
-              author={post.post.author}
-              comments={post.post.comments}
-              handleDelete={handleDelete}
-            />
-          ))}
-        {posts.length === 0 && "No posts!"}
-      </ul>
-    </div>
+    <div className="grid md:grid-cols-2 gap-8">
+            {posts.length !== 0 &&
+              posts.map((post) => (
+                  <Post
+                    key={post.post.id}
+                    post={post.post}
+                    author={post.post.author}
+                    comments={post.post.comments}
+                    handleDelete={handleDelete}
+                  />
+              ))}
+            {posts.length === 0 && (
+                  <div className="text-center py-12">
+                    <p className="text-neutral-600">
+                      No posts found.
+                    </p>
+                  </div>
+                )}
+        </div>
   );
 }

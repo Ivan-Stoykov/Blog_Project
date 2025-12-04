@@ -20,7 +20,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')->with('postCategories')->with('media')->where('status', '!=', 'draft')->orderByDesc('id');
+        $posts = Post::with('author')->with('postCategories.category')->with('media')->where('status', '!=', 'draft')->orderByDesc('id');
         return response( $posts->paginate(4), 200);
     }
 
@@ -83,7 +83,7 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        $post = Post::with('comments')->with('author')->with('media')->where('slug', $id)->first();
+        $post = Post::with('comments')->with('author')->with('media')->with('postCategories.category')->where('slug', $id)->first();
         if($post){return response( $post, 200);}
         else return response(["message"=>'Post not found'], 404);
         
@@ -137,7 +137,7 @@ class PostController extends Controller
 
     public function PersonalDrafts(string $id)
     {
-        $posts = Post::with('comments')->with('author')->where('status', 'draft')->where('authorId', $id)
+        $posts = Post::with('comments')->with('media')->with('author')->with('postCategories.category')->where('status', 'draft')->where('authorId', $id)
         ->orderByDesc('id')->paginate(10);
         if($posts){return response( $posts, 200);}
         else return response(["message"=>'Posts not found'], 404);

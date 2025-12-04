@@ -44,7 +44,7 @@ class CategoriesController extends Controller
      */
     public function show(string $category)
     {
-        $posts = PostCategory::with('post.author')->with('category')
+        $posts = PostCategory::with('post.author')->with('post.media')->with('post.postCategories.category')->with('category')
         ->whereHas('category', function($q) use ($category)
         {
             $q->where('slug', $category);

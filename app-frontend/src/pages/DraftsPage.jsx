@@ -2,34 +2,41 @@ import { Navigate, useSearchParams } from "react-router-dom";
 import Paginator from "../components/Paginator";
 import PostList from "../components/PostList";
 import { useEffect, useRef, useState } from "react";
+import CategoriesList from "../components/CategoriesList";
 
-export default function DraftsPage(){
+export default function DraftsPage() {
   const [getParams] = useSearchParams();
   const [posts, setPosts] = useState([]);
   let pages = useRef();
   let page = getParams.get("page");
-  
+
   useEffect(() => {
     async function fetchPosts() {
-      
       console.log(page, "page");
-      const response = await fetch(`http://localhost:8000/api/posts/drafts/${localStorage.getItem('id')}?page=${page}`, {
-        headers: {
-          "Accept": "application/json",
-          "Authorization": "Bearer " + localStorage.getItem('token')
-        },
-      });
+      const response = await fetch(
+        `http://localhost:8000/api/posts/drafts/${localStorage.getItem(
+          "id"
+        )}?page=${page}`,
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
       let fetchedPosts = await response.json();
       if (response.ok) {
         pages.current = fetchedPosts.last_page;
         setPosts(fetchedPosts.data);
       }
     }
-    
+
     fetchPosts();
   }, [page]);
-  if(!localStorage.getItem('token')){ return <Navigate to="/" replace/>;}
-  
+  if (!localStorage.getItem("token")) {
+    return <Navigate to="/" replace />;
+  }
+
   function handleDelete(post) {
     async function deletePost() {
       console.log(post);
@@ -38,8 +45,8 @@ export default function DraftsPage(){
         {
           method: "DELETE",
           headers: {
-            Authorization: "Bearer " + localStorage.getItem('token'),
-            "Accept": "application/json"
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            Accept: "application/json",
           },
         }
       );
@@ -50,9 +57,17 @@ export default function DraftsPage(){
     }
     deletePost();
   }
-  return <div>
-            <h3>Drafts</h3>
-    <PostList posts={posts} handleDelete={handleDelete} />
-    <Paginator pages={pages.current} currentPage={page} />
-  </div>
+  return (
+    <div className="grid lg:grid-cols-[1fr_320px] gap-12">
+      <div>
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-2xl font-serif font-bold text-neutral-900">
+            Drafts
+          </h2>
+        </div>
+        <PostList posts={posts} handleDelete={handleDelete} />
+        <Paginator pages={pages.current} currentPage={page} />
+      </div>
+    </div>
+  );
 }

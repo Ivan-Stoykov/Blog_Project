@@ -33,7 +33,7 @@ export default function MainNavigation() {
           >
             Blog Page
           </Link>
-          <nav className="flex gap-8">
+          <nav className="flex gap-8 items-center">
             {localStorage.getItem("token") && (
               <>
                 <Link

@@ -22,7 +22,7 @@ export default function CategoryPage() {
             if (response.ok) {
                 pages.current = fetchedPosts.last_page;
                 setPosts(fetchedPosts.data);
-                console.log(fetchedPosts);
+                console.log(fetchedPosts, 'fetchedPosts');
             }
 
         }
@@ -50,8 +50,19 @@ export default function CategoryPage() {
         deletePost();
     }
     return <div>
-        <CategoriesList />
-        <Category posts={posts} handleDelete={handleDelete} />
-        <Paginator pages={pages.current} currentPage={page} />
+              <div className="grid lg:grid-cols-[1fr_320px] gap-12">
+                <div>
+                  <div className="flex items-center justify-between mb-8">
+                    <h2 className="text-2xl font-serif font-bold text-neutral-900">
+                      Последни публикации в категория {params.slug}
+                    </h2>
+                  </div>
+                  <Category posts={posts} handleDelete={handleDelete} />
+                  <Paginator pages={pages.current} currentPage={page} />
+                </div>
+                <aside className="lg:sticky lg:top-6 h-fit">
+                  <CategoriesList />
+                </aside>
+              </div>
     </div>
 }

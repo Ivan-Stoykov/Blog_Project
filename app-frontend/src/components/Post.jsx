@@ -16,7 +16,7 @@ export default function Post({ post, author, handleDelete }) {
         <div className="flex items-center gap-2 text-sm">
           <span
             className="px-2.5 py-0.5 rounded-full text-white text-xs font-medium bg-violet-600"
-          >{post.category}  </span>
+          >{post.post_categories.category.name}  </span>
         </div>
         <Link to={`/post/${post.slug}`} className="text-xl font-serif font-bold text-neutral-900 leading-tight group-hover:text-neutral-700 transition-colors">
           {post.title}
