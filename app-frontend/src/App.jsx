@@ -10,7 +10,7 @@ import CreatePost from "./pages/CreatePost";
 import AddCategory from "./pages/AddCategory";
 import CategoryPage from "./pages/CategoryPage";
 import EditUserPage from "./pages/EditUserPage";
-import AddBannedWord from "./components/AddBannedWord";
+import AddBannedWord from "./pages/AddBannedWordsPage";
 import InquiryByAuthor from "./pages/InquiryByAuthor";
 import InquiryByTag from "./pages/InquiryByTag";
 import InquiryByPeriod from "./pages/InquiryByPeriod";
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
           { path: "users/:id", element: <EditUserPage /> },
           { path: "posts/:id", element: <EditPostPage /> },
           { path: "tags/:id", element: <TagsEditPage /> },
-          { path: "bannedWords", element: <AddBannedWord /> },
+          { path: "create-bannedWord", element: <AddBannedWord /> },
           { path: "inquiryByAuthor", element: <InquiryByAuthor /> },
           { path: "inquiryByCategory", element: <InquiryByCategory/> },
           { path: "inquiryByTag", element: <InquiryByTag /> },

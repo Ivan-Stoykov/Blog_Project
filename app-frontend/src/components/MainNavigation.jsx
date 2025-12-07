@@ -3,26 +3,23 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../store/userContext";
 
 export default function MainNavigation() {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const dropdownRef = useRef()
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef();
   const userCtx = useContext(UserContext);
   const navigate = useNavigate();
   useEffect(() => {
     function handleClickOutside(event) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target)
-      ) {
-        setIsDropdownOpen(false)
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
       }
     }
     if (isDropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener("mousedown", handleClickOutside);
     }
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [isDropdownOpen])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownOpen]);
   return (
     <header className="border-b border-neutral-200 bg-white">
       <div className="max-w-7xl mx-auto px-6 py-8">
@@ -60,51 +57,50 @@ export default function MainNavigation() {
               </>
             )}
             {localStorage.getItem("role") == "admin" && (
-                <div className="relative" ref={dropdownRef}>
-                  <button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50 transition-colors"
-              >
-                <span className="text-sm font-medium text-neutral-900">
-                Admin
-                </span>
-              </button>
-                {isDropdownOpen && 
-                <div
-                  className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border border-neutral-200 py-2 z-50"
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50 transition-colors"
                 >
-                  <Link to={"/admin"} className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors">Dashboard</Link>
-                  <Link
-                    to={"/admin/bannedWords"}
-                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
-                  >
-                    Banned Words
-                  </Link>
-                  <Link
-                    to={"/admin/inquiryByAuthor"}
-                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
-                  >
-                    Spravka Avtor
-                  </Link>
-                  <Link
-                    to={"/admin/inquiryByCategory"}
-                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
-                  >
-                    Spravka Kategoriq
-                  </Link>
-                  <Link
-                    to={"/admin/inquiryByTag"}
-                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
-                  >
-                    Spravka Tag
-                  </Link>
-                  <Link
-                    to={"/admin/inquiryByPeriod"}
-                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
-                  >
-                    Spravka Period
-                  </Link>
-                </div>}</div>
+                  <span className="text-sm font-medium text-neutral-900">
+                    Admin
+                  </span>
+                </button>
+                {isDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border border-neutral-200 py-2 z-50">
+                    <Link
+                      to={"/admin"}
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
+                      to={"/admin/inquiryByAuthor"}
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
+                    >
+                      Spravka Avtor
+                    </Link>
+                    <Link
+                      to={"/admin/inquiryByCategory"}
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
+                    >
+                      Spravka Kategoriq
+                    </Link>
+                    <Link
+                      to={"/admin/inquiryByTag"}
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
+                    >
+                      Spravka Tag
+                    </Link>
+                    <Link
+                      to={"/admin/inquiryByPeriod"}
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
+                    >
+                      Spravka Period
+                    </Link>
+                  </div>
+                )}
+              </div>
             )}
             {!localStorage.getItem("token") && (
               <>
