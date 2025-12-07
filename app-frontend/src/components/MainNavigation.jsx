@@ -66,14 +66,14 @@ export default function MainNavigation() {
                 className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-neutral-50 transition-colors"
               >
                 <span className="text-sm font-medium text-neutral-900">
-                <Link to={"/admin"}>Admin</Link>
+                Admin
                 </span>
               </button>
                 {isDropdownOpen && 
                 <div
-                  className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-neutral-200 py-2 z-50"
-                  /*className={styles.dropdownContent}*/
+                  className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border border-neutral-200 py-2 z-50"
                 >
+                  <Link to={"/admin"} className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors">Dashboard</Link>
                   <Link
                     to={"/admin/bannedWords"}
                     className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"

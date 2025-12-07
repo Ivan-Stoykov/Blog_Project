@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useSearchParams } from "react-router-dom";
 import Paginator from "../components/Paginator";
 
-export default function PostsCrudPage() {
+export default function PostsCrudPage({
+  cardClasses,
+  tableHeaderClasses,
+  tableCellClasses,
+  actionButtonClasses,
+}) {
   const [getParams] = useSearchParams();
   const [posts, setPosts] = useState([]);
   let pages = useRef();
@@ -27,7 +32,12 @@ export default function PostsCrudPage() {
     }
     fetchPosts();
   }, [page]);
-    if(!localStorage.getItem('token') && localStorage.getItem('role') != "admin"){ return <Navigate to="/" replace/>;}
+  if (
+    !localStorage.getItem("token") &&
+    localStorage.getItem("role") != "admin"
+  ) {
+    return <Navigate to="/" replace />;
+  }
   console.log(posts);
   function deletePost(post) {
     async function fetchDelete() {
@@ -50,44 +60,65 @@ export default function PostsCrudPage() {
   }
 
   return (
-    <>
-      {posts.length == 0 && <p>Fetching posts...</p>}
+    <div className={cardClasses}>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-serif font-bold text-gray-800">
+          Managing: Posts
+        </h2>
+        <Link
+          to="/create-post"
+          className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white font-medium rounded-full shadow-md hover:bg-green-700 transition duration-150"
+        >
+          <span>Create New</span>
+        </Link>
+      </div>
+      {posts.length == 0 && (
+        <p className="text-center py-8 text-gray-500">Fetching posts...</p>
+      )}
       {posts.length > 0 && (
-        <table>
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Title</th>
-              <th>Content</th>
-              <th>Slug</th>
-              <th>Status</th>
-              <th>Author</th>
-              <th>Edit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {posts.map((post) => (
-              <tr key={post.id}>
-                <td>{post.id}</td>
-                <td>{post.title}</td>
-                <td>{post.content}</td>
-                <td>{post.slug}</td>
-                <td>{post.status}</td>
-                <td>{post.author.name}</td>
-                <td>
-                  <Link to={`http://localhost:3000/admin/posts/${post.id}`}>
-                    Edit
-                  </Link>
-                </td>
-                <td>
-                  <button onClick={() => deletePost(post)}>Delete</button>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className={tableHeaderClasses}>Id</th>
+                <th className={tableHeaderClasses}>Title</th>
+                <th className={tableHeaderClasses}>Content</th>
+                <th className={tableHeaderClasses}>Slug</th>
+                <th className={tableHeaderClasses}>Status</th>
+                <th className={tableHeaderClasses}>Author</th>
+                <th className={tableHeaderClasses}>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {posts.map((post) => (
+                <tr key={post.id} className="hover:bg-gray-50">
+                  <td className={tableCellClasses}>{post.id}</td>
+                  <td className={tableCellClasses}>{post.title}</td>
+                  <td className={tableCellClasses}>{post.content}</td>
+                  <td className={tableCellClasses}>{post.slug}</td>
+                  <td className={tableCellClasses}>{post.status}</td>
+                  <td className={tableCellClasses}>{post.author.name}</td>
+                  <td className={`${tableCellClasses} flex space-x-2`}>
+                    <Link
+                      to={`http://localhost:3000/admin/posts/${post.id}`}
+                      className={`${actionButtonClasses} bg-blue-500 text-white hover:bg-blue-600`}
+                    >
+                      Edit
+                    </Link>
+                    <button
+                      onClick={() => deletePost(post)}
+                      className={`${actionButtonClasses} bg-red-500 text-white hover:bg-red-600`}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
       <Paginator pages={pages.current} currentPage={page} />
-    </>
+    </div>
   );
 }

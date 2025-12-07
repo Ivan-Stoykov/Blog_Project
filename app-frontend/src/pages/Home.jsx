@@ -53,20 +53,19 @@ export default function Home() {
     deletePost();
   }
   return (
-
-      <div className="grid lg:grid-cols-[1fr_320px] gap-12">
-        <div>
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-serif font-bold text-neutral-900">
-              Последни публикации
-            </h2>
-          </div>
-          <PostList posts={posts} handleDelete={handleDelete} />
-          <Paginator pages={pages.current} currentPage={page} />
+    <div className="grid lg:grid-cols-[1fr_320px] gap-12">
+      <div>
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-2xl font-serif font-bold text-neutral-900">
+            Последни публикации
+          </h2>
         </div>
-        <aside className="lg:sticky lg:top-6 h-fit">
-          <CategoriesList />
-        </aside>
+        <PostList posts={posts} handleDelete={handleDelete} />
+        <Paginator pages={pages.current} currentPage={page} />
       </div>
+      <aside className="lg:sticky lg:top-6 h-fit">
+        <CategoriesList />
+      </aside>
+    </div>
   );
 }

@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useSearchParams } from "react-router-dom";
 import Paginator from "../components/Paginator";
 
-export default function TagsCrudPage() {
+export default function TagsCrudPage({
+  cardClasses,
+  tableHeaderClasses,
+  tableCellClasses,
+  actionButtonClasses,
+}) {
   const [getParams] = useSearchParams();
   const [tags, setTags] = useState([]);
   let pages = useRef();
@@ -27,20 +32,22 @@ export default function TagsCrudPage() {
     }
     fetchTags();
   }, [page]);
-    if(!localStorage.getItem('token') && localStorage.getItem('role') != "admin"){ return <Navigate to="/" replace/>;}
+  if (
+    !localStorage.getItem("token") &&
+    localStorage.getItem("role") != "admin"
+  ) {
+    return <Navigate to="/" replace />;
+  }
   console.log(tags);
   function deleteTag(tag) {
     async function fetchDelete() {
-      const resData = await fetch(
-        `http://localhost:8000/api/tags/${tag.id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Accept: "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        }
-      );
+      const resData = await fetch(`http://localhost:8000/api/tags/${tag.id}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
       const response = await resData.json();
       console.log(response);
       if (resData.ok)
@@ -50,38 +57,53 @@ export default function TagsCrudPage() {
   }
 
   return (
-    <>
-      {tags.length == 0 && <p>Fetching tags...</p>}
+    <div className={cardClasses}>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-serif font-bold text-gray-800">
+          Managing: Tags
+        </h2>
+      </div>
+      {tags.length == 0 && (
+        <p className="text-center py-8 text-gray-500">Fetching tags...</p>
+      )}
       {tags.length > 0 && (
-        <table>
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Slug</th>
-              <th>Edit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tags.map((tag) => (
-              <tr key={tag.id}>
-                <td>{tag.id}</td>
-                <td>{tag.name}</td>
-                <td>{tag.slug}</td>
-                <td>
-                  <Link to={`http://localhost:3000/admin/tags/${tag.id}`}>
-                    Edit
-                  </Link>
-                </td>
-                <td>
-                  <button onClick={() => deleteTag(tag)}>Delete</button>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className={tableHeaderClasses}>Id</th>
+                <th className={tableHeaderClasses}>Name</th>
+                <th className={tableHeaderClasses}>Slug</th>
+                <th className={tableHeaderClasses}>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {tags.map((tag) => (
+                <tr key={tag.id} className="hover:bg-gray-50">
+                  <td className={tableCellClasses}>{tag.id}</td>
+                  <td className={tableCellClasses}>{tag.name}</td>
+                  <td className={tableCellClasses}>{tag.slug}</td>
+                  <td className={`${tableCellClasses} flex space-x-2`}>
+                    <Link
+                      to={`http://localhost:3000/admin/tags/${tag.id}`}
+                      className={`${actionButtonClasses} bg-blue-500 text-white hover:bg-blue-600`}
+                    >
+                      Edit
+                    </Link>
+                    <button
+                      onClick={() => deleteTag(tag)}
+                      className={`${actionButtonClasses} bg-red-500 text-white hover:bg-red-600`}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
       <Paginator pages={pages.current} currentPage={page} />
-    </>
+    </div>
   );
 }

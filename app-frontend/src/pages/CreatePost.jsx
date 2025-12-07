@@ -56,9 +56,9 @@ export default function CreatePost() {
       });
 
       const resData = await response.json();
-      console.log("resData", resData.ValidationError);
-      if (response.ok) navigate("/");
+      if (response.ok){ navigate("/");}
       else {
+        console.log(resData)
         setErrors(Object.values(resData.ValidationError));
         console.log(errors);
       }

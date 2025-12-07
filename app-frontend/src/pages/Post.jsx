@@ -72,7 +72,7 @@ export default function Post() {
             <p className="text-md text-gray-500 mb-8">
               By
               <span className="font-semibold text-gray-700">
-                {post.author.name}
+                {" " + post.author.name + " "}
               </span>
               on {post.publishedAt}
             </p>
@@ -85,11 +85,15 @@ export default function Post() {
           <div className="mt-12 bg-white p-6 md:p-10 shadow-xl rounded-xl">
             {localStorage.getItem("token") && (
               <>
-            <h3 className="text-xl font-semibold mb-3 text-gray-800">Leave a comment!</h3>
-              <AddComment postId={post.id} setComments={setComments} />
+                <h3 className="text-xl font-semibold mb-3 text-gray-800">
+                  Leave a comment!
+                </h3>
+                <AddComment postId={post.id} setComments={setComments} />
               </>
             )}
-                  <h3 className="text-xl font-semibold mb-3 text-gray-800">Comments</h3>
+            <h3 className="text-xl font-semibold mb-3 text-gray-800">
+              Comments
+            </h3>
             {comments.length > 0 &&
               comments.map((comment) => (
                 <div className="space-y-4">
@@ -103,10 +107,10 @@ export default function Post() {
                     )}
                 </div>
               ))}
+            {comments.length == 0 && <p>No comments!</p>}
           </div>
         </main>
       )}
-      {comments.length == 0 && <p>No comments!</p>}
     </>
   );
 }

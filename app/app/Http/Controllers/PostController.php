@@ -30,7 +30,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|min:3',
+            'title' => 'required|unique:posts|min:3',
             'content' => 'required|max:500',
             'image'=> 'image',
             'authorId' => 'required',
@@ -68,6 +68,11 @@ class PostController extends Controller
                     $tag = Tag::create(['name'=>$tags[$i], 'slug'=>str_replace(' ', '_', $tags[$i])]);
                     PostTag::create(['postId'=>$post->id, 'tagId'=>$tag->id]);
                 }
+                else 
+                {
+                    $tag = Tag::where('name', $tags[$i])->first();
+                    PostTag::create(['postId'=>$post->id, 'tagId'=>$tag->id]);
+                }
                 
             }
         }
@@ -90,7 +95,7 @@ class PostController extends Controller
     }
     public function showById(string $id)
     {
-        $post = Post::with('comments')->with('author')->with('media')->with('postTags')->where('Id', $id)->first();
+        $post = Post::with('comments')->with('author')->with('media')->with('postCategories.category')->with('postTags.tag')->where('Id', $id)->first();
         if($post){return response( $post, 200);}
         else return response(["message"=>'Post not found'], 404);
         
@@ -107,7 +112,7 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->slug = $request->input('slug');
         $post->content = $request->input('content');
-        $post->authorId = $request->input('author.id');
+        $post->authorId = $request->input('authorId');
         $post->publishedAt = $request->input('publishedAt');
         $post->status = $request->input('status');
         if($request->user()->can('update', $post)) 
