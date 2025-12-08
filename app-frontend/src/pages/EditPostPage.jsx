@@ -155,7 +155,7 @@ export default function EditPostPage() {
               >
                 {categories.length !== 0 &&
                   categories.map((category) => (
-                    <option key={category} value={category.id}>
+                    <option key={category.id} value={category.id}>
                       {category.name}
                     </option>
                   ))}
@@ -196,7 +196,7 @@ export default function EditPostPage() {
             <div>
               <input
                 type="submit"
-                value="Create Post"
+                value="Update Post"
                 className="flex items-center space-x-2 px-8 py-3 bg-blue-600 text-white font-semibold rounded-full shadow-lg hover:bg-blue-700 transition duration-150"
               />
             </div>

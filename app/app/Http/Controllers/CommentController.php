@@ -12,9 +12,9 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $id)
+    public function index()
     {
-        $comments = Comment::with('author')->where('postId', $id)->orderByDesc('id')->get();
+        $comments = Comment::with('author')->with('post')->orderByDesc('createdAt')->paginate(10);
         return response( $comments, 200);
     }
 
@@ -57,7 +57,8 @@ class CommentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $comments = Comment::with('author')->where('postId', $id)->orderByDesc('id')->get();
+        return response( $comments, 200);
     }
 
     /**

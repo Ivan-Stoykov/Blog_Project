@@ -35,11 +35,13 @@ Route::get('post/{id}', [PostController::class, 'showById'])->middleware('auth:s
 Route::patch('posts/{id}', [PostController::class, 'update'])->middleware('auth:sanctum');
 Route::get('posts/drafts/{id}', [PostController::class, 'PersonalDrafts'])->middleware('auth:sanctum');
 Route::delete('posts/{id}', [PostController::class, 'destroy'])->middleware('auth:sanctum');
-Route::get('comments/{id}', [CommentController::class, 'index']);
+Route::get('comments/{id}', [CommentController::class, 'show']);
+Route::get('comments', [CommentController::class, 'index']);
 Route::post('comments', [CommentController::class, 'store'])->middleware('auth:sanctum');
 Route::delete('comments/{id}', [CommentController::class, 'destroy'])->middleware('auth:sanctum');
 Route::apiResource('categories', CategoriesController::class)->only(['index', 'show']);
 Route::post('categories', [CategoriesController::class, 'store'])->middleware('auth:sanctum');
+Route::get('categories-paginate', [CategoriesController::class, 'indexPaginate']);
 //Route::apiResource('users', UserController::class);
 Route::get('admin/byCategory/{category}', [AdminController::class, 'showByPostCategory']);
 Route::get('admin/byTag/{tag}', [AdminController::class, 'showByPostTag']);

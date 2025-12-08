@@ -61,7 +61,7 @@ export default function Home() {
           </h2>
         </div>
         <PostList posts={posts} handleDelete={handleDelete} />
-        <Paginator pages={pages.current} currentPage={page} />
+        {posts && posts.length > 0 && <Paginator pages={pages.current} currentPage={page} />}
       </div>
       <aside className="lg:sticky lg:top-6 h-fit">
         <CategoriesList />

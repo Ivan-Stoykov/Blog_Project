@@ -24,17 +24,18 @@ export default function CategoriesList() {
       </h3>
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-        <Link
-          key={0}
-          className={`w-full text-left px-4 py-2.5 rounded-md transition-colors bg-neutral-900 text-white`}
-          to="/"
-        >
-          <span className="font-medium">All</span>
-        </Link>
+          <Link
+            key={0}
+            className={`w-full text-left px-4 py-2.5 rounded-md transition-colors bg-neutral-900 text-white`}
+            to="/"
+          >
+            <span className="font-medium">All</span>
+          </Link>
         </div>
-        <div className="flex items-center justify-between">
-          {categories.length !== 0 &&
-            categories.map((category) => (
+
+        {categories.length !== 0 &&
+          categories.map((category) => (
+            <div className="flex items-center justify-between" key={category.id + "div"}>
               <Link
                 key={category.id}
                 className={`w-full text-left px-4 py-2.5 rounded-md transition-colors hover:bg-neutral-100 text-neutral-700`}
@@ -42,8 +43,9 @@ export default function CategoriesList() {
               >
                 <span className="font-medium">{category.name}</span>
               </Link>
-            ))}
-        </div>
+            </div>
+          ))}
+
         {categories.length === 0 && (
           <span className="flex items-center justify-between font-medium">
             Няма категории!

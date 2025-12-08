@@ -4,6 +4,8 @@ import PostsCrudPage from "./PostsCrudPage";
 import TagsCrudPage from "./TagsCrudPage";
 import { Navigate } from "react-router-dom";
 import AddBannedWord from "../components/BannedWordsCrud";
+import CommentsCrudPage from "./CommentsCrudPage";
+import CategoriesCrudPage from "./CategoriesCrudPage";
 
 export default function AdminPage() {
   const cardClasses = "bg-white p-6 shadow-xl rounded-xl";
@@ -105,6 +107,40 @@ export default function AdminPage() {
                 }}
               >
                 Banned words
+              </button>
+            </li>
+            <li>
+              <button
+                className={`w-full text-left p-3 rounded-lg font-medium transition duration-150 text-gray-700 hover:bg-gray-100`}
+                onClick={() => {
+                  setContent(
+                    <CommentsCrudPage
+                      cardClasses={cardClasses}
+                      tableHeaderClasses={tableHeaderClasses}
+                      tableCellClasses={tableCellClasses}
+                      actionButtonClasses={actionButtonClasses}
+                    />
+                  );
+                }}
+              >
+                Comments
+              </button>
+            </li>
+            <li>
+              <button
+                className={`w-full text-left p-3 rounded-lg font-medium transition duration-150 text-gray-700 hover:bg-gray-100`}
+                onClick={() => {
+                  setContent(
+                    <CategoriesCrudPage
+                      cardClasses={cardClasses}
+                      tableHeaderClasses={tableHeaderClasses}
+                      tableCellClasses={tableCellClasses}
+                      actionButtonClasses={actionButtonClasses}
+                    />
+                  );
+                }}
+              >
+                Categories
               </button>
             </li>
           </ul>

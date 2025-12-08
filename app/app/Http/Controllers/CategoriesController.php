@@ -20,6 +20,12 @@ class CategoriesController extends Controller
         return response( $categories, 200);
 
     }
+    public function indexPaginate()
+    {
+        $categories = Category::paginate(10);
+        return response( $categories, 200);
+
+    }
 
     /**
      * Store a newly created resource in storage.

@@ -96,7 +96,7 @@ export default function Post() {
             </h3>
             {comments.length > 0 &&
               comments.map((comment) => (
-                <div className="space-y-4">
+                <div className="space-y-4" key={comment.id + "div"}>
                   <Comments key={comment.id} comment={comment} />
                   {localStorage.getItem("token") &&
                     (localStorage.getItem("role") == "editor" ||

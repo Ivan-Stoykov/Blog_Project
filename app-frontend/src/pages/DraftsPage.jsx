@@ -66,7 +66,7 @@ export default function DraftsPage() {
           </h2>
         </div>
         <PostList posts={posts} handleDelete={handleDelete} />
-        <Paginator pages={pages.current} currentPage={page} />
+        {posts && posts.length > 0 && <Paginator pages={pages.current} currentPage={page} />}
       </div>
     </div>
   );

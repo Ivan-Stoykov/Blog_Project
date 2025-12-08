@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
+use Validator;
 
 class UserController extends Controller
 {
@@ -47,7 +48,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3',
-            'email' => 'required|unique:users,email',
+            'email' => 'required|email',
         ]);
         if($validator->fails()){
             return response(["ValidationError"=>$validator->errors()], 400);       
