@@ -19,6 +19,7 @@ import DraftsPage from "./pages/DraftsPage";
 import EditPostPage from "./pages/EditPostPage";
 import AdminPage from "./pages/AdminPage";
 import TagsEditPage from "./pages/TagsEditPage";
+import EditCategory from "./pages/EditCategory";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
         children: [
           { path: "", element: <AdminPage /> },
           { path: "users/:id", element: <EditUserPage /> },
+          { path: "categories/:id", element: <EditCategory /> },
           { path: "posts/:id", element: <EditPostPage /> },
           { path: "tags/:id", element: <TagsEditPage /> },
           { path: "create-category", element: <AddCategory /> },

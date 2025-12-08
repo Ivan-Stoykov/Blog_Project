@@ -41,6 +41,7 @@ Route::post('comments', [CommentController::class, 'store'])->middleware('auth:s
 Route::delete('comments/{id}', [CommentController::class, 'destroy'])->middleware('auth:sanctum');
 Route::apiResource('categories', CategoriesController::class)->only(['index', 'show']);
 Route::post('categories', [CategoriesController::class, 'store'])->middleware('auth:sanctum');
+Route::get('categories-id/{id}', [CategoriesController::class, 'showId']);
 Route::get('categories-paginate', [CategoriesController::class, 'indexPaginate']);
 //Route::apiResource('users', UserController::class);
 Route::get('admin/byCategory/{category}', [AdminController::class, 'showByPostCategory']);

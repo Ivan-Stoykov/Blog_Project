@@ -64,6 +64,13 @@ class CategoriesController extends Controller
         return response( $posts, 200);
     }
 
+    public function showId(string $id)
+    {
+        $posts = Category::where('id', $id)->first();
+
+        return response( $posts, 200);
+    }
+
     /**
      * Update the specified resource in storage.
      */
