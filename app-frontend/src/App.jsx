@@ -20,6 +20,7 @@ import EditPostPage from "./pages/EditPostPage";
 import AdminPage from "./pages/AdminPage";
 import TagsEditPage from "./pages/TagsEditPage";
 import EditCategory from "./pages/EditCategory";
+import InquiriesPage from "./pages/Inquiries";
 
 const router = createBrowserRouter([
   {
@@ -44,10 +45,7 @@ const router = createBrowserRouter([
           { path: "tags/:id", element: <TagsEditPage /> },
           { path: "create-category", element: <AddCategory /> },
           { path: "create-bannedWord", element: <AddBannedWord /> },
-          { path: "inquiryByAuthor", element: <InquiryByAuthor /> },
-          { path: "inquiryByCategory", element: <InquiryByCategory/> },
-          { path: "inquiryByTag", element: <InquiryByTag /> },
-          { path: "inquiryByPeriod", element: <InquiryByPeriod /> },
+          { path: "spravki", element: <InquiriesPage /> },
         ],
       },
     ],

@@ -75,28 +75,10 @@ export default function MainNavigation() {
                       Dashboard
                     </Link>
                     <Link
-                      to={"/admin/inquiryByAuthor"}
+                      to={"/admin/spravki"}
                       className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
                     >
-                      Spravka Avtor
-                    </Link>
-                    <Link
-                      to={"/admin/inquiryByCategory"}
-                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
-                    >
-                      Spravka Kategoriq
-                    </Link>
-                    <Link
-                      to={"/admin/inquiryByTag"}
-                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
-                    >
-                      Spravka Tag
-                    </Link>
-                    <Link
-                      to={"/admin/inquiryByPeriod"}
-                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition-colors"
-                    >
-                      Spravka Period
+                      Spravki
                     </Link>
                   </div>
                 )}

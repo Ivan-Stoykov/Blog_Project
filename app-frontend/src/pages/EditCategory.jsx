@@ -18,7 +18,6 @@ export default function EditCategory() {
         setCategory(fetchedPost);
       }
       fetchCategory();
-      console.log(category)
     }, [id]);
   if (
     !localStorage.getItem("token") &&
