@@ -107,23 +107,103 @@ class PostController extends Controller
     public function update(Request $request, string $id)
     {
         
+        // $post = Post::find($id);
+        // if($post){
+        // $post->title = $request->input('title');
+        // $post->slug = $request->input('slug');
+        // $post->content = $request->input('content');
+        // $post->authorId = $request->input('authorId');
+        // $post->publishedAt = $request->input('publishedAt');
+        // $post->status = $request->input('status');
+        // if($request->user()->can('update', $post)) 
+        //     {
+        //         $post->save();
+        //         return response(["message"=>'Post was updated'], 201);
+        //     }
+        // else return response(['message'=>'Unautharized'], 401);
+        // }
+        // else return response(["message"=>'Post not found'], 404);
         $post = Post::find($id);
-        if($post){
+
+        if (!$post) {
+            return response(["message" => 'Post not found'], 404);
+        }
+        
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|min:3|unique:posts,title,' . $post->id, 
+            'content' => 'required|max:500',
+            'image' => 'nullable|image|max:2048',
+            'authorId' => 'required|exists:users,id',
+            'status' => 'required|in:Draft,Published,Reviewed,Archived',
+            'categoryId' => 'required|exists:categories,id',
+            'tags' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response(["ValidationError" => $validator->errors()], 400); 
+        }
+        if (!$request->user()->can('update', $post)) {
+            return response(['message' => 'Unauthorized'], 401);
+         }
+        
         $post->title = $request->input('title');
-        $post->slug = $request->input('slug');
+        $post->slug = $request->input('slug') ?? str_replace(' ', '-', preg_replace('/[^a-zA-Z0-9 ]/','', $request->input('title'))); 
         $post->content = $request->input('content');
         $post->authorId = $request->input('authorId');
         $post->publishedAt = $request->input('publishedAt');
         $post->status = $request->input('status');
-        if($request->user()->can('update', $post)) 
-            {
-                $post->save();
-                return response(["message"=>'Post was updated'], 201);
+
+        $post->save();
+
+        PostCategory::updateOrCreate(
+            ['postId' => $post->id],
+            ['categoryId' => $request->input('categoryId')]
+        );
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = $post->slug . '.' . $file->getClientOriginalExtension();
+
+            $oldMedia = $post->media()->first();
+            if ($oldMedia) {
+                Storage::disk('public')->delete('uploads/' . basename($oldMedia->filePath));
+                $oldMedia->delete();
             }
-        else return response(['message'=>'Unautharized'], 401);
+
+            $file->storeAs('uploads', $filename, 'public');
+
+            $type = explode('/', $file->getMimeType())[0];
+            Media::create([
+                'postId' => $post->id, 
+                'filePath' => "image/" . $filename, 
+                'kind' => $type, 
+                'uploadedAt' => $post->publishedAt
+            ]);
         }
-        else return response(["message"=>'Post not found'], 404);
+        
+        $tags = json_decode($request->input('tags'));
+        PostTag::where('postId', $post->id)->delete();
+        if(count($tags) > 0)
+        {
+            for($i = 0; $i < count($tags); $i++)
+            {
+                if(!Tag::where('name', $tags[$i])->exists())
+                {
+                    $tag = Tag::create(['name'=>$tags[$i], 'slug'=>str_replace(' ', '_', $tags[$i])]);
+                    PostTag::create(['postId'=>$post->id, 'tagId'=>$tag->id]);
+                }
+                else 
+                {
+                    $tag = Tag::where('name', $tags[$i])->first();
+                    PostTag::create(['postId'=>$post->id, 'tagId'=>$tag->id]);
+                }
+                
+            }
+        }
+
+        return response(["message" => 'Post was updated successfully'], 200);
     }
+    
 
     /**
      * Remove the specified resource from storage.

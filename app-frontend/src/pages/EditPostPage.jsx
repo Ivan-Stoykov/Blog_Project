@@ -55,7 +55,7 @@ export default function EditPostPage() {
     fd.append("slug", title.replace(/[^a-zA-Z0-9 ]/g, "").replace(" ", "-"));
     fd.append("publishedAt", publishedAt);
     fd.append("authorId", localStorage.getItem("id"));
-    const tags = JSON.stringify(fd.get("tags").split(","));
+    const tags = JSON.stringify(fd.get("tags").split(", "));
     fd.set("tags", tags);
     console.log(fd.get("tags"));
     fd.append("_method", "PATCH");
@@ -172,7 +172,7 @@ export default function EditPostPage() {
                 defaultValue={
                   post.post_tags.length > 0
                     ? post.post_tags.length > 1
-                      ? post.post_tags.map((tag) => tag.tag.name + ", ")
+                      ? post.post_tags.map((tag) => tag.tag.name).join(", ")
                       : post.post_tags[0].tag.name
                     : ""
                 }
