@@ -36,7 +36,12 @@ export default function InquiryByTag({
 
     fetchPosts();
   }, [page, tag]);
-    if(!localStorage.getItem('token') && localStorage.getItem('role') != "admin"){ return <Navigate to="/" replace/>;}
+  if (
+    !localStorage.getItem("token") &&
+    localStorage.getItem("role") != "admin"
+  ) {
+    return <Navigate to="/" replace />;
+  }
   function deletePost(post) {
     async function deletePost() {
       console.log(post);
@@ -102,49 +107,57 @@ export default function InquiryByTag({
         <p className="text-center py-8 text-gray-500">Enter Tag!</p>
       )}
       {posts.length > 0 && (
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className={tableHeaderClasses}>Id</th>
-                <th className={tableHeaderClasses}>Title</th>
-                <th className={tableHeaderClasses}>Content</th>
-                <th className={tableHeaderClasses}>Slug</th>
-                <th className={tableHeaderClasses}>Status</th>
-                <th className={tableHeaderClasses}>Author</th>
-                <th className={tableHeaderClasses}>Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {posts.map((post) => (
-                <tr key={post.post.id} className="hover:bg-gray-50">
-                  <td className={tableCellClasses}>{post.post.id}</td>
-                  <td className={tableCellClasses}>{post.post.title}</td>
-                  <td className={tableCellClasses}>{post.post.content}</td>
-                  <td className={tableCellClasses}>{post.post.slug}</td>
-                  <td className={tableCellClasses}>{post.post.status}</td>
-                  <td className={tableCellClasses}>{post.post.author.name}</td>
-                  <td className={`${tableCellClasses} flex space-x-2`}>
-                    <Link
-                      to={`http://localhost:3000/admin/posts/${post.post.id}`}
-                      className={`${actionButtonClasses} bg-blue-500 text-white hover:bg-blue-600`}
-                    >
-                      Edit
-                    </Link>
-                    <button
-                      onClick={() => deletePost(post.post)}
-                      className={`${actionButtonClasses} bg-red-500 text-white hover:bg-red-600`}
-                    >
-                      Delete
-                    </button>
-                  </td>
+        <>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className={tableHeaderClasses}>Id</th>
+                  <th className={tableHeaderClasses}>Title</th>
+                  <th className={tableHeaderClasses}>Content</th>
+                  <th className={tableHeaderClasses}>Slug</th>
+                  <th className={tableHeaderClasses}>Status</th>
+                  <th className={tableHeaderClasses}>Author</th>
+                  <th className={tableHeaderClasses}>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {posts.map((post) => (
+                  <tr key={post.post.id} className="hover:bg-gray-50">
+                    <td className={tableCellClasses}>{post.post.id}</td>
+                    <td className={tableCellClasses}>{post.post.title}</td>
+                    <td className={tableCellClasses}>
+                      {post.post.content.length > 8
+                        ? post.post.content.slice(0, 8).trim() + "..."
+                        : post.post.content}
+                    </td>
+                    <td className={tableCellClasses}>{post.post.slug}</td>
+                    <td className={tableCellClasses}>{post.post.status}</td>
+                    <td className={tableCellClasses}>
+                      {post.post.author.name}
+                    </td>
+                    <td className={`${tableCellClasses} flex space-x-2`}>
+                      <Link
+                        to={`http://localhost:3000/admin/posts/${post.post.id}`}
+                        className={`${actionButtonClasses} bg-blue-500 text-white hover:bg-blue-600`}
+                      >
+                        Edit
+                      </Link>
+                      <button
+                        onClick={() => deletePost(post.post)}
+                        className={`${actionButtonClasses} bg-red-500 text-white hover:bg-red-600`}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Paginator pages={pages.current} currentPage={page} />
+        </>
       )}
-      <Paginator pages={pages.current} currentPage={page} />
     </div>
   );
 }

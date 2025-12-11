@@ -54,7 +54,9 @@ export default function CategoriesCrudPage({
       const response = await resData.json();
       console.log(response);
       if (resData.ok)
-        setCategories((prevPosts) => prevPosts.filter((u) => u.id != category.id));
+        setCategories((prevPosts) =>
+          prevPosts.filter((u) => u.id != category.id)
+        );
     }
     fetchDelete();
   }
@@ -73,46 +75,48 @@ export default function CategoriesCrudPage({
         </Link>
       </div>
       {categories.length == 0 && (
-        <p className="text-center py-8 text-gray-500">Fetching categories...</p>
+        <p className="text-center py-8 text-gray-500">No categories...</p>
       )}
       {categories.length > 0 && (
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className={tableHeaderClasses}>Id</th>
-                <th className={tableHeaderClasses}>Name</th>
-                <th className={tableHeaderClasses}>Slug</th>
-                <th className={tableHeaderClasses}>Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {categories.map((category) => (
-                <tr key={category.id} className="hover:bg-gray-50">
-                  <td className={tableCellClasses}>{category.id}</td>
-                  <td className={tableCellClasses}>{category.name}</td>
-                  <td className={tableCellClasses}>{category.slug}</td>
-                  <td className={`${tableCellClasses} flex space-x-2`}>
-                    <Link
-                      to={`http://localhost:3000/admin/categories/${category.id}`}
-                      className={`${actionButtonClasses} bg-blue-500 text-white hover:bg-blue-600`}
-                    >
-                      Edit
-                    </Link>
-                    <button
-                      onClick={() => deleteComments(category)}
-                      className={`${actionButtonClasses} bg-red-500 text-white hover:bg-red-600`}
-                    >
-                      Delete
-                    </button>
-                  </td>
+        <>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className={tableHeaderClasses}>Id</th>
+                  <th className={tableHeaderClasses}>Name</th>
+                  <th className={tableHeaderClasses}>Slug</th>
+                  <th className={tableHeaderClasses}>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {categories.map((category) => (
+                  <tr key={category.id} className="hover:bg-gray-50">
+                    <td className={tableCellClasses}>{category.id}</td>
+                    <td className={tableCellClasses}>{category.name}</td>
+                    <td className={tableCellClasses}>{category.slug}</td>
+                    <td className={`${tableCellClasses} flex space-x-2`}>
+                      <Link
+                        to={`http://localhost:3000/admin/categories/${category.id}`}
+                        className={`${actionButtonClasses} bg-blue-500 text-white hover:bg-blue-600`}
+                      >
+                        Edit
+                      </Link>
+                      <button
+                        onClick={() => deleteComments(category)}
+                        className={`${actionButtonClasses} bg-red-500 text-white hover:bg-red-600`}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Paginator pages={pages.current} currentPage={page} />
+        </>
       )}
-      <Paginator pages={pages.current} currentPage={page} />
     </div>
   );
 }

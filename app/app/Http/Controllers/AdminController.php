@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\PostCategory;
 use App\Models\PostTag;
 use App\Models\Post;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -45,6 +46,13 @@ class AdminController extends Controller
     {
         $dates = explode('|',$period);
         $posts = Post::with('author')->whereBetween('publishedAt', [$dates[0], $dates[1]])->paginate(10);
+        
+        return response( $posts, 200);
+    }
+
+    public function showNumberPostsByAuthor()
+    {
+        $posts = User::withCount('posts')->having('posts_count', '>', 0)->paginate(10);
         
         return response( $posts, 200);
     }

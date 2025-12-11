@@ -46,11 +46,6 @@ export default function CategoriesList() {
             </div>
           ))}
 
-        {categories.length === 0 && (
-          <span className="flex items-center justify-between font-medium">
-            Няма категории!
-          </span>
-        )}
       </div>
     </div>
   );

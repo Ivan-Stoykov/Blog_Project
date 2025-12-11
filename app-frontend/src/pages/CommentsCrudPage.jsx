@@ -67,46 +67,52 @@ export default function CommentsCrudPage({
         </h2>
       </div>
       {comments.length == 0 && (
-        <p className="text-center py-8 text-gray-500">Fetching comments...</p>
+        <p className="text-center py-8 text-gray-500">No comments...</p>
       )}
       {comments.length > 0 && (
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className={tableHeaderClasses}>Id</th>
-                <th className={tableHeaderClasses}>Comment</th>
-                <th className={tableHeaderClasses}>Created At</th>
-                <th className={tableHeaderClasses}>Post</th>
-                <th className={tableHeaderClasses}>Status</th>
-                <th className={tableHeaderClasses}>Author</th>
-                <th className={tableHeaderClasses}>Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {comments.map((comment) => (
-                <tr key={comment.id} className="hover:bg-gray-50">
-                  <td className={tableCellClasses}>{comment.id}</td>
-                  <td className={tableCellClasses}>{comment.body}</td>
-                  <td className={tableCellClasses}>{comment.createdAt}</td>
-                  <td className={tableCellClasses}>{comment.post.title}</td>
-                  <td className={tableCellClasses}>{comment.status}</td>
-                  <td className={tableCellClasses}>{comment.author.name}</td>
-                  <td className={`${tableCellClasses} flex space-x-2`}>
-                    <button
-                      onClick={() => deleteComments(comment)}
-                      className={`${actionButtonClasses} bg-red-500 text-white hover:bg-red-600`}
-                    >
-                      Delete
-                    </button>
-                  </td>
+        <>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className={tableHeaderClasses}>Id</th>
+                  <th className={tableHeaderClasses}>Comment</th>
+                  <th className={tableHeaderClasses}>Created At</th>
+                  <th className={tableHeaderClasses}>Post</th>
+                  <th className={tableHeaderClasses}>Status</th>
+                  <th className={tableHeaderClasses}>Author</th>
+                  <th className={tableHeaderClasses}>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {comments.map((comment) => (
+                  <tr key={comment.id} className="hover:bg-gray-50">
+                    <td className={tableCellClasses}>{comment.id}</td>
+                    <td className={tableCellClasses}>
+                      {comment.body.length > 8
+                        ? comment.body.slice(0, 8).trim() + "..."
+                        : comment.body}
+                    </td>
+                    <td className={tableCellClasses}>{comment.createdAt}</td>
+                    <td className={tableCellClasses}>{comment.post.title}</td>
+                    <td className={tableCellClasses}>{comment.status}</td>
+                    <td className={tableCellClasses}>{comment.author.name}</td>
+                    <td className={`${tableCellClasses} flex space-x-2`}>
+                      <button
+                        onClick={() => deleteComments(comment)}
+                        className={`${actionButtonClasses} bg-red-500 text-white hover:bg-red-600`}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Paginator pages={pages.current} currentPage={page} />
+        </>
       )}
-      <Paginator pages={pages.current} currentPage={page} />
     </div>
   );
 }

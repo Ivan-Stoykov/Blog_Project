@@ -4,6 +4,7 @@ import InquiryByAuthor from "./InquiryByAuthor";
 import InquiryByCategory from "./InquiryByCategory";
 import InquiryByPeriod from "./InquiryByPeriod";
 import InquiryByTag from "./InquiryByTag";
+import InquiryNumberPosts from "./InquiryNumberPosts";
 
 export default function InquiriesPage() {
   const cardClasses = "bg-white p-6 shadow-xl rounded-xl";
@@ -105,6 +106,23 @@ export default function InquiriesPage() {
                 }}
               >
                 By Tag
+              </button>
+            </li>
+            <li>
+              <button
+                className={`w-full text-left p-3 rounded-lg font-medium transition duration-150 text-gray-700 hover:bg-gray-100`}
+                onClick={() => {
+                  setContent(
+                    <InquiryNumberPosts
+                      cardClasses={cardClasses}
+                      tableHeaderClasses={tableHeaderClasses}
+                      tableCellClasses={tableCellClasses}
+                    />
+                  );
+
+                }}
+              >
+                Posts count
               </button>
             </li>
           </ul>

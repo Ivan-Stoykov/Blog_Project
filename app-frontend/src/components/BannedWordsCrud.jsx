@@ -13,8 +13,6 @@ export default function AddBannedWord({
   let pages = useRef();
   let page = getParams.get("page");
 
-  
-
   useEffect(() => {
     async function fetchWords() {
       const response = await fetch(
@@ -74,39 +72,41 @@ export default function AddBannedWord({
       </div>
       {!words && (
         <p className="text-center py-8 text-gray-500">
-          Fetching banned words...
+          No banned words...
         </p>
       )}
       {words && (
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className={tableHeaderClasses}>Id</th>
-                <th className={tableHeaderClasses}>Word</th>
-                <th className={tableHeaderClasses}>Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {words.map((word) => (
-                <tr key={word.id} className="hover:bg-gray-50">
-                  <td className={tableCellClasses}>{word.id}</td>
-                  <td className={tableCellClasses}>{word.word}</td>
-                  <td className={`${tableCellClasses} flex space-x-2`}>
-                    <button
-                      className={`${actionButtonClasses} bg-red-500 text-white hover:bg-red-600`}
-                      onClick={() => handleDelete(word)}
-                    >
-                      Delete
-                    </button>
-                  </td>
+        <>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className={tableHeaderClasses}>Id</th>
+                  <th className={tableHeaderClasses}>Word</th>
+                  <th className={tableHeaderClasses}>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {words.map((word) => (
+                  <tr key={word.id} className="hover:bg-gray-50">
+                    <td className={tableCellClasses}>{word.id}</td>
+                    <td className={tableCellClasses}>{word.word}</td>
+                    <td className={`${tableCellClasses} flex space-x-2`}>
+                      <button
+                        className={`${actionButtonClasses} bg-red-500 text-white hover:bg-red-600`}
+                        onClick={() => handleDelete(word)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Paginator pages={pages.current} currentPage={page} />
+        </>
       )}
-      <Paginator pages={pages.current} currentPage={page} />
     </div>
   );
 }

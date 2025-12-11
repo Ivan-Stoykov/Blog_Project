@@ -64,9 +64,10 @@ export default function TagsCrudPage({
         </h2>
       </div>
       {tags.length == 0 && (
-        <p className="text-center py-8 text-gray-500">Fetching tags...</p>
+        <p className="text-center py-8 text-gray-500">No tags...</p>
       )}
       {tags.length > 0 && (
+        <>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -102,8 +103,10 @@ export default function TagsCrudPage({
             </tbody>
           </table>
         </div>
+        <Paginator pages={pages.current} currentPage={page} />
+        </>
       )}
-      <Paginator pages={pages.current} currentPage={page} />
+      
     </div>
   );
 }

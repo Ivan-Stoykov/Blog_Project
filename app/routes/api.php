@@ -44,6 +44,7 @@ Route::post('categories', [CategoriesController::class, 'store'])->middleware('a
 Route::get('categories-id/{id}', [CategoriesController::class, 'showId']);
 Route::get('categories-paginate', [CategoriesController::class, 'indexPaginate']);
 //Route::apiResource('users', UserController::class);
+Route::get('admin/authorPosts', [AdminController::class, 'showNumberPostsByAuthor']);
 Route::get('admin/byCategory/{category}', [AdminController::class, 'showByPostCategory']);
 Route::get('admin/byTag/{tag}', [AdminController::class, 'showByPostTag']);
 Route::get('admin/byAuthor/{author}', [AdminController::class, 'showByPostAuthor']);
