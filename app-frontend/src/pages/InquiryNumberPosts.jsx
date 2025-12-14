@@ -59,6 +59,8 @@ export default function InquiryNumberPosts({
                   <th className={tableHeaderClasses}>Author</th>
                   <th className={tableHeaderClasses}>Email</th>
                   <th className={tableHeaderClasses}>Post Count</th>
+                  <th className={tableHeaderClasses}>Published Count</th>
+                  <th className={tableHeaderClasses}>Draft Count</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -68,6 +70,8 @@ export default function InquiryNumberPosts({
                     <td className={tableCellClasses}>{post.name}</td>
                     <td className={tableCellClasses}>{post.email}</td>
                     <td className={tableCellClasses}>{post.posts_count}</td>
+                    <td className={tableCellClasses}>{post.published_posts_count}</td>
+                    <td className={tableCellClasses}>{post.draft_posts_count}</td>
                   </tr>
                 ))}
               </tbody>

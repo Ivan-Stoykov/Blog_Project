@@ -52,7 +52,19 @@ class AdminController extends Controller
 
     public function showNumberPostsByAuthor()
     {
-        $posts = User::withCount('posts')->having('posts_count', '>', 0)->paginate(10);
+        $posts = User::withCount([
+            'posts',
+
+            'posts as draft_posts_count' => function ($q) {
+                $q->where('status', 'draft');
+            },
+
+            'posts as published_posts_count' => function ($q) {
+                $q->where('status', 'published');
+            },
+        ])
+        ->having('posts_count', '>', 0)
+        ->paginate(10);
         
         return response( $posts, 200);
     }
