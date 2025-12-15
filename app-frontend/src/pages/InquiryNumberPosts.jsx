@@ -20,6 +20,7 @@ export default function InquiryNumberPosts({
         {
           headers: {
             Accept: "application/json",
+            Authorization: "Bearer " + localStorage.getItem('token') 
           },
         }
       );

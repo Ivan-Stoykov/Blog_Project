@@ -9,6 +9,7 @@ use \App\Models\Category;
 use \App\Policies\UserPolicy;
 use \App\Policies\PostPolicy;
 use \App\Policies\CategoryPolicy;
+use \App\Policies\DashboardPolicy;
 use Illuminate\Support\Facades\Log;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     User::class => UserPolicy::class,
     Post::class => PostPolicy::class,
     Category::class => CategoryPolicy::class,
+    DashboardPolicy::class => DashboardPolicy::class
     ];
     /**
      * Register any application services.
@@ -31,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $policies;
         Log::info('*** LOGGING IS ACTIVE ***'); // Test line
     }
 }

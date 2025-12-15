@@ -35,8 +35,8 @@ export default function EditCategory() {
     const slug = category.replace(" ", "-");
 
     async function createCategory() {
-      const response = await fetch("http://localhost:8000/api/categories", {
-        method: "POST",
+      const response = await fetch(`http://localhost:8000/api/categories/${id}`, {
+        method: "PATCH",
         body: JSON.stringify({ name: category, slug }),
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +63,7 @@ export default function EditCategory() {
     {category && <div className="flex-grow flex items-center justify-center py-10 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md bg-white p-8 shadow-xl rounded-xl">
         <h1 className="text-3xl font-serif font-bold text-gray-900 mb-6 border-b pb-4 text-center">
-          Add Category
+          Edit Category
         </h1>
         {errors &&
           errors.map((e) => (

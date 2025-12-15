@@ -106,23 +106,6 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
-        // $post = Post::find($id);
-        // if($post){
-        // $post->title = $request->input('title');
-        // $post->slug = $request->input('slug');
-        // $post->content = $request->input('content');
-        // $post->authorId = $request->input('authorId');
-        // $post->publishedAt = $request->input('publishedAt');
-        // $post->status = $request->input('status');
-        // if($request->user()->can('update', $post)) 
-        //     {
-        //         $post->save();
-        //         return response(["message"=>'Post was updated'], 201);
-        //     }
-        // else return response(['message'=>'Unautharized'], 401);
-        // }
-        // else return response(["message"=>'Post not found'], 404);
         $post = Post::find($id);
 
         if (!$post) {

@@ -10,6 +10,7 @@ use App\Http\Controllers\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Policies\DashboardPolicy;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -41,14 +42,15 @@ Route::post('comments', [CommentController::class, 'store'])->middleware('auth:s
 Route::delete('comments/{id}', [CommentController::class, 'destroy'])->middleware('auth:sanctum');
 Route::apiResource('categories', CategoriesController::class)->only(['index', 'show']);
 Route::post('categories', [CategoriesController::class, 'store'])->middleware('auth:sanctum');
+Route::patch('categories/{id}', [CategoriesController::class, 'update'])->middleware('auth:sanctum');
+Route::delete('categories/{id}', [CategoriesController::class, 'destroy'])->middleware('auth:sanctum');
 Route::get('categories-id/{id}', [CategoriesController::class, 'showId']);
 Route::get('categories-paginate', [CategoriesController::class, 'indexPaginate']);
-//Route::apiResource('users', UserController::class);
-Route::get('admin/authorPosts', [AdminController::class, 'showNumberPostsByAuthor']);
-Route::get('admin/byCategory/{category}', [AdminController::class, 'showByPostCategory']);
-Route::get('admin/byTag/{tag}', [AdminController::class, 'showByPostTag']);
-Route::get('admin/byAuthor/{author}', [AdminController::class, 'showByPostAuthor']);
-Route::get('admin/byPeriod/{period}', [AdminController::class, 'showByPostPublishedAt']);
+Route::get('admin/authorPosts', [AdminController::class, 'showNumberPostsByAuthor'])->middleware('can:view,' . DashboardPolicy::class)->middleware('auth:sanctum');
+Route::get('admin/byCategory/{category}', [AdminController::class, 'showByPostCategory'])->middleware('can:view,' . DashboardPolicy::class)->middleware('auth:sanctum');
+Route::get('admin/byTag/{tag}', [AdminController::class, 'showByPostTag'])->middleware('can:view,' . DashboardPolicy::class)->middleware('auth:sanctum');
+Route::get('admin/byAuthor/{author}', [AdminController::class, 'showByPostAuthor'])->middleware('can:view,' . DashboardPolicy::class)->middleware('auth:sanctum');
+Route::get('admin/byPeriod/{period}', [AdminController::class, 'showByPostPublishedAt'])->middleware('can:view,' . DashboardPolicy::class)->middleware('auth:sanctum');
 Route::get('users', [UserController::class, 'index']);
 Route::delete('users/{id}', [UserController::class, 'destroy'])->name('users.destroy')->middleware('auth:sanctum');
 Route::get('users/{id}', [UserController::class, 'show']);

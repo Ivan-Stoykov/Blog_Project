@@ -25,6 +25,7 @@ export default function InquiryByPeriod({
         {
           headers: {
             Accept: "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
           },
         }
       );

@@ -25,6 +25,7 @@ export default function InquiryByCategory({
         {
           headers: {
             Accept: "application/json",
+            Authorization: "Bearer " + localStorage.getItem('token') 
           },
         }
       );
@@ -39,6 +40,7 @@ export default function InquiryByCategory({
       const response = await fetch(`http://localhost:8000/api/categories`, {
         headers: {
           Accept: "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
       });
       let fetchCategories = await response.json();

@@ -76,7 +76,21 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:3',
+            'slug' => 'required|min:3',
+        ]);
+        if($validator->fails()){
+            return response(["ValidationError"=>$validator->errors()], 400);       
+        }
+        $tag = Category::find($id);
+        if($tag){
+        $tag->name = $request->input('name');
+        $tag->slug = $request->input('slug');
+        $tag->save();
+        return response(["message"=>"Category edited"]);
+         }
+        else return response(["message"=>'Category not found'], 404);
     }
 
     /**
@@ -84,6 +98,12 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::find($id);
+        if($category){
+            if(Gate::authorize('delete', $category))
+            $category->delete();
+            return response(["message"=>'Category was deleted'], 200);
+        }
+        else return response(["message"=>'Category not found'], 404);
     }
 }

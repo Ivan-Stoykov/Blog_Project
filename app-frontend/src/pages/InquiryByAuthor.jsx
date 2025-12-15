@@ -24,6 +24,7 @@ export default function InquiryByAuthor({
         {
           headers: {
             Accept: "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
           },
         }
       );
