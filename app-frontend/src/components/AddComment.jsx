@@ -23,7 +23,6 @@ export default function AddComment({ postId, setComments }) {
       authorId: localStorage.getItem("id"),
       createdAt,
     };
-    console.log(comment);
 
     async function createPost() {
       const response = await fetch("http://localhost:8000/api/comments", {
@@ -37,7 +36,6 @@ export default function AddComment({ postId, setComments }) {
       });
 
       const resData = await response.json();
-      console.log(resData);
 
       if (response.ok) {
         setComments((prevComments) => [resData, ...prevComments]);

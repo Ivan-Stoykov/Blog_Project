@@ -12,7 +12,6 @@ export default function DraftsPage() {
 
   useEffect(() => {
     async function fetchPosts() {
-      console.log(page, "page");
       const response = await fetch(
         `http://localhost:8000/api/posts/drafts/${localStorage.getItem(
           "id"
@@ -39,7 +38,6 @@ export default function DraftsPage() {
 
   function handleDelete(post) {
     async function deletePost() {
-      console.log(post);
       const response = await fetch(
         "http://localhost:8000/api/posts/" + post.id,
         {
@@ -50,8 +48,7 @@ export default function DraftsPage() {
           },
         }
       );
-      const resData = await response.json();
-      console.log(resData);
+      //const resData = await response.json();
       if (response.ok)
         setPosts((prevPosts) => prevPosts.filter((p) => p.id != post.id));
     }

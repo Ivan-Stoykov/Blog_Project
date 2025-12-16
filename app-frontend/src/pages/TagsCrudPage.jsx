@@ -38,7 +38,6 @@ export default function TagsCrudPage({
   ) {
     return <Navigate to="/" replace />;
   }
-  console.log(tags);
   function deleteTag(tag) {
     async function fetchDelete() {
       const resData = await fetch(`http://localhost:8000/api/tags/${tag.id}`, {
@@ -48,8 +47,7 @@ export default function TagsCrudPage({
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       });
-      const response = await resData.json();
-      console.log(response);
+      //const response = await resData.json();
       if (resData.ok)
         setTags((prevTags) => prevTags.filter((u) => u.id != tag.id));
     }

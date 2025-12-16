@@ -14,7 +14,6 @@ export default function InquiryNumberPosts({
 
   useEffect(() => {
     async function fetchPosts() {
-      console.log(page, "page");
       const response = await fetch(
         `http://localhost:8000/api/admin/authorPosts?page=${page}`,
         {
@@ -28,7 +27,6 @@ export default function InquiryNumberPosts({
       if (response.ok) {
         pages.current = fetchedPosts.last_page;
         setPosts(fetchedPosts.data);
-        console.log(fetchedPosts.data);
       }
     }
 

@@ -18,7 +18,7 @@ export default function EditUserPage() {
     fetchUser();
   }, [params.id]);
   if (
-    !localStorage.getItem("token") &&
+    !localStorage.getItem("token") ||
     localStorage.getItem("role") != "admin"
   ) {
     return <Navigate to="/" replace />;
@@ -30,7 +30,6 @@ export default function EditUserPage() {
     const name = fd.get("name");
     const email = fd.get("email");
     const role = fd.get("role");
-    console.log({ name, email, role });
 
     async function editUser() {
       const response = await fetch(
@@ -47,11 +46,9 @@ export default function EditUserPage() {
       );
 
       const resData = await response.json();
-      console.log(resData);
       if (response.ok) navigate("/admin");
       else {
         setErrors(Object.values(resData.ValidationError));
-        console.log(errors);
       }
     }
 

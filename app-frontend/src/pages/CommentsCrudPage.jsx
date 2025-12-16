@@ -38,7 +38,6 @@ export default function CommentsCrudPage({
   ) {
     return <Navigate to="/" replace />;
   }
-  console.log(comments);
   function deleteComments(comment) {
     async function fetchDelete() {
       const resData = await fetch(
@@ -51,8 +50,7 @@ export default function CommentsCrudPage({
           },
         }
       );
-      const response = await resData.json();
-      console.log(response);
+      //const response = await resData.json();
       if (resData.ok)
         setComments((prevPosts) => prevPosts.filter((u) => u.id != comment.id));
     }

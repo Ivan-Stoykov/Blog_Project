@@ -19,7 +19,6 @@ export default function InquiryByCategory({
 
   useEffect(() => {
     async function fetchPosts() {
-      console.log(page, "page");
       const response = await fetch(
         `http://localhost:8000/api/admin/byCategory/${category}?page=${page}`,
         {
@@ -33,7 +32,6 @@ export default function InquiryByCategory({
       if (response.ok) {
         pages.current = fetchedPosts.last_page;
         setPosts(fetchedPosts.data.map((post) => post.post));
-        console.log(fetchedPosts.data);
       }
     }
     async function fetchCategories() {
@@ -46,7 +44,6 @@ export default function InquiryByCategory({
       let fetchCategories = await response.json();
       if (response.ok) {
         setCategories(fetchCategories);
-        console.log(fetchCategories);
       }
     }
 
@@ -96,7 +93,6 @@ export default function InquiryByCategory({
           </select>
           <button
           onClick={()=>{setCategory(()=>field.current.value)
-            console.log(field.current.value, 'field');
           }}
            className="w-full sm:w-1/4 px-4 py-3 bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 transition duration-150 flex items-center justify-center space-x-2">
             <svg

@@ -38,7 +38,6 @@ export default function CategoriesCrudPage({
   ) {
     return <Navigate to="/" replace />;
   }
-  console.log(categories);
   function deleteComments(category) {
     async function fetchDelete() {
       const resData = await fetch(
@@ -51,8 +50,7 @@ export default function CategoriesCrudPage({
           },
         }
       );
-      const response = await resData.json();
-      console.log(response);
+      //const response = await resData.json();
       if (resData.ok)
         setCategories((prevPosts) =>
           prevPosts.filter((u) => u.id != category.id)

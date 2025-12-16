@@ -50,8 +50,7 @@ export default function UsersCrudPage({
           },
         }
       );
-      const response = await resData.json();
-      console.log(response);
+      //const response = await resData.json();
       if (resData.ok)
         setUsers((prevUsers) => prevUsers.filter((u) => u.id != user.id));
     }

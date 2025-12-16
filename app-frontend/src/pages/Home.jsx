@@ -3,6 +3,7 @@ import CategoriesList from "../components/CategoriesList";
 import PostList from "../components/PostList";
 import Paginator from "../components/Paginator";
 import { useSearchParams } from "react-router-dom";
+import SearchByTag from "../components/SearchByTag";
 
 export default function Home() {
   const [getParams] = useSearchParams();
@@ -12,7 +13,6 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchPosts() {
-      console.log(page, "page");
       const response = await fetch(
         `http://localhost:8000/api/posts?page=${page}`,
         {
@@ -25,7 +25,6 @@ export default function Home() {
       if (response.ok) {
         pages.current = fetchedPosts.last_page;
         setPosts(fetchedPosts.data);
-        console.log(fetchedPosts);
       }
     }
 
@@ -34,7 +33,6 @@ export default function Home() {
 
   function handleDelete(post) {
     async function deletePost() {
-      console.log(post);
       const response = await fetch(
         "http://localhost:8000/api/posts/" + post.id,
         {
@@ -45,8 +43,7 @@ export default function Home() {
           },
         }
       );
-      const resData = await response.json();
-      console.log(resData);
+      //const resData = await response.json();
       if (response.ok)
         setPosts((prevPosts) => prevPosts.filter((p) => p.id != post.id));
     }
@@ -61,9 +58,12 @@ export default function Home() {
           </h2>
         </div>
         <PostList posts={posts} handleDelete={handleDelete} />
-        {posts && posts.length > 0 && <Paginator pages={pages.current} currentPage={page} />}
+        {posts && posts.length > 0 && (
+          <Paginator pages={pages.current} currentPage={page} />
+        )}
       </div>
       <aside className="lg:sticky lg:top-6 h-fit">
+        <SearchByTag/>
         <CategoriesList />
       </aside>
     </div>

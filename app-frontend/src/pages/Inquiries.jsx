@@ -22,7 +22,7 @@ export default function InquiriesPage() {
     />
   );
   if (
-    !localStorage.getItem("token") &&
+    !localStorage.getItem("token") ||
     localStorage.getItem("role") != "admin"
   ) {
     return <Navigate to="/" replace />;

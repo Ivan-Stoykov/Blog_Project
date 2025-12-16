@@ -39,7 +39,6 @@ class LoginController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required|min:8',
         ]);
         if($validator->fails()){
             return response(["ValidationError"=>$validator->errors()], 400);       
@@ -49,7 +48,7 @@ class LoginController extends Controller
             $user['token'] =  $user->createToken('MyApp')->plainTextToken; 
             return response($user, 200);
         }else{
-            return  response(["message"=>"Wrong credentials"],404);
+            return  response(["ValidationError"=>["Wrong credentials"]],404);
         } 
     }
 

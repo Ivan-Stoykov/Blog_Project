@@ -30,7 +30,7 @@ export default function Post({ post, author, handleDelete }) {
       </div>
       {localStorage.getItem("token") &&
         (localStorage.getItem("role") == "editor" ||
-          localStorage.getItem("role") == "admin") && (
+          localStorage.getItem("role") == "admin" || post.author.id == localStorage.getItem('id')) && (
           <div className="flex space-x-2">
             <Link to={`/edit-post/${post.id}`} className="px-3 py-1 text-xs font-medium rounded-full transition duration-150 bg-blue-500 text-white hover:bg-blue-600">Edit</Link>
             <DeleteButton

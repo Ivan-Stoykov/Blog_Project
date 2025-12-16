@@ -5,8 +5,8 @@ export default function AddCategory() {
   const [errors, setErrors] = useState();
   const navigate = useNavigate();
   if (
-    !localStorage.getItem("token") &&
-    (localStorage.getItem("role") != "admin" ||
+    !localStorage.getItem("token") ||
+    (localStorage.getItem("role") != "admin" &&
       localStorage.getItem("role") != "editor")
   ) {
     return <Navigate to="/" replace />;
@@ -30,11 +30,9 @@ export default function AddCategory() {
       });
 
       const resData = await response.json();
-      console.log(resData);
       if (response.ok) navigate("/admin");
       else {
         setErrors(Object.values(resData.ValidationError));
-        console.log(errors);
       }
     }
 

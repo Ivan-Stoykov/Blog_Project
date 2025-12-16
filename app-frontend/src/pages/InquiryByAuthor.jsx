@@ -17,8 +17,6 @@ export default function InquiryByAuthor({
 
   useEffect(() => {
     async function fetchPosts() {
-      console.log(page, "page");
-      console.log(author, "author");
       const response = await fetch(
         `http://localhost:8000/api/admin/byAuthor/${author}?page=${page}`,
         {
@@ -32,7 +30,6 @@ export default function InquiryByAuthor({
       if (response.ok) {
         pages.current = fetchedPosts.last_page;
         setPosts(fetchedPosts.data);
-        console.log(fetchedPosts);
       }
     }
 
@@ -46,7 +43,6 @@ export default function InquiryByAuthor({
   }
   function deletePost(post) {
     async function deletePost() {
-      console.log(post);
       const response = await fetch(
         "http://localhost:8000/api/posts/" + post.id,
         {
@@ -57,8 +53,7 @@ export default function InquiryByAuthor({
           },
         }
       );
-      const resData = await response.json();
-      console.log(resData);
+      //const resData = await response.json();
       if (response.ok)
         setPosts((prevPosts) => prevPosts.filter((p) => p.id != post.id));
     }

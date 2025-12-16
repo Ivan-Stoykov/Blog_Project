@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BannedWords;
 use Symfony\Component\HttpFoundation\Response;
+use Validator;
 
 class bannedwordsController extends Controller
 {
@@ -45,7 +46,7 @@ class bannedwordsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        
     }
 
     /**

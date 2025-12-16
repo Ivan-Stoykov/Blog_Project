@@ -23,11 +23,9 @@ export default function Register() {
       });
 
       const resData = await response.json();
-      console.log(resData);
       if(response.ok)
         navigate('/login');
       else {setErrors(Object.values(resData.ValidationError))
-        console.log(errors);
       };
     }
 

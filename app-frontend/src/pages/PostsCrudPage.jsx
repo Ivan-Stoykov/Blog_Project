@@ -38,7 +38,6 @@ export default function PostsCrudPage({
   ) {
     return <Navigate to="/" replace />;
   }
-  console.log(posts);
   function deletePost(post) {
     async function fetchDelete() {
       const resData = await fetch(
@@ -51,8 +50,7 @@ export default function PostsCrudPage({
           },
         }
       );
-      const response = await resData.json();
-      console.log(response);
+      //const response = await resData.json();
       if (resData.ok)
         setPosts((prevPosts) => prevPosts.filter((u) => u.id != post.id));
     }

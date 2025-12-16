@@ -11,28 +11,28 @@ import AddCategory from "./pages/AddCategory";
 import CategoryPage from "./pages/CategoryPage";
 import EditUserPage from "./pages/EditUserPage";
 import AddBannedWord from "./pages/AddBannedWordsPage";
-import InquiryByAuthor from "./pages/InquiryByAuthor";
-import InquiryByTag from "./pages/InquiryByTag";
-import InquiryByPeriod from "./pages/InquiryByPeriod";
-import InquiryByCategory from "./pages/InquiryByCategory";
 import DraftsPage from "./pages/DraftsPage";
 import EditPostPage from "./pages/EditPostPage";
 import AdminPage from "./pages/AdminPage";
 import TagsEditPage from "./pages/TagsEditPage";
 import EditCategory from "./pages/EditCategory";
 import InquiriesPage from "./pages/Inquiries";
+import NotFound from "./pages/NotFound";
+import PostTags from "./pages/PostTags";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     children: [
+      { path: "*", element: <NotFound /> },
       { path: "", element: <Home /> },
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
       { path: "create-post", element: <CreatePost /> },
       { path: "post/:slug", element: <Post /> },
       { path: "category/:slug", element: <CategoryPage /> },
+      { path: "tag/:slug", element: <PostTags /> },
       { path: "drafts", element: <DraftsPage /> },
       { path: "edit-post/:id", element: <EditPostPage /> },
       {

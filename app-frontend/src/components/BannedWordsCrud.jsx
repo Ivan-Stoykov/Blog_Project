@@ -28,7 +28,6 @@ export default function AddBannedWord({
       if (response.ok) {
         pages.current = fetchedWords.last_page;
         setWords(fetchedWords.data);
-        console.log(fetchedWords);
       }
     }
 
@@ -49,8 +48,7 @@ export default function AddBannedWord({
           },
         }
       );
-      const resData = await response.json();
-      console.log(resData);
+      //const resData = await response.json();
       if (response.ok)
         setWords((prevWords) => prevWords.filter((w) => w.id != word.id));
     }

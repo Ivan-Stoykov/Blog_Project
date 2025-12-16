@@ -20,8 +20,8 @@ export default function EditCategory() {
       fetchCategory();
     }, [id]);
   if (
-    !localStorage.getItem("token") &&
-    (localStorage.getItem("role") != "admin" ||
+    !localStorage.getItem("token") ||
+    (localStorage.getItem("role") != "admin" &&
       localStorage.getItem("role") != "editor")
   ) {
     return <Navigate to="/" replace />;
@@ -46,11 +46,9 @@ export default function EditCategory() {
       });
 
       const resData = await response.json();
-      console.log(resData);
       if (response.ok) navigate("/admin");
       else {
         setErrors(Object.values(resData.ValidationError));
-        console.log(errors);
       }
     }
 

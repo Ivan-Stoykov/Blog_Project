@@ -210,4 +210,20 @@ class PostController extends Controller
         if($posts){return response( $posts, 200);}
         else return response(["message"=>'Posts not found'], 404);
     }
+
+    public function PostsByTag(string $tag)
+    {
+        $posts = PostTag::with('post.author')->with('post.media')->with('post.postTags.tag')->with('tag')->with('post.postCategories.category')
+        ->whereHas('tag', function($q) use ($tag)
+        {
+            $q->where('slug', $tag);
+        })
+        ->whereHas('post', function($q)
+        {
+            $q->where('status', '!=', 'draft');
+        })
+        ->paginate(10);
+
+        return response( $posts, 200);
+    }
 }

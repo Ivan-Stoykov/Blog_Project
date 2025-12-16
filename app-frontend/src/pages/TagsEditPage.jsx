@@ -19,13 +19,12 @@ export default function TagsEditPage() {
         }
       );
       const resData = await response.json();
-      console.log(resData, "fetch");
       setTag(resData);
     }
     fetchTag();
   }, [params.id]);
   if (
-    !localStorage.getItem("token") &&
+    !localStorage.getItem("token") ||
     localStorage.getItem("role") != "admin"
   ) {
     return <Navigate to="/" replace />;
@@ -36,7 +35,6 @@ export default function TagsEditPage() {
     const fd = new FormData(event.target);
     const name = fd.get("name");
     const slug = fd.get("slug");
-    console.log({ tag });
 
     async function editTag() {
       const response = await fetch(`http://localhost:8000/api/tags/${tag.id}`, {
@@ -52,11 +50,9 @@ export default function TagsEditPage() {
       const resData = await response.json();
 
       if (response.ok) {
-        console.log(resData);
         navigate("/admin");
       } else {
         setErrors(Object.values(resData.ValidationError));
-        console.log(errors);
       }
     }
 

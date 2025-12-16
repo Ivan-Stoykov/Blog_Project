@@ -22,7 +22,6 @@ export default function Post() {
       const comments = await response.json();
 
       setComments(comments);
-      console.log(post);
     }
     fetchPost();
   }, [params.slug]);
@@ -39,8 +38,7 @@ export default function Post() {
           },
         }
       );
-      const resData = await response.json();
-      console.log(resData);
+      //const resData = await response.json();
       if (response.ok)
         setComments((prevComments) =>
           prevComments.filter((c) => c.id != comment.id)
@@ -100,7 +98,7 @@ export default function Post() {
                   <Comments key={comment.id} comment={comment} />
                   {localStorage.getItem("token") &&
                     (localStorage.getItem("role") == "editor" ||
-                      localStorage.getItem("admin") == "admin") && (
+                      localStorage.getItem("admin") == "admin" || comment.authorId == localStorage.getItem('id')) && (
                       <DeleteButton
                         handleDelete={() => handleDelete(comment)}
                       />

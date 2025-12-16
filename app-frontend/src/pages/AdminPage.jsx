@@ -23,8 +23,8 @@ export default function AdminPage() {
     />
   );
   if (
-    !localStorage.getItem("token") &&
-    localStorage.getItem("role") != "admin"
+    !localStorage.getItem("token") ||
+    localStorage.getItem("role") !== "admin"
   ) {
     return <Navigate to="/" replace />;
   }

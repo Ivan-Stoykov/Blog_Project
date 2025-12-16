@@ -17,7 +17,6 @@ export default function InquiryByTag({
 
   useEffect(() => {
     async function fetchPosts() {
-      console.log(page, "page");
       const response = await fetch(
         `http://localhost:8000/api/admin/byTag/${tag}?page=${page}`,
         {
@@ -31,7 +30,6 @@ export default function InquiryByTag({
       if (response.ok) {
         pages.current = fetchedPosts.last_page;
         setPosts(fetchedPosts.data);
-        console.log(fetchedPosts);
       }
     }
 
@@ -45,7 +43,6 @@ export default function InquiryByTag({
   }
   function deletePost(post) {
     async function deletePost() {
-      console.log(post);
       const response = await fetch(
         "http://localhost:8000/api/posts/" + post.id,
         {
@@ -56,8 +53,7 @@ export default function InquiryByTag({
           },
         }
       );
-      const resData = await response.json();
-      console.log(resData);
+      //const resData = await response.json();
       if (response.ok)
         setPosts((prevPosts) => prevPosts.filter((p) => p.id != post.id));
     }

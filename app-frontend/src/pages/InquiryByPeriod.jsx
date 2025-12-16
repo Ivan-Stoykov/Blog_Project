@@ -18,8 +18,6 @@ export default function InquiryByPeriod({
 
   useEffect(() => {
     async function fetchPosts() {
-      console.log(page, "page");
-      console.log(period, "period");
       const response = await fetch(
         `http://localhost:8000/api/admin/byPeriod/${period}?page=${page || 1}`,
         {
@@ -33,7 +31,6 @@ export default function InquiryByPeriod({
       if (response.ok) {
         pages.current = fetchedPosts.last_page;
         setPosts(fetchedPosts.data);
-        console.log(fetchedPosts.data);
       }
     }
 
@@ -47,7 +44,6 @@ export default function InquiryByPeriod({
   }
   function deletePost(post) {
     async function deletePost() {
-      console.log(post);
       const response = await fetch(
         "http://localhost:8000/api/posts/" + post.id,
         {
@@ -58,8 +54,7 @@ export default function InquiryByPeriod({
           },
         }
       );
-      const resData = await response.json();
-      console.log(resData);
+      //const resData = await response.json();
       if (response.ok)
         setPosts((prevPosts) => prevPosts.filter((p) => p.id != post.id));
     }

@@ -29,35 +29,27 @@ export default function EditPostPage() {
   }, [id]);
   if (
     !localStorage.getItem("token") &&
-    localStorage.getItem("role") != "admin"
+    (localStorage.getItem("role") != "admin" || localStorage.getItem("role") != "editor")
   ) {
     return <Navigate to="/" replace />;
   }
-  console.log("categories", categories);
   function handleSubmit(event) {
     event.preventDefault();
 
     const fd = new FormData(event.target);
     const title = fd.get("title");
-    // const content = fd.get("content");
-    // const status = "draft";
-    // const slug = title.replace(/[^a-zA-Z0-9 ]/g, '').replace(' ', '-');
     const today = new Date();
-    // const categoryId = fd.get('categoryId');
     const publishedAt =
       today.getFullYear() +
       "-" +
       (today.getMonth() + 1) +
       "-" +
       today.getDate();
-    // const image = fd.get('image');
-    // const post = { title, slug, content, status, author:userCtx.user, publishedAt, categoryId, image };
     fd.append("slug", title.replace(/[^a-zA-Z0-9 ]/g, "").replace(" ", "-"));
     fd.append("publishedAt", publishedAt);
     fd.append("authorId", localStorage.getItem("id"));
     const tags = JSON.stringify(fd.get("tags").split(", "));
     fd.set("tags", tags);
-    console.log(fd.get("tags"));
     fd.append("_method", "PATCH");
     async function createPost() {
       const response = await fetch(`http://localhost:8000/api/posts/${id}`, {
@@ -71,17 +63,22 @@ export default function EditPostPage() {
       });
 
       const resData = await response.json();
-      console.log("resData", resData);
       if (response.ok) navigate("/");
       else {
         setErrors(Object.values(resData.errors));
-        console.log(errors);
       }
     }
 
     createPost();
   }
-  console.log("post", post);
+
+  function kick() {
+    if (
+      localStorage.getItem("role") == "author" &&
+      localStorage.getItem("id") != post.authorId
+    )
+      navigate("/");
+  }
   const labelClasses = "block text-sm font-medium text-gray-700";
   const inputClasses =
     "w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 mt-1";
@@ -90,6 +87,7 @@ export default function EditPostPage() {
       {!post && <p>Loading...</p>}
       {post && (
         <div className="bg-white p-6 md:p-10 shadow-xl rounded-xl">
+          {kick()}
           <h1 className="text-3xl font-serif font-bold text-gray-900 mb-6 border-b pb-4">
             Edit Blog Post
           </h1>
