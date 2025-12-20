@@ -33,7 +33,7 @@ Route::apiResource('posts', PostController::class)->only(['index', 'show']);
 Route::apiResource('bannedWords', bannedwordsController::class)->middleware('auth:sanctum');
 Route::post('posts', [PostController::class, 'store'])->middleware('auth:sanctum');
 Route::get('post/{id}', [PostController::class, 'showById'])->middleware('auth:sanctum');
-Route::get('postsByTag/{tag}', [PostController::class, 'PostsByTag'])->middleware('auth:sanctum');
+Route::get('postsByTag/{tag}', [PostController::class, 'PostsByTag']);
 Route::patch('posts/{id}', [PostController::class, 'update'])->middleware('auth:sanctum');
 Route::get('posts/drafts/{id}', [PostController::class, 'PersonalDrafts'])->middleware('auth:sanctum');
 Route::delete('posts/{id}', [PostController::class, 'destroy'])->middleware('auth:sanctum');
