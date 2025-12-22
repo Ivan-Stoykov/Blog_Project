@@ -34,7 +34,8 @@ export default function TagsEditPage() {
 
     const fd = new FormData(event.target);
     const name = fd.get("name");
-    const slug = fd.get("slug");
+    const slug = fd.get("slug").replace(/ /g, "-");
+    console.log({ tag });
 
     async function editTag() {
       const response = await fetch(`http://localhost:8000/api/tags/${tag.id}`, {

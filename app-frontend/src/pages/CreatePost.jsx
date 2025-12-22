@@ -31,7 +31,7 @@ export default function CreatePost() {
       (today.getMonth() + 1) +
       "-" +
       today.getDate();
-    fd.append("slug", title.replace(/[^a-zA-Z0-9 ]/g, "").replace(" ", "-"));
+    fd.append("slug", title.replace(/[^a-zA-Z0-9 ]/g, "").replace(/ /g, "-"));
     fd.append("publishedAt", publishedAt);
     fd.append("authorId", localStorage.getItem("id"));
     const tags = JSON.stringify(fd.get("tags").split(","));

@@ -31,7 +31,7 @@ class PostController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|unique:posts|min:3',
-            'content' => 'required|max:500',
+            'content' => 'required|max:5000',
             'image'=> 'image',
             'authorId' => 'required',
             'status' => 'required',
@@ -114,7 +114,7 @@ class PostController extends Controller
         
         $validator = Validator::make($request->all(), [
             'title' => 'required|min:3|unique:posts,title,' . $post->id, 
-            'content' => 'required|max:500',
+            'content' => 'required|max:5000',
             'image' => 'nullable|image|max:2048',
             'authorId' => 'required|exists:users,id',
             'status' => 'required|in:Draft,Published,Reviewed,Archived',

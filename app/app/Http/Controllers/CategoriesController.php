@@ -100,7 +100,6 @@ class CategoriesController extends Controller
     {
         $category = Category::find($id);
         if($category){
-            if(Gate::authorize('delete', $category))
             $category->delete();
             return response(["message"=>'Category was deleted'], 200);
         }

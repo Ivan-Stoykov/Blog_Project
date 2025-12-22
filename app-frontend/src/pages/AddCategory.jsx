@@ -16,7 +16,7 @@ export default function AddCategory() {
 
     const fd = new FormData(event.target);
     const category = fd.get("category");
-    const slug = category.replace(" ", "-");
+    const slug = category.replace(/ /g, "-");
 
     async function createCategory() {
       const response = await fetch("http://localhost:8000/api/categories", {
