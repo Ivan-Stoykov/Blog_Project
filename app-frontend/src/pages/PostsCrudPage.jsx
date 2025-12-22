@@ -15,10 +15,11 @@ export default function PostsCrudPage({
   useEffect(() => {
     async function fetchPosts() {
       const response = await fetch(
-        `http://localhost:8000/api/posts?page=${page}`,
+        `http://localhost:8000/api/allPosts?page=${page}`,
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem('token'),
             Accept: "application/json",
           },
         }

@@ -20,8 +20,14 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')->with('postCategories.category')->with('media')->where('status', '!=', 'draft')->orderByDesc('id');
+        $posts = Post::with('author')->with('postCategories.category')->with('media')->where('status', 'published')->orderByDesc('id');
         return response( $posts->paginate(4), 200);
+    }
+
+    public function AllPosts()
+    {
+        $posts = Post::with('author')->with('postCategories.category')->with('media')->orderByDesc('id');
+        return response( $posts->paginate(10), 200);
     }
 
     /**
@@ -138,10 +144,8 @@ class PostController extends Controller
 
         $post->save();
 
-        PostCategory::updateOrCreate(
-            ['postId' => $post->id],
-            ['categoryId' => $request->input('categoryId')]
-        );
+        PostCategory::where('postId', $post->id)->update(['categoryId' => $request->input('categoryId')]);
+        
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -209,21 +213,5 @@ class PostController extends Controller
         ->orderByDesc('id')->paginate(10);
         if($posts){return response( $posts, 200);}
         else return response(["message"=>'Posts not found'], 404);
-    }
-
-    public function PostsByTag(string $tag)
-    {
-        $posts = PostTag::with('post.author')->with('post.media')->with('post.postTags.tag')->with('tag')->with('post.postCategories.category')
-        ->whereHas('tag', function($q) use ($tag)
-        {
-            $q->where('slug', $tag);
-        })
-        ->whereHas('post', function($q)
-        {
-            $q->where('status', '!=', 'draft');
-        })
-        ->paginate(10);
-
-        return response( $posts, 200);
     }
 }

@@ -37,6 +37,7 @@ Route::get('postsByTag/{tag}', [PostController::class, 'PostsByTag']);
 Route::patch('posts/{id}', [PostController::class, 'update'])->middleware('auth:sanctum');
 Route::get('posts/drafts/{id}', [PostController::class, 'PersonalDrafts'])->middleware('auth:sanctum');
 Route::delete('posts/{id}', [PostController::class, 'destroy'])->middleware('auth:sanctum');
+Route::get('allPosts', [PostController::class, 'AllPosts'])->middleware('auth:sanctum');
 Route::get('comments/{id}', [CommentController::class, 'show']);
 Route::get('comments', [CommentController::class, 'index']);
 Route::post('comments', [CommentController::class, 'store'])->middleware('auth:sanctum');
