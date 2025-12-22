@@ -210,7 +210,7 @@ class PostController extends Controller
     public function PersonalDrafts(string $id)
     {
         $posts = Post::with('comments')->with('media')->with('author')->with('postCategories.category')->where('status', 'draft')->where('authorId', $id)
-        ->orderByDesc('id')->paginate(10);
+        ->orderByDesc('id')->paginate(4);
         if($posts){return response( $posts, 200);}
         else return response(["message"=>'Posts not found'], 404);
     }

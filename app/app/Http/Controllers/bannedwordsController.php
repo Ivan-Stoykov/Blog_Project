@@ -14,7 +14,7 @@ class bannedwordsController extends Controller
      */
     public function index()
     {
-        $bannedwords = BannedWords::paginate(20);
+        $bannedwords = BannedWords::paginate(10);
         return response($bannedwords, 200);
     }
 

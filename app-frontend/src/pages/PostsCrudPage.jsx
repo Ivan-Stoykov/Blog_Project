@@ -93,13 +93,17 @@ export default function PostsCrudPage({
                 {posts.map((post) => (
                   <tr key={post.id} className="hover:bg-gray-50">
                     <td className={tableCellClasses}>{post.id}</td>
-                    <td className={tableCellClasses}>{post.title}</td>
+                    <td className={tableCellClasses}>{post.title.length > 15
+                        ? post.title.slice(0, 15).trim() + "..."
+                        : post.title}</td>
                     <td className={tableCellClasses}>
                       {post.content.length > 8
                         ? post.content.slice(0, 8).trim() + "..."
                         : post.content}
                     </td>
-                    <td className={tableCellClasses}>{post.slug}</td>
+                    <td className={tableCellClasses}>{post.slug.length > 8
+                        ? post.slug.slice(0, 8).trim() + "..."
+                        : post.slug}</td>
                     <td className={tableCellClasses}>{post.status}</td>
                     <td className={tableCellClasses}>{post.author.name}</td>
                     <td className={`${tableCellClasses} flex space-x-2`}>

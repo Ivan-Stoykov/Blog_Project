@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Validator;
 class TagController extends Controller
 {
     /**
@@ -13,7 +13,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::Paginate(20);
+        $tags = Tag::Paginate(10);
         return response($tags, 200);
     }
 

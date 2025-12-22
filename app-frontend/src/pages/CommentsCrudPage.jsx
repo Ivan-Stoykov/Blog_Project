@@ -92,7 +92,9 @@ export default function CommentsCrudPage({
                         : comment.body}
                     </td>
                     <td className={tableCellClasses}>{comment.createdAt}</td>
-                    <td className={tableCellClasses}>{comment.post.title}</td>
+                    <td className={tableCellClasses}>{comment.post.title.length > 25
+                        ? comment.post.title.slice(0, 25).trim() + "..."
+                        : comment.post.title}</td>
                     <td className={tableCellClasses}>{comment.status}</td>
                     <td className={tableCellClasses}>{comment.author.name}</td>
                     <td className={`${tableCellClasses} flex space-x-2`}>
