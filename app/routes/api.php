@@ -62,7 +62,4 @@ Route::controller(LoginController::class)->group(function(){
     Route::post('register', 'register');
     Route::post('login', 'login');
 });
-Route::middleware('auth:sanctum')->post('/logout', function(Request $request){
-        $request->user()->currentAccessToken()->delete();
-        return response(["message"=>"Logged out"], 200);
-    });
+Route::post('logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');

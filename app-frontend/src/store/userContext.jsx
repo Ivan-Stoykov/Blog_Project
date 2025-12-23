@@ -27,7 +27,8 @@ export default function UserContextProvider({children})
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + user.token
+          "Accept": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem('token')
         },
       });
       localStorage.removeItem('token');
