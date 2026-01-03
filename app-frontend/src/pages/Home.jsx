@@ -43,7 +43,6 @@ export default function Home() {
           },
         }
       );
-      //const resData = await response.json();
       if (response.ok)
         setPosts((prevPosts) => prevPosts.filter((p) => p.id != post.id));
     }
