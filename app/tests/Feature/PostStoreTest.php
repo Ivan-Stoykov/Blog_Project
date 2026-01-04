@@ -65,4 +65,41 @@ class PostStoreTest extends TestCase
         $response->assertStatus(400);
         $response->assertJsonStructure(['ValidationError' => ['title', 'content', 'authorId']]);
     }
+
+    public function test_returns_only_published_posts_with_pagination()
+    {
+        $author = User::factory()->create();
+        $this->actingAs($author);
+        Post::factory()->count(5)->create([
+            'status' => 'published',
+            'authorId' => $author->id,
+        ]);
+
+        Post::factory()->create([
+            'status' => 'draft',
+            'authorId' => $author->id,
+        ]);
+
+        $response = $this->getJson('/api/posts'); 
+
+        $response->assertStatus(200);
+
+        $response->assertJsonCount(4, 'data');
+        
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id', 
+                    'status', 
+                    'author', 
+                    'post_categories', 
+                    'media'
+                ]
+            ]
+        ]);
+
+        foreach ($response->json('data') as $post) {
+            $this->assertEquals('published', $post['status']);
+        }
+    }
 }

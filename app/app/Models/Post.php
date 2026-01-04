@@ -8,9 +8,11 @@ use App\Models\Comment;
 use App\Models\Media;
 use App\Models\PostCategory;
 use App\Models\PostTag;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'title', 'slug', 'content', 'authorId', 'publishedAt', 'status'
     ];
