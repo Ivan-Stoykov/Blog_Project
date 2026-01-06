@@ -86,7 +86,7 @@ export default function InquiryByCategory({
           >
             {categories.length !== 0 &&
               categories.map((category) => (
-                <option key={category.id} value={category.name}>
+                <option key={category.id} value={category.slug}>
                   {category.name}
                 </option>
               ))}

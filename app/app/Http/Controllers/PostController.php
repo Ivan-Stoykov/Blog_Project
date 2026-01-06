@@ -122,7 +122,6 @@ class PostController extends Controller
             'title' => 'required|min:3|unique:posts,title,' . $post->id, 
             'content' => 'required|max:5000',
             'image' => 'nullable|image|max:2048',
-            'authorId' => 'required|exists:users,id',
             'status' => 'required|in:Draft,Published,Reviewed,Archived',
             'categoryId' => 'required|exists:categories,id',
             'tags' => 'nullable|string',
@@ -138,8 +137,6 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->slug = $request->input('slug') ?? str_replace(' ', '-', preg_replace('/[^a-zA-Z0-9 ]/','', $request->input('title'))); 
         $post->content = $request->input('content');
-        $post->authorId = $request->input('authorId');
-        $post->publishedAt = $request->input('publishedAt');
         $post->status = $request->input('status');
 
         $post->save();

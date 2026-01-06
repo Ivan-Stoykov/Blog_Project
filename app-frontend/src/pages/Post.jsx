@@ -98,7 +98,7 @@ export default function Post() {
                   <Comments key={comment.id} comment={comment} />
                   {localStorage.getItem("token") &&
                     (localStorage.getItem("role") == "editor" ||
-                      localStorage.getItem("admin") == "admin" || comment.authorId == localStorage.getItem('id')) && (
+                      localStorage.getItem("role") == "admin" || comment.authorId == localStorage.getItem('id')) && (
                       <DeleteButton
                         handleDelete={() => handleDelete(comment)}
                       />
