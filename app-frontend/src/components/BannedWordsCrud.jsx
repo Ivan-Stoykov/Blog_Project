@@ -59,7 +59,7 @@ export default function AddBannedWord({
     <div className={cardClasses}>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-serif font-bold text-gray-800">
-          Managing: Posts
+          Managing: Banned words
         </h2>
         <Link
           to="/admin/create-bannedWord"
